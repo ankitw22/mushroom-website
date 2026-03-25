@@ -19,14 +19,20 @@ export default function Ticker() {
   const items = [...AI_LIST, ...AI_LIST, ...AI_LIST];
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 h-[52px] bg-[var(--ink)] overflow-hidden flex items-center z-20">
-      <div className="flex items-center animate-ticker will-change-transform flex-shrink-0">
+    <div id="ticker" className="absolute bottom-0 left-0 right-0 h-[52px] bg-[var(--ink)] overflow-hidden flex items-center z-20">
+      <div className="t-track flex items-center animate-ticker will-change-transform flex-shrink-0">
         {items.map((ai, idx) => (
           <span
             key={idx}
-            className="inline-flex items-center gap-2 px-[26px] font-[var(--body)] text-sm font-bold text-white whitespace-nowrap flex-shrink-0"
+            className="t-item inline-flex items-center gap-2 px-[26px] whitespace-nowrap flex-shrink-0"
+            style={{
+              fontFamily: "'Poppins', sans-serif",
+              fontSize: '14px',
+              fontWeight: 700,
+              color: '#ffffff',
+            }}
           >
-            <span className="text-base" style={{ color: ai.col }}>
+            <span className="t-icon text-base" style={{ color: ai.col }}>
               {ai.sym}
             </span>
             {ai.name}

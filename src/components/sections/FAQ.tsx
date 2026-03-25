@@ -76,43 +76,70 @@ export default function FAQ() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-15 px-12 pb-[120px] max-w-[1200px] mx-auto max-[768px]:px-5 max-[768px]:pb-20" id="faq">
-      <div className="reveal text-left mb-10">
-        <h2 className="font-[var(--pixel)] text-[clamp(22px,3.4vw,40px)] text-[var(--ink)] leading-tight">
+    <section 
+      ref={sectionRef} 
+      className="section-faq py-[60px] px-12 pb-[120px] max-w-[1200px] mx-auto max-[768px]:px-5 max-[768px]:pb-20" 
+      id="faq"
+    >
+      <div className="faq-header reveal text-left mb-10">
+        <h2 
+          className="section-headline leading-tight"
+          style={{
+            fontFamily: "'Symtext', 'Press Start 2P', monospace",
+            fontSize: 'clamp(22px, 3.4vw, 40px)',
+            color: 'var(--ink)',
+          }}
+        >
           EVERYTHING YOU <span className="text-[#068F57]">NEED TO KNOW.</span>
         </h2>
       </div>
 
-      <div className="reveal grid grid-cols-1 gap-3 max-w-[1200px] mx-auto" data-delay="1">
+      <div className="faq-grid reveal grid grid-cols-1 gap-3 max-w-[1200px] mx-auto" data-delay="1">
         {FAQ_ITEMS.map((item) => (
           <div
             key={item.id}
             id={item.id}
             onClick={() => toggleFaq(item.id)}
-            className={`bg-white border border-[#e2e8f0] rounded-[14px] overflow-hidden transition-colors cursor-pointer hover:border-[#c8d4e0] ${
+            className={`faq-card bg-white border-[1.5px] border-[#e2e8f0] rounded-[14px] overflow-hidden transition-colors cursor-pointer hover:border-[#c8d4e0] ${
               openId === item.id ? 'border-[#068F57]' : ''
             }`}
           >
-            <div className="flex items-center justify-between gap-4 py-5 px-[22px]">
-              <span className="font-[var(--body)] text-sm font-semibold text-[var(--ink)] leading-snug">
+            <div className="faq-question flex items-center justify-between gap-4 py-5 px-[22px]">
+              <span 
+                className="faq-q-text leading-snug"
+                style={{
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  color: 'var(--ink)',
+                }}
+              >
                 {item.question}
               </span>
               <span
-                className={`w-[26px] h-[26px] rounded-full border border-[#e2e8f0] flex items-center justify-center flex-shrink-0 transition-all text-[rgba(10,10,10,0.4)] text-base leading-none font-light ${
+                className={`faq-toggle w-[26px] h-[26px] rounded-full border border-[#e2e8f0] flex items-center justify-center flex-shrink-0 transition-all text-base leading-none font-light ${
                   openId === item.id
                     ? 'bg-[var(--green)] border-[#068F57] text-[var(--ink)] rotate-45'
-                    : ''
+                    : 'text-[rgba(10,10,10,0.4)]'
                 }`}
               >
                 +
               </span>
             </div>
             <div
-              className={`overflow-hidden transition-[max-height] duration-350 ease-out ${
+              className={`faq-answer overflow-hidden transition-[max-height] duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
                 openId === item.id ? 'max-h-[200px]' : 'max-h-0'
               }`}
             >
-              <div className="py-0 px-[22px] pb-5 font-[var(--body)] text-[13px] text-[var(--ink)] leading-relaxed border-t border-[#f1f5f9] pt-4">
+              <div 
+                className="faq-answer-inner py-0 px-[22px] pb-5 border-t border-[#f1f5f9] pt-4"
+                style={{
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: '13px',
+                  color: 'var(--ink)',
+                  lineHeight: 1.7,
+                }}
+              >
                 {item.answer}
               </div>
             </div>

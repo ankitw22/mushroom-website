@@ -159,72 +159,122 @@ export default function Integrations() {
   }, [activeCat, query]);
 
   return (
-    <section ref={sectionRef} className="bg-[var(--cream)] py-20 px-12 max-w-[1200px] mx-auto max-[768px]:py-15 max-[768px]:px-5 max-[540px]:hidden" id="integrations">
-      <div className="reveal mb-10">
-        <h2 className="font-[var(--pixel)] text-[clamp(24px,3vw,42px)] text-[var(--ink)] leading-tight mb-3.5 whitespace-nowrap max-[768px]:whitespace-normal">
+    <section 
+      ref={sectionRef} 
+      className="section-integrations bg-[var(--cream)] py-20 px-12 pb-[182px] max-w-[1200px] mx-auto max-[768px]:py-[60px] max-[768px]:px-5 max-[768px]:pb-[140px] max-[540px]:hidden" 
+      id="integrations"
+    >
+      <div className="integrations-header reveal text-left mb-10 relative z-[3]">
+        <h2 
+          className="section-headline leading-tight mb-3.5 whitespace-nowrap max-[768px]:whitespace-normal"
+          style={{
+            fontFamily: "'Symtext', 'Press Start 2P', monospace",
+            fontSize: 'clamp(24px, 3vw, 42px)',
+            color: 'var(--ink)',
+          }}
+        >
           Give your <span className="text-[#068F57]">AI agent</span> the power to act
         </h2>
         <Link
           href="#"
-          className="inline-block font-[var(--body)] text-base font-bold text-white bg-[var(--ink)] no-underline py-[15px] px-[38px] rounded-full mb-5 transition-transform hover:translate-y-[-1px] hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)]"
+          className="integrations-cta inline-block py-[15px] px-[38px] rounded-full mb-5 transition-transform hover:translate-y-[-1px] hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)]"
+          style={{
+            fontFamily: "'Poppins', sans-serif",
+            fontSize: '16px',
+            fontWeight: 700,
+            color: '#fff',
+            background: 'var(--ink)',
+            textDecoration: 'none',
+          }}
         >
           Get Your Cluster URL
         </Link>
       </div>
 
-      <div className="border-2 border-[rgba(10,10,10,0.1)] rounded-xl overflow-hidden bg-white relative z-[3]">
-        <div className="relative max-w-full border-b-2 border-[rgba(10,10,10,0.1)]">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[rgba(10,10,10,0.35)] text-base pointer-events-none">
+      <div className="integrations-box border-2 border-[rgba(10,10,10,0.1)] rounded-xl overflow-hidden bg-white relative z-[3]">
+        <div className="integrations-search relative max-w-full border-b-2 border-[rgba(10,10,10,0.1)]">
+          <span 
+            className="integrations-search-icon absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"
+            style={{ color: 'rgba(10,10,10,0.35)', fontSize: '16px' }}
+          >
             ⌕
           </span>
           <input
             type="text"
             placeholder="SEARCH YOUR FAVOURITE APPS"
-            className="w-full py-4 pl-11 pr-4 font-[var(--mono)] text-xs tracking-[0.05em] text-[var(--ink)] bg-white border-none outline-none focus:bg-[rgba(6,143,87,0.03)]"
+            className="w-full py-4 pl-11 pr-4 bg-white border-none outline-none focus:bg-[rgba(6,143,87,0.03)]"
+            style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '12px',
+              letterSpacing: '0.05em',
+              color: 'var(--ink)',
+            }}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
 
-        <div className="grid grid-cols-[200px_1fr] gap-0 bg-white max-[768px]:grid-cols-1">
-          <div className="border-r-2 border-[rgba(10,10,10,0.08)] py-2 bg-white max-[768px]:border-r-0 max-[768px]:border-b-2 max-[768px]:flex max-[768px]:flex-wrap max-[768px]:gap-1 max-[768px]:p-2">
+        <div className="integrations-layout grid grid-cols-[200px_1fr] gap-0 bg-white max-[768px]:grid-cols-1">
+          <div className="integrations-sidebar border-r-2 border-[rgba(10,10,10,0.08)] py-2 bg-white max-[768px]:border-r-0 max-[768px]:border-b-2 max-[768px]:flex max-[768px]:flex-wrap max-[768px]:gap-1 max-[768px]:p-2">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCat(cat)}
-                className={`block w-full text-left py-[9px] px-[18px] font-[var(--body)] text-[13px] text-[var(--ink)] bg-none border-none border-l-[3px] border-transparent cursor-pointer transition-all whitespace-nowrap overflow-hidden text-ellipsis hover:text-[var(--ink)] hover:bg-[rgba(10,10,10,0.03)] max-[768px]:w-auto max-[768px]:rounded-full max-[768px]:border-l-0 ${
+                className={`integ-cat block w-full text-left py-[9px] px-[18px] bg-none border-none border-l-[3px] border-transparent cursor-pointer transition-all whitespace-nowrap overflow-hidden text-ellipsis hover:text-[var(--ink)] hover:bg-[rgba(10,10,10,0.03)] max-[768px]:w-auto max-[768px]:rounded-full max-[768px]:border-l-0 ${
                   cat === activeCat
-                    ? 'text-[var(--ink)] font-semibold border-l-[#068F57] bg-[rgba(6,143,87,0.06)] max-[768px]:bg-[#068F57] max-[768px]:text-white'
+                    ? 'text-[var(--ink)] font-semibold !border-l-[#068F57] bg-[rgba(6,143,87,0.06)] max-[768px]:bg-[#068F57] max-[768px]:text-white'
                     : ''
                 }`}
+                style={{
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: '13px',
+                  color: 'var(--ink)',
+                }}
               >
                 {cat}
               </button>
             ))}
           </div>
 
-          <div className="flex flex-col">
-            <div className="grid grid-cols-4 auto-rows-[54px] min-h-0 max-[1024px]:grid-cols-3 max-[768px]:grid-cols-3">
+          <div className="integrations-grid-wrap flex flex-col">
+            <div className="integrations-grid grid grid-cols-4 auto-rows-[54px] min-h-0 max-[1024px]:grid-cols-3 max-[768px]:grid-cols-3">
               {slice.length === 0 ? (
-                <div className="col-span-full p-12 text-center font-[var(--body)] text-sm text-[rgba(10,10,10,0.4)]">
+                <div 
+                  className="integ-empty col-span-full p-12 text-center"
+                  style={{
+                    fontFamily: "'Poppins', sans-serif",
+                    fontSize: '14px',
+                    color: 'rgba(10,10,10,0.4)',
+                  }}
+                >
                   No apps found.
                 </div>
               ) : (
                 slice.map((app, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center gap-2.5 py-[13px] px-4 border-r border-b border-[rgba(10,10,10,0.07)] transition-colors cursor-default hover:bg-[rgba(6,143,87,0.05)] [&:nth-child(4n)]:border-r-0 max-[1024px]:[&:nth-child(4n)]:border-r max-[1024px]:[&:nth-child(3n)]:border-r-0"
+                    className="integ-cell flex items-center gap-2.5 py-[13px] px-4 border-r border-b border-[rgba(10,10,10,0.07)] transition-colors cursor-default hover:bg-[rgba(6,143,87,0.05)] [&:nth-child(4n)]:border-r-0 max-[1024px]:[&:nth-child(4n)]:border-r max-[1024px]:[&:nth-child(3n)]:border-r-0"
                   >
                     <span
-                      className="w-7 h-7 rounded-[7px] flex items-center justify-center font-[var(--body)] text-[10px] font-bold flex-shrink-0"
+                      className="integ-icon w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0"
                       style={{
                         backgroundColor: app.color,
                         color: app.textColor || '#fff',
+                        fontFamily: "'Poppins', sans-serif",
+                        fontSize: '10px',
+                        fontWeight: 700,
                       }}
                     >
                       {app.init}
                     </span>
-                    <span className="font-[var(--body)] text-[13px] text-[var(--ink)] whitespace-nowrap overflow-hidden text-ellipsis">
+                    <span 
+                      className="integ-name whitespace-nowrap overflow-hidden text-ellipsis"
+                      style={{
+                        fontFamily: "'Poppins', sans-serif",
+                        fontSize: '13px',
+                        color: 'var(--ink)',
+                      }}
+                    >
                       {app.name}
                     </span>
                   </div>
@@ -235,49 +285,119 @@ export default function Integrations() {
         </div>
       </div>
 
-      <div className="flex items-center justify-end pt-4 gap-3">
+      <div className="integrations-footer flex items-center justify-end pt-4 gap-3">
         <button
           onClick={() => setPage((p) => Math.max(0, p - 1))}
           disabled={currentPage === 0}
-          className="font-[var(--mono)] text-xs text-[var(--ink)] bg-none border border-[rgba(10,10,10,0.15)] rounded-md py-[5px] px-3.5 cursor-pointer transition-all hover:border-[#068F57] hover:text-[#068F57] disabled:opacity-35 disabled:cursor-default disabled:hover:border-[rgba(10,10,10,0.15)] disabled:hover:text-[var(--ink)]"
+          className="integ-page-btn bg-none border-[1.5px] border-[rgba(10,10,10,0.15)] rounded-md py-[5px] px-3.5 cursor-pointer transition-all hover:border-[#068F57] hover:text-[#068F57] disabled:opacity-35 disabled:cursor-default disabled:hover:border-[rgba(10,10,10,0.15)] disabled:hover:text-[var(--ink)]"
+          style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '12px',
+            color: 'var(--ink)',
+          }}
         >
           ← Prev
         </button>
         <button
           onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
           disabled={currentPage >= totalPages - 1}
-          className="font-[var(--mono)] text-xs text-[var(--ink)] bg-none border border-[rgba(10,10,10,0.15)] rounded-md py-[5px] px-3.5 cursor-pointer transition-all hover:border-[#068F57] hover:text-[#068F57] disabled:opacity-35 disabled:cursor-default disabled:hover:border-[rgba(10,10,10,0.15)] disabled:hover:text-[var(--ink)]"
+          className="integ-page-btn bg-none border-[1.5px] border-[rgba(10,10,10,0.15)] rounded-md py-[5px] px-3.5 cursor-pointer transition-all hover:border-[#068F57] hover:text-[#068F57] disabled:opacity-35 disabled:cursor-default disabled:hover:border-[rgba(10,10,10,0.15)] disabled:hover:text-[var(--ink)]"
+          style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '12px',
+            color: 'var(--ink)',
+          }}
         >
           Next →
         </button>
       </div>
 
-      <div className="reveal bg-white border border-[#e2e8f0] rounded-[14px] p-9 mt-6 relative z-[1]" data-delay="2">
-        <p className="font-[var(--pixel)] text-[clamp(16px,2vw,24px)] text-[var(--ink)] mb-7 tracking-[0.04em]">
+      <div className="apps-missing reveal bg-white border-[1.5px] border-[#e2e8f0] rounded-[14px] p-9 px-10 mt-6 relative z-[1] max-[540px]:p-7 max-[540px]:px-5" data-delay="2">
+        <p 
+          className="apps-missing-headline mb-7"
+          style={{
+            fontFamily: "'Symtext', 'Press Start 2P', monospace",
+            fontSize: 'clamp(16px, 2vw, 24px)',
+            color: 'var(--ink)',
+            letterSpacing: '0.04em',
+          }}
+        >
           DON&apos;T SEE YOUR APP?
         </p>
-        <div className="flex items-start gap-0 max-[540px]:flex-col max-[540px]:gap-6">
-          <div className="flex-1 flex flex-col gap-2">
-            <strong className="font-[var(--body)] text-lg font-bold text-[var(--ink)]">Request it</strong>
-            <span className="font-[var(--body)] text-sm text-[var(--ink)] leading-relaxed max-w-[340px]">
+        <div className="apps-missing-paths flex items-start gap-0 max-[540px]:flex-col max-[540px]:gap-6">
+          <div className="apps-missing-path flex-1 flex flex-col gap-2">
+            <strong 
+              style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: '18px',
+                fontWeight: 700,
+                color: 'var(--ink)',
+              }}
+            >
+              Request it
+            </strong>
+            <span 
+              className="max-w-[340px]"
+              style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: '14px',
+                color: 'var(--ink)',
+                lineHeight: 1.6,
+              }}
+            >
               Can&apos;t find what you need? We&apos;ll build the integration within 48 hours.
             </span>
             <Link
               href="#"
-              className="font-[var(--pixel)] text-[clamp(10px,1.1vw,13px)] font-normal tracking-[0.08em] text-white bg-[var(--ink)] no-underline mt-2.5 inline-flex items-center self-start py-3 px-[26px] rounded-lg transition-transform hover:translate-y-[-2px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.32)]"
+              className="apps-missing-cta mt-2.5 inline-flex items-center self-start py-3 px-[26px] rounded-lg transition-transform hover:translate-y-[-2px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.32)]"
+              style={{
+                fontFamily: "'Symtext', 'Press Start 2P', monospace",
+                fontSize: 'clamp(10px, 1.1vw, 13px)',
+                fontWeight: 400,
+                letterSpacing: '0.08em',
+                color: '#fff',
+                background: 'var(--ink)',
+                textDecoration: 'none',
+              }}
             >
               Request an app →
             </Link>
           </div>
-          <div className="w-px bg-[#e2e8f0] self-stretch mx-10 flex-shrink-0 max-[540px]:hidden" />
-          <div className="flex-1 flex flex-col gap-2">
-            <strong className="font-[var(--body)] text-lg font-bold text-[var(--ink)]">List it yourself</strong>
-            <span className="font-[var(--body)] text-sm text-[var(--ink)] leading-relaxed max-w-[340px]">
+          <div className="apps-missing-divider w-px bg-[#e2e8f0] self-stretch mx-10 flex-shrink-0 max-[540px]:hidden" />
+          <div className="apps-missing-path flex-1 flex flex-col gap-2">
+            <strong 
+              style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: '18px',
+                fontWeight: 700,
+                color: 'var(--ink)',
+              }}
+            >
+              List it yourself
+            </strong>
+            <span 
+              className="max-w-[340px]"
+              style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: '14px',
+                color: 'var(--ink)',
+                lineHeight: 1.6,
+              }}
+            >
               Own an app? Connect it to Mushrooms and reach thousands of AI users.
             </span>
             <Link
               href="#"
-              className="font-[var(--pixel)] text-[clamp(10px,1.1vw,13px)] font-normal tracking-[0.08em] text-white bg-[var(--ink)] no-underline mt-2.5 inline-flex items-center self-start py-3 px-[26px] rounded-lg transition-transform hover:translate-y-[-2px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.32)]"
+              className="apps-missing-cta mt-2.5 inline-flex items-center self-start py-3 px-[26px] rounded-lg transition-transform hover:translate-y-[-2px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.32)]"
+              style={{
+                fontFamily: "'Symtext', 'Press Start 2P', monospace",
+                fontSize: 'clamp(10px, 1.1vw, 13px)',
+                fontWeight: 400,
+                letterSpacing: '0.08em',
+                color: '#fff',
+                background: 'var(--ink)',
+                textDecoration: 'none',
+              }}
             >
               Get started →
             </Link>

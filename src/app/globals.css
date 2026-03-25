@@ -15,7 +15,9 @@
   --mono: 'JetBrains Mono', monospace;
 }
 
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -27,6 +29,23 @@ body {
   font-family: var(--body);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+.page {
+  padding: 0;
+}
+
+/* ── Font family utilities ── */
+.font-pixel {
+  font-family: 'Symtext', 'Press Start 2P', monospace;
+}
+
+.font-body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
 }
 
 /* Keyframe Animations */
@@ -106,17 +125,371 @@ body {
   transform: translateY(0);
 }
 
-/* Custom Fonts */
-.font-pixel {
-  font-family: var(--pixel);
+/* Section base styles matching original */
+.section {
+  padding: 100px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.font-body {
-  font-family: var(--body);
+.section-headline {
+  font-family: 'Symtext', 'Press Start 2P', monospace;
+  font-size: clamp(22px, 3.4vw, 40px);
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 14px;
 }
 
-.font-mono {
-  font-family: var(--mono);
+.section-headline .accent {
+  color: #068F57;
+}
+
+.section-sub {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(15px, 1.5vw, 18px);
+  color: rgba(10, 10, 10, 0.5);
+  max-width: 560px;
+  line-height: 1.65;
+}
+
+/* Pixel band - green background sections */
+.pixel-band {
+  position: relative;
+  background: var(--green);
+  padding: 60px 48px;
+  margin: 0;
+  width: 100%;
+}
+
+/* Pixel edge dissolve effects */
+.pixel-edge-top,
+.pixel-edge-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 224px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pixel-edge-top {
+  top: -224px;
+}
+
+.pixel-edge-bottom {
+  bottom: -224px;
+}
+
+/* How it works section */
+.how-section {
+  padding: 100px 24px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.how-header {
+  margin-bottom: 56px;
+  text-align: center;
+}
+
+.how-stepper {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  margin-bottom: 0;
+}
+
+.how-stepper::before {
+  content: '';
+  position: absolute;
+  top: 26px;
+  left: calc((100% - 144px) / 6);
+  right: calc((100% - 144px) / 6);
+  height: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  z-index: 0;
+}
+
+.how-step {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.how-step-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--green);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 4px var(--cream);
+  margin-bottom: 14px;
+}
+
+.how-cards {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  background: none;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.how-card {
+  border-radius: 16px;
+  flex: 1;
+  min-width: 0;
+  padding: 44px 40px 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: none;
+  box-shadow: none;
+  background: #fff;
+}
+
+.how-card-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0 8px;
+}
+
+.how-card-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #068F57;
+  line-height: 1.15;
+}
+
+.how-card-desc {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+/* Pricing band */
+.pricing-band {
+  background: var(--cream);
+  padding: 182px 48px 100px;
+}
+
+.pricing-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  padding: 48px 48px 52px;
+}
+
+/* Feature cards */
+.feature-card {
+  background: #ffffff;
+  border: 3px solid #068F57;
+  border-radius: 14px;
+  padding: 24px 24px 28px;
+  transition: transform 0.25s, box-shadow 0.25s;
+  box-shadow: none;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(6, 143, 87, 0.15);
+}
+
+.feature-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(16px, 1.6vw, 22px);
+  font-weight: 700;
+  color: #068F57;
+  margin-bottom: 10px;
+}
+
+.feature-desc {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  color: rgba(10, 10, 10, 0.7);
+  line-height: 1.6;
+}
+
+/* Use case cards */
+.usecase-card {
+  background: #fff;
+  border: 2px dashed #068F57;
+  border-radius: 14px;
+  padding: 28px 26px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 180px;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.usecase-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06);
+  border-style: solid;
+  border-color: #068F57;
+}
+
+.usecase-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+/* Blog cards */
+.blog-card {
+  background: #fff;
+  border: 2px solid #068F57;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.07);
+  border-color: #068F57;
+}
+
+/* FAQ cards */
+.faq-card {
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.faq-card:hover {
+  border-color: #c8d4e0;
+}
+
+.faq-card.open {
+  border-color: #068F57;
+}
+
+/* Integrations browser */
+.integrations-box {
+  border: 2px solid rgba(10, 10, 10, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+  z-index: 3;
+}
+
+/* Apps missing section */
+.apps-missing {
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 36px 40px;
+  margin-top: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.apps-missing-headline {
+  font-family: 'Symtext', 'Press Start 2P', monospace;
+  font-size: clamp(16px, 2vw, 24px);
+  color: var(--ink);
+  margin-bottom: 28px;
+  letter-spacing: 0.04em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .section {
+    padding: 72px 32px;
+  }
+  .pixel-band {
+    padding: 72px 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pixel-edge-top,
+  .pixel-edge-bottom {
+    height: 160px;
+  }
+  .pixel-edge-top {
+    top: -160px;
+  }
+  .pixel-edge-bottom {
+    bottom: -160px;
+  }
+  .how-stepper {
+    display: none;
+  }
+  .how-cards {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .how-card {
+    padding: 32px 28px 36px;
+  }
+  .how-card-arrow {
+    display: none;
+  }
+  .pricing-band {
+    padding: 192px 0 60px;
+  }
+  .pricing-wrap {
+    margin: 0 16px;
+    padding: 36px 28px 40px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 540px) {
+  .section {
+    padding: 56px 20px;
+  }
+  .pixel-band {
+    padding: 56px 20px;
+  }
+  .pixel-edge-top,
+  .pixel-edge-bottom {
+    height: 128px;
+  }
+  .pixel-edge-top {
+    top: -128px;
+  }
+  .pixel-edge-bottom {
+    bottom: -128px;
+  }
+  .pricing-band {
+    padding: 160px 0 48px;
+  }
+  .pricing-wrap {
+    margin: 0 12px;
+    padding: 28px 20px 32px;
+  }
+  .apps-missing {
+    padding: 28px 20px;
+  }
 }
 
 /* Custom Colors */

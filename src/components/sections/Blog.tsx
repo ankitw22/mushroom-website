@@ -63,24 +63,35 @@ export default function Blog() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-10 px-12 pb-15 max-w-[1200px] mx-auto max-[768px]:px-5" id="blog">
-      <div className="reveal mb-10">
-        <h2 className="font-[var(--pixel)] text-[clamp(22px,3.4vw,40px)] text-[var(--ink)] leading-tight">
+    <section 
+      ref={sectionRef} 
+      className="section-blogs py-10 px-12 pb-[60px] max-w-[1200px] mx-auto max-[768px]:px-5 max-[540px]:px-5" 
+      id="blog"
+    >
+      <div className="blogs-header reveal mb-10">
+        <h2 
+          className="section-headline leading-tight"
+          style={{
+            fontFamily: "'Symtext', 'Press Start 2P', monospace",
+            fontSize: 'clamp(22px, 3.4vw, 40px)',
+            color: 'var(--ink)',
+          }}
+        >
           FROM THE <span className="text-[#068F57]">MUSHROOMS BLOG.</span>
         </h2>
       </div>
 
-      <div className="reveal grid grid-cols-4 gap-4 max-[768px]:grid-cols-2 max-[540px]:grid-cols-1" data-delay="1">
+      <div className="blogs-grid reveal grid grid-cols-4 gap-4 max-[768px]:grid-cols-2 max-[540px]:grid-cols-1" data-delay="1">
         {BLOG_POSTS.map((post, idx) => (
           <a
             key={idx}
             href={post.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-white border-2 border-[#068F57] rounded-[14px] overflow-hidden flex flex-col transition-all cursor-pointer no-underline hover:translate-y-[-4px] hover:shadow-[0_14px_36px_rgba(0,0,0,0.07)] hover:border-[#068F57]"
+            className="blog-card bg-white border-2 border-[#068F57] rounded-[14px] overflow-hidden flex flex-col transition-all cursor-pointer no-underline hover:translate-y-[-4px] hover:shadow-[0_14px_36px_rgba(0,0,0,0.07)] hover:border-[#068F57]"
           >
             <img
-              className="w-full aspect-video object-cover block bg-[#e2e8f0]"
+              className="blog-thumb w-full aspect-video object-cover block bg-[#e2e8f0]"
               src={post.image}
               alt={post.title}
               onError={(e) => {
@@ -90,18 +101,43 @@ export default function Blog() {
                 if (placeholder) placeholder.style.display = 'flex';
               }}
             />
-            <div className="hidden w-full aspect-video bg-gradient-to-br from-[#e2e8f0] to-[#d1d9e2] items-center justify-center">
-              <span className="font-[var(--pixel)] text-[9px] text-[rgba(10,10,10,0.2)] tracking-[0.06em]">
+            <div 
+              className="blog-thumb-placeholder hidden w-full aspect-video bg-gradient-to-br from-[#e2e8f0] to-[#d1d9e2] items-center justify-center"
+            >
+              <span 
+                style={{
+                  fontFamily: "'Symtext', 'Press Start 2P', monospace",
+                  fontSize: '9px',
+                  color: 'rgba(10,10,10,0.2)',
+                  letterSpacing: '0.06em',
+                }}
+              >
                 BLOG
               </span>
             </div>
-            <div className="py-[22px] px-6 pb-6 flex flex-col flex-1 gap-3">
-              <div className="flex items-center gap-2.5 font-[var(--mono)] text-[10px] text-[rgba(10,10,10,0.35)]">
+            <div className="blog-body py-[22px] px-6 pb-6 flex flex-col flex-1 gap-3">
+              <div 
+                className="blog-meta flex items-center gap-2.5"
+                style={{
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: '10px',
+                  color: 'rgba(10,10,10,0.35)',
+                }}
+              >
                 <span>{post.date}</span>
-                <span className="opacity-40">·</span>
+                <span className="blog-meta-sep opacity-40">·</span>
                 <span>{post.readTime}</span>
               </div>
-              <p className="font-[var(--body)] text-base font-semibold text-[var(--ink)] leading-relaxed flex-1">
+              <p 
+                className="blog-title flex-1"
+                style={{
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: '16px',
+                  fontWeight: 600,
+                  color: 'var(--ink)',
+                  lineHeight: 1.5,
+                }}
+              >
                 {post.title}
               </p>
             </div>

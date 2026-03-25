@@ -78,36 +78,71 @@ export default function UseCases() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-[100px] px-12 max-w-[1200px] mx-auto max-[1200px]:py-[72px] max-[1200px]:px-8 max-[540px]:py-14 max-[540px]:px-5" id="use-cases">
-      <div className="reveal mb-12">
-        <h2 className="font-[var(--pixel)] text-[clamp(22px,3.4vw,40px)] text-[var(--ink)] leading-tight mb-3.5">
+    <section 
+      ref={sectionRef} 
+      className="section-usecases py-[100px] px-12 max-w-[1200px] mx-auto max-[1200px]:py-[72px] max-[1200px]:px-8 max-[540px]:py-14 max-[540px]:px-5" 
+      id="use-cases"
+    >
+      <div className="usecases-header reveal text-left mb-12 relative z-[3]">
+        <h2 
+          className="section-headline leading-tight mb-3.5"
+          style={{
+            fontFamily: "'Symtext', 'Press Start 2P', monospace",
+            fontSize: 'clamp(22px, 3.4vw, 40px)',
+            color: 'var(--ink)',
+          }}
+        >
           START WITH REAL <span className="text-[#068F57]">USE CASES.</span>
         </h2>
       </div>
-      <div className="grid grid-cols-3 gap-4 max-w-[1100px] mx-auto max-[1200px]:grid-cols-2 max-[540px]:grid-cols-1">
+      <div className="usecases-grid grid grid-cols-3 gap-4 max-w-[1100px] mx-auto relative z-[3] max-[1200px]:grid-cols-2 max-[540px]:grid-cols-1">
         {USE_CASES.map((uc, idx) => (
           <div
             key={idx}
-            className="reveal bg-white border-2 border-dashed border-[#068F57] rounded-[14px] p-7 flex flex-col gap-3.5 min-h-[180px] transition-all hover:translate-y-[-3px] hover:shadow-[0_12px_36px_rgba(0,0,0,0.06)] hover:border-solid hover:border-[#068F57]"
+            className="usecase-card reveal bg-white border-2 border-dashed border-[#068F57] rounded-[14px] py-7 px-[26px] pb-8 flex flex-col gap-3.5 min-h-[180px] transition-all hover:translate-y-[-3px] hover:shadow-[0_12px_36px_rgba(0,0,0,0.06)] hover:border-solid hover:border-[#068F57]"
             data-delay={idx % 3}
           >
-            <div className="flex items-center justify-between">
-              <div className="flex">
+            <div className="usecase-top flex items-center justify-between">
+              <div className="usecase-icons flex">
                 {uc.icons.map((icon, i) => (
                   <span
                     key={i}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center font-[var(--body)] text-[11px] font-bold text-white border-2 border-[var(--cream)]"
-                    style={{ backgroundColor: icon.bg, marginLeft: i > 0 ? '-8px' : 0 }}
+                    className="usecase-icon w-8 h-8 rounded-lg flex items-center justify-center text-white border-2 border-[var(--cream)]"
+                    style={{ 
+                      backgroundColor: icon.bg, 
+                      marginLeft: i > 0 ? '-8px' : 0,
+                      fontFamily: "'Poppins', sans-serif",
+                      fontSize: '11px',
+                      fontWeight: 700,
+                    }}
                   >
                     {icon.letter}
                   </span>
                 ))}
               </div>
             </div>
-            <h3 className="font-[var(--body)] text-[22px] font-bold text-[var(--ink)] leading-tight">
+            <h3 
+              className="usecase-title leading-tight"
+              style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: '22px',
+                fontWeight: 700,
+                color: 'var(--ink)',
+              }}
+            >
               {uc.title}
             </h3>
-            <Link href="#" className="font-[var(--mono)] text-xs text-[#068F57] no-underline font-medium mt-auto hover:underline">
+            <Link 
+              href="#" 
+              className="usecase-link mt-auto hover:underline"
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: '12px',
+                color: '#068F57',
+                textDecoration: 'none',
+                fontWeight: 500,
+              }}
+            >
               Use template →
             </Link>
           </div>
