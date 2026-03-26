@@ -2,113 +2,34 @@
 
 import { useState, useMemo, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { PluginApp } from '@/types/api';
 
-const APPS = [
-  // Communication
-  { name: 'Slack', cat: 'Communication', color: '#4A154B', init: 'S' },
-  { name: 'Microsoft Teams', cat: 'Communication', color: '#6264A7', init: 'MT' },
-  { name: 'Discord', cat: 'Communication', color: '#5865F2', init: 'DC' },
-  { name: 'Telegram', cat: 'Communication', color: '#26A5E4', init: 'TG' },
-  { name: 'WhatsApp', cat: 'Communication', color: '#25D366', init: 'WA' },
-  { name: 'Zoom', cat: 'Communication', color: '#2D8CFF', init: 'ZM' },
-  { name: 'Twilio', cat: 'Communication', color: '#F22F46', init: 'TW' },
-  // Email
-  { name: 'Gmail', cat: 'Email', color: '#EA4335', init: 'GM' },
-  { name: 'Outlook', cat: 'Email', color: '#0078D4', init: 'OL' },
-  { name: 'SendGrid', cat: 'Email', color: '#1A82E2', init: 'SG' },
-  { name: 'Mailchimp', cat: 'Email', color: '#FFE01B', init: 'MC', textColor: '#000' },
-  { name: 'Brevo', cat: 'Email', color: '#0092FF', init: 'BR' },
-  { name: 'ActiveCampaign', cat: 'Email', color: '#356AE6', init: 'AC' },
-  { name: 'Klaviyo', cat: 'Email', color: '#00B300', init: 'KL' },
-  // CRM
-  { name: 'HubSpot', cat: 'CRM', color: '#FF7A59', init: 'HS' },
-  { name: 'Salesforce', cat: 'CRM', color: '#00A1E0', init: 'SF' },
-  { name: 'Pipedrive', cat: 'CRM', color: '#1F7E3E', init: 'PD' },
-  { name: 'Zoho CRM', cat: 'CRM', color: '#E42527', init: 'ZC' },
-  { name: 'Freshsales', cat: 'CRM', color: '#22C55E', init: 'FS' },
-  { name: 'Close', cat: 'CRM', color: '#6C47FF', init: 'CL' },
-  // Project Management
-  { name: 'Notion', cat: 'Project Management', color: '#000000', init: 'N' },
-  { name: 'Linear', cat: 'Project Management', color: '#5E6AD2', init: 'L' },
-  { name: 'Jira', cat: 'Project Management', color: '#0052CC', init: 'J' },
-  { name: 'Asana', cat: 'Project Management', color: '#F06A6A', init: 'AS' },
-  { name: 'ClickUp', cat: 'Project Management', color: '#7B68EE', init: 'CU' },
-  { name: 'Monday.com', cat: 'Project Management', color: '#FF3D57', init: 'MO' },
-  { name: 'Trello', cat: 'Project Management', color: '#0052CC', init: 'TR' },
-  { name: 'Basecamp', cat: 'Project Management', color: '#1D2D35', init: 'BA' },
-  // Developer Tools
-  { name: 'GitHub', cat: 'Developer Tools', color: '#181717', init: 'GH' },
-  { name: 'GitLab', cat: 'Developer Tools', color: '#FC6D26', init: 'GL' },
-  { name: 'Bitbucket', cat: 'Developer Tools', color: '#0052CC', init: 'BB' },
-  { name: 'Vercel', cat: 'Developer Tools', color: '#000000', init: 'VC' },
-  { name: 'Netlify', cat: 'Developer Tools', color: '#00C7B7', init: 'NE' },
-  { name: 'CircleCI', cat: 'Developer Tools', color: '#161616', init: 'CI' },
-  { name: 'Supabase', cat: 'Developer Tools', color: '#3ECF8E', init: 'SB' },
-  { name: 'Firebase', cat: 'Developer Tools', color: '#FFCA28', init: 'FB', textColor: '#000' },
-  // Documents & Storage
-  { name: 'Google Sheets', cat: 'Documents', color: '#34A853', init: 'GS' },
-  { name: 'Google Drive', cat: 'Documents', color: '#4285F4', init: 'GD' },
-  { name: 'Google Docs', cat: 'Documents', color: '#4285F4', init: 'GD' },
-  { name: 'Dropbox', cat: 'Documents', color: '#0061FF', init: 'DB' },
-  { name: 'Box', cat: 'Documents', color: '#0061D5', init: 'BX' },
-  { name: 'OneDrive', cat: 'Documents', color: '#0078D4', init: 'OD' },
-  { name: 'Confluence', cat: 'Documents', color: '#0052CC', init: 'CF' },
-  { name: 'DocuSign', cat: 'Documents', color: '#FFBE00', init: 'DS', textColor: '#000' },
-  // Calendar
-  { name: 'Google Calendar', cat: 'Calendar', color: '#4285F4', init: 'GC' },
-  { name: 'Calendly', cat: 'Calendar', color: '#006BFF', init: 'CA' },
-  { name: 'Cal.com', cat: 'Calendar', color: '#000000', init: 'CC' },
-  // Accounting
-  { name: 'QuickBooks', cat: 'Accounting', color: '#2CA01C', init: 'QB' },
-  { name: 'Xero', cat: 'Accounting', color: '#13B5EA', init: 'XE' },
-  { name: 'FreshBooks', cat: 'Accounting', color: '#0075DD', init: 'FB' },
-  { name: 'Stripe', cat: 'Accounting', color: '#635BFF', init: 'ST' },
-  { name: 'Razorpay', cat: 'Accounting', color: '#3395FF', init: 'RP' },
-  // AI Tools
-  { name: 'OpenAI', cat: 'AI Tools', color: '#10A37F', init: 'OA' },
-  { name: 'Anthropic', cat: 'AI Tools', color: '#D97706', init: 'AN' },
-  { name: 'Perplexity', cat: 'AI Tools', color: '#20808D', init: 'PP' },
-  { name: 'Pinecone', cat: 'AI Tools', color: '#1C1C1C', init: 'PN' },
-  { name: 'Cohere', cat: 'AI Tools', color: '#39594D', init: 'CO' },
-  // E-Commerce
-  { name: 'Shopify', cat: 'E-Commerce', color: '#96BF48', init: 'SH' },
-  { name: 'WooCommerce', cat: 'E-Commerce', color: '#7F54B3', init: 'WC' },
-  { name: 'BigCommerce', cat: 'E-Commerce', color: '#34313F', init: 'BC' },
-  { name: 'Magento', cat: 'E-Commerce', color: '#EE672F', init: 'MG' },
-  // Customer Support
-  { name: 'Zendesk', cat: 'Customer Support', color: '#03363D', init: 'ZD' },
-  { name: 'Intercom', cat: 'Customer Support', color: '#286EFA', init: 'IC' },
-  { name: 'Freshdesk', cat: 'Customer Support', color: '#22AEE1', init: 'FD' },
-  { name: 'Help Scout', cat: 'Customer Support', color: '#1292EE', init: 'HL' },
-  // Marketing
-  { name: 'Typeform', cat: 'Marketing', color: '#262627', init: 'TF' },
-  { name: 'Webflow', cat: 'Marketing', color: '#4353FF', init: 'WF' },
-  { name: 'Airtable', cat: 'Marketing', color: '#2D7FF9', init: 'AT' },
-  { name: 'HubSpot Mktg', cat: 'Marketing', color: '#FF7A59', init: 'HM' },
-  { name: 'Klaviyo Mktg', cat: 'Marketing', color: '#00B300', init: 'KM' },
-];
+interface IntegrationsProps {
+  apps: PluginApp[];
+}
 
-const CATEGORIES = [
-  'All',
-  'AI Tools',
-  'Accounting',
-  'Calendar',
-  'Communication',
-  'CRM',
-  'Customer Support',
-  'Developer Tools',
-  'Documents',
-  'E-Commerce',
-  'Email',
-  'Marketing',
-  'Project Management',
-];
-
-export default function Integrations() {
+export default function Integrations({ apps }: IntegrationsProps) {
   const [activeCat, setActiveCat] = useState('All');
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
+
+  // Extract unique categories from apps
+  const categories = useMemo(() => {
+    const cats = new Set<string>();
+    apps.forEach((app) => {
+      if (app.category && app.category.length > 0) {
+        // Clean up category names - capitalize and trim
+        const cat = app.category[0].replace(/\./g, '').trim();
+        const formatted = cat.split(' ').map(word => 
+          word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        ).join(' ');
+        cats.add(formatted);
+      }
+    });
+    return ['All', ...Array.from(cats).sort()];
+  }, [apps]);
 
   const getPerPage = () => {
     if (typeof window === 'undefined') return 40;
@@ -116,12 +37,16 @@ export default function Integrations() {
   };
 
   const filtered = useMemo(() => {
-    return APPS.filter((a) => {
-      const catOk = activeCat === 'All' || a.cat === activeCat;
+    return apps.filter((a) => {
+      const appCat = a.category?.[0]?.replace(/\./g, '').trim() || '';
+      const formattedCat = appCat.split(' ').map(word => 
+        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      ).join(' ');
+      const catOk = activeCat === 'All' || formattedCat === activeCat;
       const qOk = !query || a.name.toLowerCase().includes(query.toLowerCase());
       return catOk && qOk;
     });
-  }, [activeCat, query]);
+  }, [activeCat, query, apps]);
 
   const PER_PAGE = getPerPage();
   const totalPages = Math.ceil(filtered.length / PER_PAGE);
@@ -216,7 +141,7 @@ export default function Integrations() {
 
         <div className="integrations-layout grid grid-cols-[200px_1fr] gap-0 bg-white max-[768px]:grid-cols-1">
           <div className="integrations-sidebar border-r-2 border-[rgba(10,10,10,0.08)] py-2 bg-white max-[768px]:border-r-0 max-[768px]:border-b-2 max-[768px]:flex max-[768px]:flex-wrap max-[768px]:gap-1 max-[768px]:p-2">
-            {CATEGORIES.map((cat) => (
+            {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCat(cat)}
@@ -251,22 +176,34 @@ export default function Integrations() {
                 </div>
               ) : (
                 slice.map((app, idx) => (
-                  <div
+                  <Link
                     key={idx}
-                    className="integ-cell flex items-center gap-2.5 py-[13px] px-4 border-r border-b border-[rgba(10,10,10,0.07)] transition-colors cursor-default hover:bg-[rgba(6,143,87,0.05)] [&:nth-child(4n)]:border-r-0 max-[1024px]:[&:nth-child(4n)]:border-r max-[1024px]:[&:nth-child(3n)]:border-r-0"
+                    href={`/integrations/${app.appslugname}`}
+                    className="integ-cell flex items-center gap-2.5 py-[13px] px-4 border-r border-b border-[rgba(10,10,10,0.07)] transition-colors cursor-pointer hover:bg-[rgba(6,143,87,0.05)] [&:nth-child(4n)]:border-r-0 max-[1024px]:[&:nth-child(4n)]:border-r max-[1024px]:[&:nth-child(3n)]:border-r-0"
                   >
-                    <span
-                      className="integ-icon w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0"
-                      style={{
-                        backgroundColor: app.color,
-                        color: app.textColor || '#fff',
-                        fontFamily: "'Poppins', sans-serif",
-                        fontSize: '10px',
-                        fontWeight: 700,
-                      }}
-                    >
-                      {app.init}
-                    </span>
+                    {app.iconurl ? (
+                      <Image
+                        src={app.iconurl}
+                        alt={app.name}
+                        width={28}
+                        height={28}
+                        className="integ-icon w-7 h-7 rounded-[7px] flex-shrink-0 object-contain"
+                        unoptimized
+                      />
+                    ) : (
+                      <span
+                        className="integ-icon w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0"
+                        style={{
+                          backgroundColor: app.brandcolor || '#666',
+                          color: '#fff',
+                          fontFamily: "'Poppins', sans-serif",
+                          fontSize: '10px',
+                          fontWeight: 700,
+                        }}
+                      >
+                        {app.name.substring(0, 2).toUpperCase()}
+                      </span>
+                    )}
                     <span 
                       className="integ-name whitespace-nowrap overflow-hidden text-ellipsis"
                       style={{
@@ -277,7 +214,7 @@ export default function Integrations() {
                     >
                       {app.name}
                     </span>
-                  </div>
+                  </Link>
                 ))
               )}
             </div>
