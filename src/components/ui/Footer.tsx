@@ -9,12 +9,13 @@ export default function Footer() {
       <div className="footer-brand-band bg-[var(--green)] flex flex-col items-center justify-end overflow-hidden">
         <div className="footer-brand-scene relative w-full flex items-end justify-center">
           <span 
-            className="footer-wordmark leading-none whitespace-nowrap block text-center w-full mt-12 relative"
+            className="footer-wordmark whitespace-nowrap block text-center w-full mt-12 relative"
             style={{
               fontFamily: "'Symtext', 'Press Start 2P', monospace",
               fontSize: 'clamp(20px, 7.2vw, 115px)',
               fontWeight: 400,
               color: '#fff',
+              lineHeight: 1,
             }}
           >
             Mushrooms.viaSocket
@@ -23,32 +24,34 @@ export default function Footer() {
       </div>
 
       {/* Top section */}
-      <div className="footer-top bg-[var(--cream)] py-8 px-12 flex items-center justify-between gap-6 max-[768px]:px-5 max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-4">
-        <div className="footer-tagline flex flex-col gap-0.5">
+      <div className="footer-top bg-[var(--cream)] py-8 px-12 flex items-center justify-between gap-[24px] max-[768px]:px-5 max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-[16px]">
+        <div className="footer-tagline flex flex-col gap-[2px]">
           <span 
-            className="footer-tagline-power leading-tight"
+            className="footer-tagline-power"
             style={{
               fontFamily: "'Poppins', sans-serif",
               fontSize: '22px',
               fontWeight: 700,
               color: '#068F57',
+              lineHeight: 1.2,
             }}
           >
             Power up
           </span>
           <span 
-            className="footer-tagline-sub leading-tight"
+            className="footer-tagline-sub"
             style={{
               fontFamily: "'Poppins', sans-serif",
               fontSize: '22px',
               fontWeight: 700,
               color: 'var(--ink)',
+              lineHeight: 1.2,
             }}
           >
             Your AI client
           </span>
         </div>
-        <nav className="footer-nav flex flex-col items-end gap-1.5 max-[540px]:items-start">
+        <nav className="footer-nav flex flex-col items-end gap-[6px] max-[540px]:items-start">
           <Link
             href="https://viasocket.com/embed#ai_agent"
             target="_blank"

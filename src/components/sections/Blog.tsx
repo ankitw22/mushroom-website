@@ -65,7 +65,7 @@ export default function Blog() {
   return (
     <section 
       ref={sectionRef} 
-      className="section-blogs py-10 px-12 pb-[60px] max-w-[1200px] mx-auto max-[768px]:px-5 max-[540px]:px-5" 
+      className="section-blogs pt-10 pb-[60px] px-12 max-w-[1200px] mx-auto max-[768px]:px-5 max-[768px]:pt-10 max-[768px]:pb-[60px]" 
       id="blog"
     >
       <div className="blogs-header reveal mb-10">
@@ -81,14 +81,14 @@ export default function Blog() {
         </h2>
       </div>
 
-      <div className="blogs-grid reveal grid grid-cols-4 gap-4 max-[768px]:grid-cols-2 max-[540px]:grid-cols-1" data-delay="1">
+      <div className="blogs-grid reveal grid grid-cols-4 gap-4 max-[768px]:grid-cols-2 max-[540px]:grid-cols-1" data-delay="1" style={{gap:'16px'}}>
         {BLOG_POSTS.map((post, idx) => (
           <a
             key={idx}
             href={post.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="blog-card bg-white border-2 border-[#068F57] rounded-[14px] overflow-hidden flex flex-col transition-all cursor-pointer no-underline hover:translate-y-[-4px] hover:shadow-[0_14px_36px_rgba(0,0,0,0.07)] hover:border-[#068F57]"
+            className="group blog-card bg-white border-2 border-[#068F57] rounded-[14px] overflow-hidden flex flex-col transition-all cursor-pointer no-underline hover:translate-y-[-4px] hover:shadow-[0_14px_36px_rgba(0,0,0,0.07)] hover:border-[#068F57]"
           >
             <img
               className="blog-thumb w-full aspect-video object-cover block bg-[#e2e8f0]"
@@ -115,9 +115,9 @@ export default function Blog() {
                 BLOG
               </span>
             </div>
-            <div className="blog-body py-[22px] px-6 pb-6 flex flex-col flex-1 gap-3">
+            <div className="blog-body flex flex-col flex-1 gap-[12px]" style={{padding:'22px 24px 24px'}}>
               <div 
-                className="blog-meta flex items-center gap-2.5"
+                className="blog-meta flex items-center gap-[10px]"
                 style={{
                   fontFamily: "'JetBrains Mono', monospace",
                   fontSize: '10px',
@@ -140,6 +140,15 @@ export default function Blog() {
               >
                 {post.title}
               </p>
+              <div className="blog-author-row flex items-center justify-between mt-auto">
+                <div className="blog-author hidden" />
+                <div
+                  className="blog-arrow w-7 h-7 rounded-full border-[1.5px] border-[#e2e8f0] flex items-center justify-center flex-shrink-0 transition-all group-hover:bg-[var(--green)] group-hover:border-[#068F57] group-hover:translate-x-[2px]"
+                  style={{ color: '#068F57', fontSize: '14px' }}
+                >
+                  →
+                </div>
+              </div>
             </div>
           </a>
         ))}

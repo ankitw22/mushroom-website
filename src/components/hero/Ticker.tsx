@@ -24,15 +24,9 @@ export default function Ticker() {
         {items.map((ai, idx) => (
           <span
             key={idx}
-            className="t-item inline-flex items-center gap-2 px-[26px] whitespace-nowrap flex-shrink-0"
-            style={{
-              fontFamily: "'Poppins', sans-serif",
-              fontSize: '14px',
-              fontWeight: 700,
-              color: '#ffffff',
-            }}
+            className="t-item inline-flex items-center gap-[10px] px-[28px] whitespace-nowrap flex-shrink-0 font-body text-[16px] font-bold text-white"
           >
-            <span className="t-icon text-base" style={{ color: ai.col }}>
+            <span className="t-icon text-2xl" style={{ color: ai.col }}>
               {ai.sym}
             </span>
             {ai.name}

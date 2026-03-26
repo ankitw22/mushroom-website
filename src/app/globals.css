@@ -18,8 +18,6 @@
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -33,6 +31,24 @@ body {
 
 .page {
   padding: 0;
+}
+
+.integrations-sidebar::-webkit-scrollbar,
+.integrations-grid-wrap::-webkit-scrollbar {
+  width: 4px;
+}
+.integrations-sidebar::-webkit-scrollbar-track,
+.integrations-grid-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+.integrations-sidebar::-webkit-scrollbar-thumb,
+.integrations-grid-wrap::-webkit-scrollbar-thumb {
+  background: rgba(10,10,10,0.12);
+  border-radius: 4px;
+}
+.integrations-sidebar::-webkit-scrollbar-thumb:hover,
+.integrations-grid-wrap::-webkit-scrollbar-thumb:hover {
+  background: rgba(6,143,87,0.35);
 }
 
 /* ── Font family utilities ── */

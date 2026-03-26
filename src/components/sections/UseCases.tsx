@@ -80,22 +80,16 @@ export default function UseCases() {
   return (
     <section 
       ref={sectionRef} 
-      className="section-usecases py-[100px] px-12 max-w-[1200px] mx-auto max-[1200px]:py-[72px] max-[1200px]:px-8 max-[540px]:py-14 max-[540px]:px-5" 
+      className="section-usecases" 
       id="use-cases"
+      style={{ padding: '80px 48px 182px', maxWidth: 1200, margin: '0 auto' }}
     >
-      <div className="usecases-header reveal text-left mb-12 relative z-[3]">
-        <h2 
-          className="section-headline leading-tight mb-3.5"
-          style={{
-            fontFamily: "'Symtext', 'Press Start 2P', monospace",
-            fontSize: 'clamp(22px, 3.4vw, 40px)',
-            color: 'var(--ink)',
-          }}
-        >
+      <div className="usecases-header reveal text-left relative z-[3]" style={{ marginBottom: 48 }}>
+        <h2 className="section-headline leading-tight mb-3.5 font-pixel font-normal text-[var(--ink)] text-[clamp(22px,3.4vw,40px)]">
           START WITH REAL <span className="text-[#068F57]">USE CASES.</span>
         </h2>
       </div>
-      <div className="usecases-grid grid grid-cols-3 gap-4 max-w-[1100px] mx-auto relative z-[3] max-[1200px]:grid-cols-2 max-[540px]:grid-cols-1">
+      <div className="usecases-grid grid grid-cols-3 max-w-[1100px] mx-auto relative z-[3] max-[1200px]:grid-cols-2 max-[540px]:grid-cols-1" style={{ gap: 16 }}>
         {USE_CASES.map((uc, idx) => (
           <div
             key={idx}
@@ -107,41 +101,20 @@ export default function UseCases() {
                 {uc.icons.map((icon, i) => (
                   <span
                     key={i}
-                    className="usecase-icon w-8 h-8 rounded-lg flex items-center justify-center text-white border-2 border-[var(--cream)]"
-                    style={{ 
-                      backgroundColor: icon.bg, 
-                      marginLeft: i > 0 ? '-8px' : 0,
-                      fontFamily: "'Poppins', sans-serif",
-                      fontSize: '11px',
-                      fontWeight: 700,
-                    }}
+                    className="usecase-icon w-8 h-8 rounded-lg flex items-center justify-center text-white border-2 border-[var(--cream)] font-body text-[11px] font-bold"
+                    style={{ backgroundColor: icon.bg, marginLeft: i > 0 ? '-8px' : 0 }}
                   >
                     {icon.letter}
                   </span>
                 ))}
               </div>
             </div>
-            <h3 
-              className="usecase-title leading-tight"
-              style={{
-                fontFamily: "'Poppins', sans-serif",
-                fontSize: '22px',
-                fontWeight: 700,
-                color: 'var(--ink)',
-              }}
-            >
+            <h3 className="usecase-title font-body text-[22px] font-bold text-[var(--ink)] leading-[1.3]">
               {uc.title}
             </h3>
             <Link 
               href="#" 
-              className="usecase-link mt-auto hover:underline"
-              style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: '12px',
-                color: '#068F57',
-                textDecoration: 'none',
-                fontWeight: 500,
-              }}
+              className="usecase-link mt-auto font-mono text-[12px] font-medium text-[#068F57] no-underline hover:underline"
             >
               Use template →
             </Link>

@@ -94,7 +94,7 @@ export default function FAQ() {
         </h2>
       </div>
 
-      <div className="faq-grid reveal grid grid-cols-1 gap-3 max-w-[1200px] mx-auto" data-delay="1">
+      <div className="faq-grid reveal grid grid-cols-1 gap-[12px] max-w-[1200px] mx-auto" data-delay="1">
         {FAQ_ITEMS.map((item) => (
           <div
             key={item.id}
@@ -106,12 +106,13 @@ export default function FAQ() {
           >
             <div className="faq-question flex items-center justify-between gap-4 py-5 px-[22px]">
               <span 
-                className="faq-q-text leading-snug"
+                className="faq-q-text"
                 style={{
                   fontFamily: "'Poppins', sans-serif",
                   fontSize: '14px',
                   fontWeight: 600,
                   color: 'var(--ink)',
+                  lineHeight: 1.4,
                 }}
               >
                 {item.question}

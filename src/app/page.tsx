@@ -24,8 +24,8 @@ export default function Home() {
     <div className="p-0">
       <Navbar onFreePillClick={scrollToFaq} />
       <Hero />
-      <UseCases />
       <Integrations />
+      <UseCases />
       <Features />
       <Pricing />
       <Blog />

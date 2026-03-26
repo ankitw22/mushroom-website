@@ -129,11 +129,11 @@ export default function Features() {
   }, []);
 
   return (
-    <div ref={sectionRef} className="pixel-band relative bg-[var(--green)] py-[60px] px-12 w-full" id="green-band">
+    <div ref={sectionRef} className="pixel-band relative w-full" id="green-band" style={{ background: 'var(--green)', padding: '60px 48px' }}>
       <PixelEdge position="top" />
       <PixelEdge position="bottom" />
       
-      <section className="section-features pt-[256px] pb-20 max-w-[1200px] mx-auto max-[768px]:pt-[192px] max-[540px]:pt-[160px]" id="features">
+      <section className="section-features" id="features" style={{ paddingTop: 256, paddingBottom: 80, maxWidth: 1200, margin: '0 auto' }}>
         <div className="features-header reveal text-center mb-[52px]">
           <h2 
             className="features-headline leading-tight"
@@ -150,12 +150,12 @@ export default function Features() {
           </h2>
         </div>
 
-        <div className="features-grid grid grid-cols-3 gap-4 max-w-[1100px] mx-auto max-[1200px]:grid-cols-2 max-[540px]:grid-cols-1">
+        <div className="features-grid grid grid-cols-3 gap-4 max-w-[1100px] mx-auto max-[1200px]:grid-cols-2 max-[540px]:grid-cols-1" style={{gap:'16px'}}>
           {FEATURES.slice(0, 3).map((f, idx) => (
             <div
               key={idx}
               className={`feature-card reveal bg-white border-[3px] border-[#068F57] rounded-[14px] py-6 px-6 pb-7 transition-all hover:translate-y-[-4px] hover:shadow-[0_12px_32px_rgba(6,143,87,0.15)] ${
-                idx === 2 ? 'max-[1024px]:col-span-full max-[1024px]:max-w-[calc(50%-8px)] max-[1024px]:mx-auto max-[540px]:col-auto max-[540px]:max-w-none max-[540px]:mx-0' : ''
+                idx === 2 ? 'max-[1200px]:col-span-full max-[1200px]:max-w-[calc(50%-8px)] max-[1200px]:mx-auto max-[540px]:col-auto max-[540px]:max-w-none max-[540px]:mx-0' : ''
               }`}
               data-delay={idx}
             >
@@ -183,44 +183,44 @@ export default function Features() {
               </p>
             </div>
           ))}
-        </div>
-        <div className="features-bottom col-span-full flex justify-center gap-4 mt-4 max-[1200px]:flex-col">
-          {FEATURES.slice(3).map((f, idx) => (
-            <div
-              key={idx}
-              className="feature-card reveal flex-1 max-w-[calc(33.333%-10px)] bg-white border-[3px] border-[#068F57] rounded-[14px] py-6 px-6 pb-7 transition-all hover:translate-y-[-4px] hover:shadow-[0_12px_32px_rgba(6,143,87,0.15)] max-[1200px]:max-w-none"
-              data-delay={idx + 3}
-            >
-              <h3 
-                className="feature-title mb-2.5"
-                style={{
-                  fontFamily: "'Poppins', sans-serif",
-                  fontSize: 'clamp(16px, 1.6vw, 22px)',
-                  fontWeight: 700,
-                  color: '#068F57',
-                }}
+          <div className="features-bottom col-span-full flex justify-center gap-4 max-[1200px]:flex-col" style={{gap:'16px'}}>
+            {FEATURES.slice(3).map((f, idx) => (
+              <div
+                key={idx}
+                className="feature-card reveal flex-1 max-w-[calc(33.333%-10px)] bg-white border-[3px] border-[#068F57] rounded-[14px] py-6 px-6 pb-7 transition-all hover:translate-y-[-4px] hover:shadow-[0_12px_32px_rgba(6,143,87,0.15)] max-[1200px]:max-w-none"
+                data-delay={idx + 3}
               >
-                {f.title}
-              </h3>
-              <p 
-                className="feature-desc"
-                style={{
-                  fontFamily: "'Poppins', sans-serif",
-                  fontSize: '14px',
-                  color: 'rgba(10,10,10,0.7)',
-                  lineHeight: 1.6,
-                }}
-              >
-                {f.desc}
-              </p>
-            </div>
-          ))}
+                <h3 
+                  className="feature-title mb-2.5"
+                  style={{
+                    fontFamily: "'Poppins', sans-serif",
+                    fontSize: 'clamp(16px, 1.6vw, 22px)',
+                    fontWeight: 700,
+                    color: '#068F57',
+                  }}
+                >
+                  {f.title}
+                </h3>
+                <p 
+                  className="feature-desc"
+                  style={{
+                    fontFamily: "'Poppins', sans-serif",
+                    fontSize: '14px',
+                    color: 'rgba(10,10,10,0.7)',
+                    lineHeight: 1.6,
+                  }}
+                >
+                  {f.desc}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section id="how-it-works" className="how-section py-[100px] px-6 max-w-[1200px] mx-auto max-[768px]:pt-[60px]">
-        <div className="how-header text-center mb-14">
+      <section id="how-it-works" className="how-section pt-[100px] pb-[60px] px-6 max-w-[1200px] mx-auto max-[768px]:pt-[60px]">
+        <div className="how-header text-center mb-[56px]">
           <h2 
             className="section-headline leading-tight mb-2.5"
             style={{
@@ -234,11 +234,11 @@ export default function Features() {
             <span className="text-white">IT EXECUTES.</span>
           </h2>
           <p 
-            className="section-sub max-w-[560px] mx-auto"
+            className="section-sub max-w-none mx-auto text-center"
             style={{
               fontFamily: "'Poppins', sans-serif",
               fontSize: 'clamp(15px, 1.5vw, 18px)',
-              color: 'rgba(10,10,10,0.5)',
+              color: 'var(--ink)',
               lineHeight: 1.65,
             }}
           >
