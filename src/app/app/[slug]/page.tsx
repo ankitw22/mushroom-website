@@ -7,6 +7,22 @@ import { Marquee } from '@/components/ui/Marquee';
 
 export const runtime = 'edge';
 
+// MCP clients list - same as displayed in Hero section's Ticker
+// Using thingsofbrand.com API for icons
+const MCP_CLIENTS = [
+  { name: 'Claude', col: '#D4845A', domain: 'claude.ai' },
+  { name: 'ChatGPT', col: '#74AA9C', domain: 'chatgpt.com' },
+  { name: 'Cursor', col: '#aaa', domain: 'cursor.com' },
+  { name: 'Windsurf', col: '#4D9FE8', domain: 'codeium.com' },
+  { name: 'Gemini', col: '#8B9CF6', domain: 'gemini.google.com' },
+  { name: 'Copilot', col: '#0078D4', domain: 'github.com' },
+  { name: 'Continue', col: '#FF6B35', domain: 'continue.dev' },
+  { name: 'Cline', col: '#E24444', domain: 'cline.bot' },
+  { name: 'Zed', col: '#7744DD', domain: 'zed.dev' },
+  { name: 'Cody', col: '#FF5959', domain: 'sourcegraph.com' },
+  { name: 'Amp', col: '#FFCC00', domain: 'amp.dev' },
+];
+
 const RECOMMEND_API = 'https://plug-service.viasocket.com/api/v1/plugins/recommend/integrations?service=';
 
 interface PluginEvent {
@@ -127,24 +143,8 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
   const app = data.plugins[slug];
   if (!app) notFound();
 
-  const allCombinations = data.combinations ?? [];
-  const uniqueCombos = allCombinations
-    .filter((c, i, arr) => arr.findIndex(x => x.description === c.description) === i)
-    .slice(0, 12);
-
   const actions = app.events.filter(e => e.type === 'action');
   const triggers = app.events.filter(e => e.type === 'trigger');
-
-  const connectedAppSlugs = Array.from(new Set(
-    allCombinations.flatMap(c => [
-      c.trigger.name !== slug ? c.trigger.name : null,
-      ...c.actions.map(a => a.name !== slug ? a.name : null),
-    ]).filter(Boolean) as string[]
-  ));
-  const connectedApps = connectedAppSlugs
-    .map(s => data.plugins[s])
-    .filter((p): p is Plugin => !!p)
-    .slice(0, 10);
 
   return (
     <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
@@ -198,60 +198,42 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
       {/* ── EVENTS (client component for tab interactivity) ── */}
       <EventsTabs actions={actions} triggers={triggers} />
 
-      {/* ── POPULAR INTEGRATIONS ── */}
-      {uniqueCombos.length > 0 && (
-        <section style={{ maxWidth: 1200, margin: '0 auto', padding: '72px 48px 0' }}>
-          <div style={{ marginBottom: 28 }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: "'JetBrains Mono',monospace", fontSize: 11, fontWeight: 600, color: '#0a0a0a', background: 'rgba(6,143,87,0.12)', border: '1.5px solid rgba(6,143,87,0.35)', padding: '5px 12px', borderRadius: 100, marginBottom: 10 }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#068F57', display: 'inline-block' }} />
-              {uniqueCombos.length} Popular Workflows
-            </div>
-            <h2 style={{ fontFamily: "'Symtext','Press Start 2P',monospace", fontSize: 'clamp(18px,2.5vw,30px)', color: '#0a0a0a', lineHeight: 1.3 }}>
-              Popular Integrations
-            </h2>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(340px,1fr))', gap: 12 }}>
-            {uniqueCombos.map((combo, idx) => {
-              const triggerApp = data.plugins[combo.trigger.name];
-              const actionApp = combo.actions[0] ? data.plugins[combo.actions[0].name] : undefined;
-              return (
-                <div key={idx} style={{ background: '#fff', border: '1.5px solid rgba(10,10,10,0.07)', borderRadius: 12, padding: '16px 18px', display: 'flex', alignItems: 'flex-start', gap: 14 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
-                    {triggerApp && <AppIcon app={triggerApp} size={30} />}
-                    <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: 'rgba(10,10,10,0.3)' }}>→</span>
-                    {actionApp && <AppIcon app={actionApp} size={30} />}
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontFamily: "'Poppins',sans-serif", fontSize: 12, color: '#0a0a0a', lineHeight: 1.55 }}>{combo.description}</div>
-                    <div style={{ marginTop: 6, fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: 'rgba(10,10,10,0.3)' }}>
-                      Score {combo.score.toFixed(1)}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-      )}
 
-      {/* ── CONNECTED APPS ── */}
-      {connectedApps.length > 0 && (
-        <section style={{ maxWidth: 1200, margin: '0 auto', padding: '72px 48px 0' }}>
-          <h2 style={{ fontFamily: "'Symtext','Press Start 2P',monospace", fontSize: 'clamp(18px,2.5vw,30px)', color: '#0a0a0a', lineHeight: 1.3, marginBottom: 28 }}>
-            Works with
-          </h2>
-          <Marquee speed={7} gap={12} pauseOnHover={true}>
-            {connectedApps.map(connApp => (
-              <Link key={connApp.appslugname} href={`/app/${connApp.appslugname}`}
-                style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 16px', background: '#fff', border: '1.5px solid rgba(10,10,10,0.07)', borderRadius: 12, textDecoration: 'none', flexShrink: 0 }}
-              >
-                <AppIcon app={connApp} size={28} />
-                <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: 13, fontWeight: 500, color: '#0a0a0a', whiteSpace: 'nowrap' }}>{connApp.name}</span>
-              </Link>
-            ))}
-          </Marquee>
-        </section>
-      )}
+
+      {/* ── WORKS WITH (MCP Clients) ── */}
+      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '72px 48px 0' }}>
+        <h2 style={{ fontFamily: "'Symtext','Press Start 2P',monospace", fontSize: 'clamp(18px,2.5vw,30px)', color: '#0a0a0a', lineHeight: 1.3, marginBottom: 28 }}>
+          Works with
+        </h2>
+        <Marquee speed={7} gap={12} pauseOnHover={true}>
+          {MCP_CLIENTS.map(client => (
+            <div key={client.name}
+              style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 16px', background: '#fff', border: '1.5px solid rgba(10,10,10,0.07)', borderRadius: 12, flexShrink: 0 }}
+            >
+              <span style={{ 
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                width: 28, 
+                height: 28, 
+                borderRadius: 6, 
+                overflow: 'hidden',
+                flexShrink: 0,
+              }}>
+                <Image
+                  src={`https://thingsofbrand.com/api/icon/${client.domain}`}
+                  alt={client.name}
+                  width={28}
+                  height={28}
+                  unoptimized
+                  style={{ objectFit: 'cover' }}
+                />
+              </span>
+              <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: 13, fontWeight: 500, color: '#0a0a0a', whiteSpace: 'nowrap' }}>{client.name}</span>
+            </div>
+          ))}
+        </Marquee>
+      </section>
 
       {/* ── CTA ── */}
       <section style={{ maxWidth: 1200, margin: '72px auto 0', padding: '0 48px 96px' }}>

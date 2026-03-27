@@ -1,17 +1,20 @@
 'use client';
 
+import Image from 'next/image';
+
+// AI Clients with thingsofbrand.com domains for icons
 const AI_LIST = [
-  { name: 'Claude', sym: '✳', col: '#D4845A' },
-  { name: 'ChatGPT', sym: '◎', col: '#74AA9C' },
-  { name: 'Cursor', sym: '⬡', col: '#aaa' },
-  { name: 'Windsurf', sym: '◈', col: '#4D9FE8' },
-  { name: 'Gemini', sym: '✦', col: '#8B9CF6' },
-  { name: 'Copilot', sym: '⊕', col: '#0078D4' },
-  { name: 'Continue', sym: '▷', col: '#FF6B35' },
-  { name: 'Cline', sym: '◆', col: '#E24444' },
-  { name: 'Zed', sym: '⬢', col: '#7744DD' },
-  { name: 'Cody', sym: '✿', col: '#FF5959' },
-  { name: 'Amp', sym: '⚡', col: '#FFCC00' },
+  { name: 'Claude', sym: '✳', col: '#D4845A', domain: 'claude.ai' },
+  { name: 'ChatGPT', sym: '◎', col: '#74AA9C', domain: 'chatgpt.com' },
+  { name: 'Cursor', sym: '⬡', col: '#aaa', domain: 'cursor.com' },
+  { name: 'Windsurf', sym: '◈', col: '#4D9FE8', domain: 'codeium.com' },
+  { name: 'Gemini', sym: '✦', col: '#8B9CF6', domain: 'gemini.google.com' },
+  { name: 'Copilot', sym: '⊕', col: '#0078D4', domain: 'github.com' },
+  { name: 'Continue', sym: '▷', col: '#FF6B35', domain: 'continue.dev' },
+  { name: 'Cline', sym: '◆', col: '#E24444', domain: 'cline.bot' },
+  { name: 'Zed', sym: '⬢', col: '#7744DD', domain: 'zed.dev' },
+  { name: 'Cody', sym: '✿', col: '#FF5959', domain: 'sourcegraph.com' },
+  { name: 'Amp', sym: '⚡', col: '#FFCC00', domain: 'amp.dev' },
 ];
 
 export default function Ticker() {
@@ -26,8 +29,18 @@ export default function Ticker() {
             key={idx}
             className="t-item inline-flex items-center gap-[10px] px-[28px] whitespace-nowrap flex-shrink-0 font-body text-[16px] font-bold text-white"
           >
-            <span className="t-icon text-2xl" style={{ color: ai.col }}>
-              {ai.sym}
+            <span 
+              className="t-icon flex items-center justify-center rounded-md overflow-hidden" 
+              style={{ width: 24, height: 24 }}
+            >
+              <Image
+                src={`https://thingsofbrand.com/api/icon/${ai.domain}`}
+                alt={ai.name}
+                width={24}
+                height={24}
+                unoptimized
+                style={{ objectFit: 'cover' }}
+              />
             </span>
             {ai.name}
           </span>
