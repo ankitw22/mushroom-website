@@ -241,7 +241,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
           </h2>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {connectedApps.map(connApp => (
-              <Link key={connApp.appslugname} href={`/app/${connApp.appslugname}`}
+              <Link key={connApp.appslugname} href={`/mcp/${connApp.appslugname}`}
                 style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 16px', background: '#fff', border: '1.5px solid rgba(10,10,10,0.07)', borderRadius: 12, textDecoration: 'none' }}
               >
                 <AppIcon app={connApp} size={28} />
