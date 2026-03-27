@@ -17,22 +17,28 @@ const AI_LIST = [
   { name: 'Amp', sym: '⚡', col: '#FFCC00', icon: null },
 ];
 
-// App catalogue
+// App catalogue — domain used for thingsofbrand icon API
 const APPS = [
-  { nm: 'Slack', bg: '#4A154B', fg: '#fff', l: 'S' },
-  { nm: 'Notion', bg: '#000000', fg: '#fff', l: 'N' },
-  { nm: 'Gmail', bg: '#EA4335', fg: '#fff', l: 'G' },
-  { nm: 'GitHub', bg: '#1a1a2e', fg: '#fff', l: 'GH' },
-  { nm: 'Zapier', bg: '#FF4A00', fg: '#fff', l: 'Z' },
-  { nm: 'Linear', bg: '#5E6AD2', fg: '#fff', l: 'L' },
-  { nm: 'ClickUp', bg: '#7B68EE', fg: '#fff', l: 'CU' },
-  { nm: 'Sheets', bg: '#34A853', fg: '#fff', l: 'S' },
-  { nm: 'Trello', bg: '#0052CC', fg: '#fff', l: 'T' },
-  { nm: 'Airtable', bg: '#18BFFF', fg: '#000', l: 'AT' },
-  { nm: 'Figma', bg: '#F24E1E', fg: '#fff', l: 'F' },
-  { nm: 'Jira', bg: '#0052CC', fg: '#fff', l: 'J' },
-  { nm: 'Asana', bg: '#F06A6A', fg: '#fff', l: 'A' },
-  { nm: 'HubSpot', bg: '#FF7A59', fg: '#fff', l: 'H' },
+  { nm: 'Slack',      bg: '#4A154B', fg: '#fff', l: 'S',  domain: 'slack.com' },
+  { nm: 'Notion',     bg: '#000000', fg: '#fff', l: 'N',  domain: 'notion.so' },
+  { nm: 'Gmail',      bg: '#EA4335', fg: '#fff', l: 'G',  domain: 'gmail.com' },
+  { nm: 'GitHub',     bg: '#181717', fg: '#fff', l: 'GH', domain: 'github.com' },
+  { nm: 'Zapier',     bg: '#FF4A00', fg: '#fff', l: 'Z',  domain: 'zapier.com' },
+  { nm: 'Linear',     bg: '#5E6AD2', fg: '#fff', l: 'L',  domain: 'linear.app' },
+  { nm: 'ClickUp',    bg: '#7B68EE', fg: '#fff', l: 'CU', domain: 'clickup.com' },
+  { nm: 'Sheets',     bg: '#34A853', fg: '#fff', l: 'S',  domain: 'docs.google.com' },
+  { nm: 'Trello',     bg: '#0052CC', fg: '#fff', l: 'T',  domain: 'trello.com' },
+  { nm: 'Airtable',   bg: '#18BFFF', fg: '#000', l: 'AT', domain: 'airtable.com' },
+  { nm: 'Figma',      bg: '#F24E1E', fg: '#fff', l: 'F',  domain: 'figma.com' },
+  { nm: 'Jira',       bg: '#0052CC', fg: '#fff', l: 'J',  domain: 'atlassian.com' },
+  { nm: 'Asana',      bg: '#F06A6A', fg: '#fff', l: 'A',  domain: 'asana.com' },
+  { nm: 'HubSpot',    bg: '#FF7A59', fg: '#fff', l: 'H',  domain: 'hubspot.com' },
+  { nm: 'Discord',    bg: '#5865F2', fg: '#fff', l: 'D',  domain: 'discord.com' },
+  { nm: 'Dropbox',    bg: '#0061FF', fg: '#fff', l: 'DB', domain: 'dropbox.com' },
+  { nm: 'Stripe',     bg: '#635BFF', fg: '#fff', l: 'ST', domain: 'stripe.com' },
+  { nm: 'Salesforce', bg: '#00A1E0', fg: '#fff', l: 'SF', domain: 'salesforce.com' },
+  { nm: 'Twilio',     bg: '#F22F46', fg: '#fff', l: 'TW', domain: 'twilio.com' },
+  { nm: 'Zendesk',    bg: '#03363D', fg: '#fff', l: 'Z',  domain: 'zendesk.com' },
 ];
 
 // App actions
@@ -150,6 +156,7 @@ export default function HeroCanvas() {
     let floats: FloatText[] = [];
     let actionBubbles: ActionBubble[] = [];
     const logoImgs: Record<string, HTMLImageElement> = {};
+    const appIconImgs: Record<string, HTMLImageElement> = {};
 
     // Character
     const char = {
@@ -170,7 +177,7 @@ export default function HeroCanvas() {
     let autoState = 'idle';
     let pauseTimer = 0;
 
-    // Preload logos
+    // Preload AI logos
     AI_LIST.forEach((ai) => {
       if (!ai.icon) return;
       const img = new Image();
@@ -178,6 +185,16 @@ export default function HeroCanvas() {
       img.src = `https://cdn.simpleicons.org/${ai.icon}/white`;
       img.onload = () => {
         logoImgs[ai.name] = img;
+      };
+    });
+
+    // Preload app icons via thingsofbrand.com API
+    APPS.forEach((app) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.src = `/api/icon/${app.domain}`;
+      img.onload = () => {
+        appIconImgs[app.nm] = img;
       };
     });
 
@@ -363,19 +380,34 @@ export default function HeroCanvas() {
     };
 
     const drawAppLogo = (app: (typeof APPS)[0], cx: number, cy: number) => {
-      const s = 28;
-      ctx.fillStyle = '#fff';
-      roundRect(cx - s / 2 - 2, cy - s / 2 - 2, s + 4, s + 4, 5);
+      const s = 40;
+      const r = 10;
+      // White card background (thingsofbrand icons are full-colour on transparent)
+      ctx.fillStyle = '#ffffff';
+      roundRect(cx - s / 2, cy - s / 2, s, s, r);
       ctx.fill();
-      ctx.fillStyle = app.bg;
-      roundRect(cx - s / 2, cy - s / 2, s, s, 4);
-      ctx.fill();
-      ctx.fillStyle = app.fg;
-      const fz = app.l.length > 1 ? 9 : 13;
-      ctx.font = `700 ${fz}px 'Press Start 2P', monospace`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(app.l[0], cx, cy + 1);
+      // Subtle drop-shadow ring
+      ctx.strokeStyle = 'rgba(0,0,0,0.10)';
+      ctx.lineWidth = 1.5;
+      roundRect(cx - s / 2, cy - s / 2, s, s, r);
+      ctx.stroke();
+      // Icon image or letter fallback
+      const iconImg = appIconImgs[app.nm];
+      const iconSize = s * 0.68;
+      if (iconImg && iconImg.complete && iconImg.naturalWidth > 0) {
+        ctx.drawImage(iconImg, cx - iconSize / 2, cy - iconSize / 2, iconSize, iconSize);
+      } else {
+        // Letter fallback on brand colour
+        ctx.fillStyle = app.bg;
+        roundRect(cx - s / 2, cy - s / 2, s, s, r);
+        ctx.fill();
+        ctx.fillStyle = app.fg;
+        const fz = app.l.length > 1 ? 10 : 14;
+        ctx.font = `700 ${fz}px 'Press Start 2P', monospace`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(app.l, cx, cy + 1);
+      }
     };
 
     const drawFallingApps = () => {
@@ -438,12 +470,18 @@ export default function HeroCanvas() {
       ];
       spots.forEach(([ox, oy, sw, sh]) => ctx.fillRect(ox, oy, sw, sh));
 
-      ctx.fillStyle = app.fg;
-      const fz = app.l.length > 1 ? 9 : 12;
-      ctx.font = `700 ${fz}px 'Press Start 2P', monospace`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(app.l[0], 0, -8);
+      const mushIconImg = appIconImgs[app.nm];
+      const mushIconSize = 16;
+      if (mushIconImg && mushIconImg.complete && mushIconImg.naturalWidth > 0) {
+        ctx.drawImage(mushIconImg, -mushIconSize / 2, -16, mushIconSize, mushIconSize);
+      } else {
+        ctx.fillStyle = app.fg;
+        const fz = app.l.length > 1 ? 9 : 12;
+        ctx.font = `700 ${fz}px 'Press Start 2P', monospace`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(app.l[0], 0, -8);
+      }
 
       ctx.fillStyle = app.fg === '#fff' ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.65)';
       ctx.fillRect(-6, 4, 4, 4);
