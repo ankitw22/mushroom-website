@@ -8,18 +8,19 @@ import { Marquee } from '@/components/ui/Marquee';
 export const runtime = 'edge';
 
 // MCP clients list - same as displayed in Hero section's Ticker
+// icon: Simple Icons slug, null means no icon available (use fallback symbol)
 const MCP_CLIENTS = [
-  { name: 'Claude', sym: '✳', col: '#D4845A' },
-  { name: 'ChatGPT', sym: '◎', col: '#74AA9C' },
-  { name: 'Cursor', sym: '⬡', col: '#aaa' },
-  { name: 'Windsurf', sym: '◈', col: '#4D9FE8' },
-  { name: 'Gemini', sym: '✦', col: '#8B9CF6' },
-  { name: 'Copilot', sym: '⊕', col: '#0078D4' },
-  { name: 'Continue', sym: '▷', col: '#FF6B35' },
-  { name: 'Cline', sym: '◆', col: '#E24444' },
-  { name: 'Zed', sym: '⬢', col: '#7744DD' },
-  { name: 'Cody', sym: '✿', col: '#FF5959' },
-  { name: 'Amp', sym: '⚡', col: '#FFCC00' },
+  { name: 'Claude', sym: '✳', col: '#D4845A', icon: 'anthropic' },
+  { name: 'ChatGPT', sym: '◎', col: '#74AA9C', icon: 'openai' },
+  { name: 'Cursor', sym: '⬡', col: '#aaa', icon: 'cursor' },
+  { name: 'Windsurf', sym: '◈', col: '#4D9FE8', icon: 'codeium' },
+  { name: 'Gemini', sym: '✦', col: '#8B9CF6', icon: 'googlegemini' },
+  { name: 'Copilot', sym: '⊕', col: '#0078D4', icon: 'githubcopilot' },
+  { name: 'Continue', sym: '▷', col: '#FF6B35', icon: 'continuedev' },
+  { name: 'Cline', sym: '◆', col: '#E24444', icon: null },
+  { name: 'Zed', sym: '⬢', col: '#7744DD', icon: 'zedindustries' },
+  { name: 'Cody', sym: '✿', col: '#FF5959', icon: 'sourcegraph' },
+  { name: 'Amp', sym: '⚡', col: '#FFCC00', icon: null },
 ];
 
 const RECOMMEND_API = 'https://plug-service.viasocket.com/api/v1/plugins/recommend/integrations?service=';
@@ -217,11 +218,21 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
                 height: 28, 
                 borderRadius: 6, 
                 background: client.col,
-                fontSize: 16,
-                color: '#fff',
                 flexShrink: 0,
               }}>
-                {client.sym}
+                {client.icon ? (
+                  <Image
+                    src={`https://cdn.simpleicons.org/${client.icon}/white`}
+                    alt={client.name}
+                    width={18}
+                    height={18}
+                    unoptimized
+                  />
+                ) : (
+                  <span style={{ fontSize: 16, color: '#fff' }}>
+                    {client.sym}
+                  </span>
+                )}
               </span>
               <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: 13, fontWeight: 500, color: '#0a0a0a', whiteSpace: 'nowrap' }}>{client.name}</span>
             </div>
