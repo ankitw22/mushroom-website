@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-const FAQ_ITEMS = [
+const FAQ_ITEMS: { id: string; question: string; answer: React.ReactNode }[] = [
   {
     id: 'mcp',
     question: 'What is MCP?',
@@ -24,8 +24,20 @@ const FAQ_ITEMS = [
   {
     id: 'faq-free',
     question: 'Is Mushrooms free?',
-    answer:
-      'Yes — Mushrooms is free to use. Connect your AI client, add Power-Ups, and start giving your AI real-world actions at no cost. Full access, no credit card required.',
+    answer: (
+      <>
+        Yes — Mushrooms is free to use. Connect your AI client, add Power-Ups, and start giving your AI real-world actions at no cost. Full access, no credit card required.{' '}
+        <a
+          href="https://viasocket.com/help/viasocket-mcp?source=single"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#068F57] underline hover:text-[#056b41] transition-colors"
+          onClick={(e) => e.stopPropagation()}
+        >
+          Learn more
+        </a>
+      </>
+    ),
   },
   {
     id: 'secure',
