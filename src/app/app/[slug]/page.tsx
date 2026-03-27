@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import EventsTabs from './EventsTabs';
+import { Marquee } from '@/components/ui/Marquee';
 
 export const runtime = 'edge';
 
@@ -239,16 +240,16 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
           <h2 style={{ fontFamily: "'Symtext','Press Start 2P',monospace", fontSize: 'clamp(18px,2.5vw,30px)', color: '#0a0a0a', lineHeight: 1.3, marginBottom: 28 }}>
             Works with
           </h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+          <Marquee speed={40} gap={12} pauseOnHover={true}>
             {connectedApps.map(connApp => (
               <Link key={connApp.appslugname} href={`/app/${connApp.appslugname}`}
-                style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 16px', background: '#fff', border: '1.5px solid rgba(10,10,10,0.07)', borderRadius: 12, textDecoration: 'none' }}
+                style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 16px', background: '#fff', border: '1.5px solid rgba(10,10,10,0.07)', borderRadius: 12, textDecoration: 'none', flexShrink: 0 }}
               >
                 <AppIcon app={connApp} size={28} />
                 <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: 13, fontWeight: 500, color: '#0a0a0a', whiteSpace: 'nowrap' }}>{connApp.name}</span>
               </Link>
             ))}
-          </div>
+          </Marquee>
         </section>
       )}
 
