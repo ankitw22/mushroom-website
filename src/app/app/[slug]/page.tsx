@@ -157,7 +157,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
             <nav style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: 'rgba(10,10,10,0.55)', marginBottom: 28 }}>
               <Link href="/" style={{ color: 'rgba(10,10,10,0.55)', textDecoration: 'none' }}>Home</Link>
               <span style={{ opacity: 0.5 }}>/</span>
-              <Link href="/#integrations" style={{ color: 'rgba(10,10,10,0.55)', textDecoration: 'none' }}>Integrations</Link>
+              <Link href="/#integrations" style={{ color: 'rgba(10,10,10,0.55)', textDecoration: 'none' }}>Mushroom</Link>
               <span style={{ opacity: 0.5 }}>/</span>
               <span style={{ color: '#0a0a0a', fontWeight: 600 }}>{app.name}</span>
             </nav>
