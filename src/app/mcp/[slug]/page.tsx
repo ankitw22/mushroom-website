@@ -176,7 +176,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
                   Connect {app.name} actions with AI tools like ChatGPT, Claude, and Cursor using the Mushrooms MCP Server.
                 </p>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-                  <Link href="https://app.mushroom.viasocket.com/login" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', padding: '13px 28px', background: '#0a0a0a', color: '#fff', fontFamily: "'Symtext','Press Start 2P',monospace", fontSize: 'clamp(9px,1vw,11px)', letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 8, whiteSpace: 'nowrap' }}>
+                  <Link href="https://app.mushrooms.viasocket.com/login" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', padding: '13px 28px', background: '#0a0a0a', color: '#fff', fontFamily: "'Symtext','Press Start 2P',monospace", fontSize: 'clamp(9px,1vw,11px)', letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 8, whiteSpace: 'nowrap' }}>
                     Get Your Cluster URL →
                   </Link>
                   {(app.category ?? []).slice(0, 3).map(cat => (
@@ -263,7 +263,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
               Get your MCP endpoint and start automating {app.name} with any AI client in under 2 minutes.
             </p>
           </div>
-          <Link href="https://app.mushroom.viasocket.com/login" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 32px', background: '#52c49a', color: '#0a0a0a', fontFamily: "'Symtext','Press Start 2P',monospace", fontSize: 12, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 8, whiteSpace: 'nowrap', flexShrink: 0 }}>
+          <Link href="https://app.mushrooms.viasocket.com/login" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 32px', background: '#52c49a', color: '#0a0a0a', fontFamily: "'Symtext','Press Start 2P',monospace", fontSize: 12, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 8, whiteSpace: 'nowrap', flexShrink: 0 }}>
             Get Your Cluster URL →
           </Link>
         </div>

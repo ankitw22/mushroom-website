@@ -52,7 +52,7 @@ export default function Hero() {
               <strong style={{ color: 'var(--ink)', fontWeight: 700 }}>Power up</strong> your AI with {displayCount} apps
             </p>
             <Link
-              href="https://app.mushroom.viasocket.com/login"
+              href="https://app.mushrooms.viasocket.com/login"
               target="_blank"
               rel="noopener noreferrer"
               id="hero-cta"

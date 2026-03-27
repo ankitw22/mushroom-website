@@ -99,7 +99,7 @@ export default function Integrations() {
           Give your <span className="text-[#068F57]">AI agent</span> the power to act
         </h2>
         <Link
-          href="https://app.mushroom.viasocket.com/login"
+          href="https://app.mushrooms.viasocket.com/login"
           target="_blank"
           rel="noopener noreferrer"
           className="integrations-cta transition-transform hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)]"
@@ -275,7 +275,7 @@ export default function Integrations() {
               Can&apos;t find what you need? We&apos;ll build the integration within 48 hours.
             </span>
             <Link
-              href="https://app.mushroom.viasocket.com/login"
+              href="https://app.mushrooms.viasocket.com/login"
               target="_blank"
               rel="noopener noreferrer"
               className="apps-missing-cta mt-2.5 inline-flex items-center self-start py-3 px-[26px] rounded-lg transition-transform hover:translate-y-[-2px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.32)]"
@@ -316,7 +316,7 @@ export default function Integrations() {
               Own an app? Connect it to Mushrooms and reach thousands of AI users.
             </span>
             <Link
-              href="https://app.mushroom.viasocket.com/login"
+              href="https://app.mushrooms.viasocket.com/login"
               target="_blank"
               rel="noopener noreferrer"
               className="apps-missing-cta mt-2.5 inline-flex items-center self-start py-3 px-[26px] rounded-lg transition-transform hover:translate-y-[-2px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.32)]"
