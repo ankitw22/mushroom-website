@@ -81,7 +81,7 @@ function ChatMockup({ app }: { app: Plugin }) {
       <div style={{ padding: '16px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
           <span style={{ width: 24, height: 24, borderRadius: '50%', background: '#52c49a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <svg viewBox="0 0 16 16" fill="none" stroke="#0a0a0a" strokeWidth="1.8" style={{ width: 12, height: 12 }}><circle cx="8" cy="6" r="3"/><path d="M3 13c0-2.76 2.24-5 5-5s5 2.24 5 5"/></svg>
+            <svg viewBox="0 0 16 16" fill="none" stroke="#0a0a0a" strokeWidth="1.8" style={{ width: 12, height: 12 }}><circle cx="8" cy="6" r="3" /><path d="M3 13c0-2.76 2.24-5 5-5s5 2.24 5 5" /></svg>
           </span>
           <div style={{ background: '#2a2a2a', borderRadius: '0 10px 10px 10px', padding: '8px 12px', maxWidth: 200 }}>
             <p style={{ fontFamily: "'Poppins',sans-serif", fontSize: 11, color: 'rgba(255,255,255,0.8)', margin: 0, lineHeight: 1.5 }}>What can I help you with?</p>
@@ -95,7 +95,7 @@ function ChatMockup({ app }: { app: Plugin }) {
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
           <span style={{ width: 24, height: 24, borderRadius: '50%', background: '#52c49a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <svg viewBox="0 0 16 16" fill="none" stroke="#0a0a0a" strokeWidth="1.8" style={{ width: 12, height: 12 }}><circle cx="8" cy="6" r="3"/><path d="M3 13c0-2.76 2.24-5 5-5s5 2.24 5 5"/></svg>
+            <svg viewBox="0 0 16 16" fill="none" stroke="#0a0a0a" strokeWidth="1.8" style={{ width: 12, height: 12 }}><circle cx="8" cy="6" r="3" /><path d="M3 13c0-2.76 2.24-5 5-5s5 2.24 5 5" /></svg>
           </span>
           <div style={{ background: '#2a2a2a', borderRadius: '0 10px 10px 10px', padding: '6px 10px' }}>
             <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9, color: 'rgba(255,255,255,0.4)', margin: '0 0 4px' }}>Agent · MCP Tool Options</p>
@@ -110,7 +110,7 @@ function ChatMockup({ app }: { app: Plugin }) {
         </div>
         <div style={{ marginTop: 4, background: '#2a2a2a', borderRadius: 10, padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid rgba(255,255,255,0.06)' }}>
           <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.25)' }}>Message your agent…</span>
-          <svg viewBox="0 0 24 24" fill="#52c49a" style={{ width: 16, height: 16 }}><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="#52c49a" strokeWidth="2" fill="none" strokeLinejoin="round"/></svg>
+          <svg viewBox="0 0 24 24" fill="#52c49a" style={{ width: 16, height: 16 }}><path d="M22 2L11 13" /><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="#52c49a" strokeWidth="2" fill="none" strokeLinejoin="round" /></svg>
         </div>
       </div>
     </div>
@@ -240,7 +240,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
           <h2 style={{ fontFamily: "'Symtext','Press Start 2P',monospace", fontSize: 'clamp(18px,2.5vw,30px)', color: '#0a0a0a', lineHeight: 1.3, marginBottom: 28 }}>
             Works with
           </h2>
-          <Marquee speed={40} gap={12} pauseOnHover={true}>
+          <Marquee speed={7} gap={12} pauseOnHover={true}>
             {connectedApps.map(connApp => (
               <Link key={connApp.appslugname} href={`/app/${connApp.appslugname}`}
                 style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 16px', background: '#fff', border: '1.5px solid rgba(10,10,10,0.07)', borderRadius: 12, textDecoration: 'none', flexShrink: 0 }}
