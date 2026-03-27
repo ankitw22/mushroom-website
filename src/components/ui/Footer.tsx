@@ -7,9 +7,9 @@ export default function Footer() {
     <footer className="site-footer w-full">
       {/* Brand band */}
       <div className="footer-brand-band bg-[var(--green)] flex flex-col items-center justify-end overflow-hidden">
-        <div className="footer-brand-scene relative w-full flex items-end justify-center">
+        <div className="footer-brand-scene relative w-full flex items-center justify-center">
           <span 
-            className="footer-wordmark whitespace-nowrap block text-center w-full mt-12 relative"
+            className="footer-wordmark whitespace-nowrap block text-center mt-12 relative"
             style={{
               fontFamily: "'Symtext', 'Press Start 2P', monospace",
               fontSize: 'clamp(20px, 7.2vw, 115px)',
