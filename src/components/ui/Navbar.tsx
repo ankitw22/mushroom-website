@@ -1,16 +1,52 @@
 'use client';
 
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 interface NavbarProps {
   onFreePillClick?: () => void;
 }
 
 export default function Navbar({ onFreePillClick }: NavbarProps) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show header when user has scrolled more than 50px
+      const scrolled = window.scrollY > 50;
+      setIsVisible(scrolled);
+    };
+
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Check initial scroll position (in case page is already scrolled on load)
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <nav
       id="hero-nav"
-      style={{ position: 'fixed', top: 28, right: 32, zIndex: 1000, display: 'flex', alignItems: 'center', gap: 8, background: 'none', padding: 0, boxShadow: 'none' }}
+      style={{
+        position: 'fixed',
+        top: 28,
+        right: 32,
+        zIndex: 1000,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 8,
+        background: 'none',
+        padding: 0,
+        boxShadow: 'none',
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(-20px)',
+        transition: 'opacity 0.3s ease, transform 0.3s ease',
+        pointerEvents: isVisible ? 'auto' : 'none',
+      }}
     >
       <a
         href="#faq-free"
