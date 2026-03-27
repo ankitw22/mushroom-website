@@ -128,9 +128,6 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
   if (!app) notFound();
 
   const allCombinations = data.combinations ?? [];
-  const uniqueCombos = allCombinations
-    .filter((c, i, arr) => arr.findIndex(x => x.description === c.description) === i)
-    .slice(0, 12);
 
   const actions = app.events.filter(e => e.type === 'action');
   const triggers = app.events.filter(e => e.type === 'trigger');
@@ -198,41 +195,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
       {/* ── EVENTS (client component for tab interactivity) ── */}
       <EventsTabs actions={actions} triggers={triggers} />
 
-      {/* ── POPULAR INTEGRATIONS ── */}
-      {uniqueCombos.length > 0 && (
-        <section style={{ maxWidth: 1200, margin: '0 auto', padding: '72px 48px 0' }}>
-          <div style={{ marginBottom: 28 }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: "'JetBrains Mono',monospace", fontSize: 11, fontWeight: 600, color: '#0a0a0a', background: 'rgba(6,143,87,0.12)', border: '1.5px solid rgba(6,143,87,0.35)', padding: '5px 12px', borderRadius: 100, marginBottom: 10 }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#068F57', display: 'inline-block' }} />
-              {uniqueCombos.length} Popular Workflows
-            </div>
-            <h2 style={{ fontFamily: "'Symtext','Press Start 2P',monospace", fontSize: 'clamp(18px,2.5vw,30px)', color: '#0a0a0a', lineHeight: 1.3 }}>
-              Popular Integrations
-            </h2>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(340px,1fr))', gap: 12 }}>
-            {uniqueCombos.map((combo, idx) => {
-              const triggerApp = data.plugins[combo.trigger.name];
-              const actionApp = combo.actions[0] ? data.plugins[combo.actions[0].name] : undefined;
-              return (
-                <div key={idx} style={{ background: '#fff', border: '1.5px solid rgba(10,10,10,0.07)', borderRadius: 12, padding: '16px 18px', display: 'flex', alignItems: 'flex-start', gap: 14 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
-                    {triggerApp && <AppIcon app={triggerApp} size={30} />}
-                    <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: 'rgba(10,10,10,0.3)' }}>→</span>
-                    {actionApp && <AppIcon app={actionApp} size={30} />}
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontFamily: "'Poppins',sans-serif", fontSize: 12, color: '#0a0a0a', lineHeight: 1.55 }}>{combo.description}</div>
-                    <div style={{ marginTop: 6, fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: 'rgba(10,10,10,0.3)' }}>
-                      Score {combo.score.toFixed(1)}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-      )}
+
 
       {/* ── CONNECTED APPS ── */}
       {connectedApps.length > 0 && (
