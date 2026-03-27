@@ -8,19 +8,19 @@ import { Marquee } from '@/components/ui/Marquee';
 export const runtime = 'edge';
 
 // MCP clients list - same as displayed in Hero section's Ticker
-// icon: Simple Icons slug, null means no icon available (use fallback symbol)
+// Using thingsofbrand.com API for icons
 const MCP_CLIENTS = [
-  { name: 'Claude', sym: '✳', col: '#D4845A', icon: 'anthropic' },
-  { name: 'ChatGPT', sym: '◎', col: '#74AA9C', icon: 'openai' },
-  { name: 'Cursor', sym: '⬡', col: '#aaa', icon: 'cursor' },
-  { name: 'Windsurf', sym: '◈', col: '#4D9FE8', icon: 'codeium' },
-  { name: 'Gemini', sym: '✦', col: '#8B9CF6', icon: 'googlegemini' },
-  { name: 'Copilot', sym: '⊕', col: '#0078D4', icon: 'githubcopilot' },
-  { name: 'Continue', sym: '▷', col: '#FF6B35', icon: 'continuedev' },
-  { name: 'Cline', sym: '◆', col: '#E24444', icon: null },
-  { name: 'Zed', sym: '⬢', col: '#7744DD', icon: 'zedindustries' },
-  { name: 'Cody', sym: '✿', col: '#FF5959', icon: 'sourcegraph' },
-  { name: 'Amp', sym: '⚡', col: '#FFCC00', icon: null },
+  { name: 'Claude', col: '#D4845A', domain: 'claude.ai' },
+  { name: 'ChatGPT', col: '#74AA9C', domain: 'chatgpt.com' },
+  { name: 'Cursor', col: '#aaa', domain: 'cursor.com' },
+  { name: 'Windsurf', col: '#4D9FE8', domain: 'codeium.com' },
+  { name: 'Gemini', col: '#8B9CF6', domain: 'gemini.google.com' },
+  { name: 'Copilot', col: '#0078D4', domain: 'github.com' },
+  { name: 'Continue', col: '#FF6B35', domain: 'continue.dev' },
+  { name: 'Cline', col: '#E24444', domain: 'cline.bot' },
+  { name: 'Zed', col: '#7744DD', domain: 'zed.dev' },
+  { name: 'Cody', col: '#FF5959', domain: 'sourcegraph.com' },
+  { name: 'Amp', col: '#FFCC00', domain: 'amp.dev' },
 ];
 
 const RECOMMEND_API = 'https://plug-service.viasocket.com/api/v1/plugins/recommend/integrations?service=';
@@ -217,22 +217,17 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
                 width: 28, 
                 height: 28, 
                 borderRadius: 6, 
-                background: client.col,
+                overflow: 'hidden',
                 flexShrink: 0,
               }}>
-                {client.icon ? (
-                  <Image
-                    src={`https://cdn.simpleicons.org/${client.icon}/white`}
-                    alt={client.name}
-                    width={18}
-                    height={18}
-                    unoptimized
-                  />
-                ) : (
-                  <span style={{ fontSize: 16, color: '#fff' }}>
-                    {client.sym}
-                  </span>
-                )}
+                <Image
+                  src={`https://thingsofbrand.com/api/icon/${client.domain}`}
+                  alt={client.name}
+                  width={28}
+                  height={28}
+                  unoptimized
+                  style={{ objectFit: 'cover' }}
+                />
               </span>
               <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: 13, fontWeight: 500, color: '#0a0a0a', whiteSpace: 'nowrap' }}>{client.name}</span>
             </div>
