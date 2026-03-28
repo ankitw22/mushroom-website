@@ -6,7 +6,7 @@ const PRICING_CARDS = [
   {
     title: 'Free for Lifetime',
     desc: 'Mushrooms is free to use for lifetime under a fair usage policy, without rate limits.',
-    cta: 'Get your Cluster URL',
+    cta: 'Get your Cluster (MCP Server) URL',
   },
   {
     title: 'For Enterprises',

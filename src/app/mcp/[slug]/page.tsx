@@ -59,8 +59,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const app = data.plugins[slug];
     if (!app) return { title: 'Mushroom Server' };
     return {
-      title: `${app.name} MCP Server | Mashroom`,
-      description: `Mushrooms is a power-up layer for your AI. Connect your AI client to apps you use, and give your AI the ability to do things in those apps.`,
+      title: `${app.name} MCP Server | Mushroom`,
+      description: `Connect ${app.name} to your AI assistant using the Mushroom MCP Server. Give ChatGPT, Claude, and Cursor the power to take actions in ${app.name} via the Model Context Protocol (MCP).`,
       icons: {
         icon: "/mushroom-logo.svg",
       },
