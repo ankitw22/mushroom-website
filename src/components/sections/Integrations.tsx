@@ -115,7 +115,7 @@ export default function Integrations() {
             textDecoration: 'none',
           }}
         >
-          Get Your Cluster URL
+          Get Your Cluster (MCP Server) URL
         </Link>
       </div>
 

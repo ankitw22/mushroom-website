@@ -7,7 +7,7 @@ const FAQ_ITEMS: { id: string; question: string; answer: React.ReactNode }[] = [
     id: 'mcp',
     question: 'What is MCP?',
     answer:
-      'MCP (Model Context Protocol) is an open standard that lets AI models connect to external tools and take real-world actions. In Mushrooms, each Cluster you create gets its own MCP server URL — paste it into your AI client and your AI instantly has access to every Power-Up you\'ve connected.',
+      'MCP (Model Context Protocol) is an open standard that lets AI models connect to external tools and take real-world actions. In Mushrooms, each Cluster (MCP Server) you create gets its own URL — paste it into your AI client and your AI instantly has access to every Power-Up you\'ve connected.',
   },
   {
     id: 'mushrooms',
