@@ -20,11 +20,14 @@ const pressStart2P = Press_Start_2P({
   variable: '--font-press-start',
 });
 
-export const metadata: Metadata = {
-  title: 'Mushrooms — Power up your AI clients with 2,000+ apps',
-  description: 'Mushrooms is a power-up layer for your AI. Connect your AI client to apps you use, and give your AI the ability to do things in those apps.',
-};
 
+export const metadata: Metadata = {
+  title: "Mashroom",
+  description: "Mashroom - AI powered MCP server manager",
+  icons: {
+    icon: "/mushroom-logo.svg",
+  },
+};
 export default function RootLayout({
   children,
 }: Readonly<{

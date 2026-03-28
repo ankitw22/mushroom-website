@@ -1,4 +1,5 @@
 import React from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -6,6 +7,27 @@ import EventsTabs from './EventsTabs';
 import { Marquee } from '@/components/ui/Marquee';
 
 export const runtime = 'edge';
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const res = await fetch(`${RECOMMEND_API}${slug}`, { next: { revalidate: 3600 } });
+    if (!res.ok) return { title: 'Mushroom Server' };
+    const data: ApiResponse = await res.json();
+    const app = data.plugins[slug];
+    if (!app) return { title: 'Mushroom Server' };
+    return {
+      title: `${app.name} MCP Server | Mashroom`,
+      description: `Mushrooms is a power-up layer for your AI. Connect your AI client to apps you use, and give your AI the ability to do things in those apps.`,
+      icons: {
+        icon: "/mushroom-logo.svg",
+      },
+    };
+  } catch {
+    return { title: 'Mushroom Server' };
+  }
+}
+
 
 const RECOMMEND_API = 'https://plug-service.viasocket.com/api/v1/plugins/recommend/integrations?service=';
 
@@ -81,7 +103,7 @@ function ChatMockup({ app }: { app: Plugin }) {
       <div style={{ padding: '16px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
           <span style={{ width: 24, height: 24, borderRadius: '50%', background: '#52c49a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <svg viewBox="0 0 16 16" fill="none" stroke="#0a0a0a" strokeWidth="1.8" style={{ width: 12, height: 12 }}><circle cx="8" cy="6" r="3"/><path d="M3 13c0-2.76 2.24-5 5-5s5 2.24 5 5"/></svg>
+            <svg viewBox="0 0 16 16" fill="none" stroke="#0a0a0a" strokeWidth="1.8" style={{ width: 12, height: 12 }}><circle cx="8" cy="6" r="3" /><path d="M3 13c0-2.76 2.24-5 5-5s5 2.24 5 5" /></svg>
           </span>
           <div style={{ background: '#2a2a2a', borderRadius: '0 10px 10px 10px', padding: '8px 12px', maxWidth: 200 }}>
             <p style={{ fontFamily: "'Poppins',sans-serif", fontSize: 11, color: 'rgba(255,255,255,0.8)', margin: 0, lineHeight: 1.5 }}>What can I help you with?</p>
@@ -95,7 +117,7 @@ function ChatMockup({ app }: { app: Plugin }) {
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
           <span style={{ width: 24, height: 24, borderRadius: '50%', background: '#52c49a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <svg viewBox="0 0 16 16" fill="none" stroke="#0a0a0a" strokeWidth="1.8" style={{ width: 12, height: 12 }}><circle cx="8" cy="6" r="3"/><path d="M3 13c0-2.76 2.24-5 5-5s5 2.24 5 5"/></svg>
+            <svg viewBox="0 0 16 16" fill="none" stroke="#0a0a0a" strokeWidth="1.8" style={{ width: 12, height: 12 }}><circle cx="8" cy="6" r="3" /><path d="M3 13c0-2.76 2.24-5 5-5s5 2.24 5 5" /></svg>
           </span>
           <div style={{ background: '#2a2a2a', borderRadius: '0 10px 10px 10px', padding: '6px 10px' }}>
             <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9, color: 'rgba(255,255,255,0.4)', margin: '0 0 4px' }}>Agent · MCP Tool Options</p>
@@ -110,7 +132,7 @@ function ChatMockup({ app }: { app: Plugin }) {
         </div>
         <div style={{ marginTop: 4, background: '#2a2a2a', borderRadius: 10, padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid rgba(255,255,255,0.06)' }}>
           <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.25)' }}>Message your agent…</span>
-          <svg viewBox="0 0 24 24" fill="#52c49a" style={{ width: 16, height: 16 }}><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="#52c49a" strokeWidth="2" fill="none" strokeLinejoin="round"/></svg>
+          <svg viewBox="0 0 24 24" fill="#52c49a" style={{ width: 16, height: 16 }}><path d="M22 2L11 13" /><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="#52c49a" strokeWidth="2" fill="none" strokeLinejoin="round" /></svg>
         </div>
       </div>
     </div>
@@ -157,7 +179,7 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
             <nav style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: 'rgba(10,10,10,0.55)', marginBottom: 28 }}>
               <Link href="/" style={{ color: 'rgba(10,10,10,0.55)', textDecoration: 'none' }}>Home</Link>
               <span style={{ opacity: 0.5 }}>/</span>
-              <Link href="/#integrations" style={{ color: 'rgba(10,10,10,0.55)', textDecoration: 'none' }}>Mushroom</Link>
+              <Link href="/#integrations" style={{ color: 'rgba(10,10,10,0.55)', textDecoration: 'none' }}>Mushrooms(MCP)</Link>
               <span style={{ opacity: 0.5 }}>/</span>
               <span style={{ color: '#0a0a0a', fontWeight: 600 }}>{app.name}</span>
             </nav>
