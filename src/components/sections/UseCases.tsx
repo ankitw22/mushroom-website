@@ -78,9 +78,9 @@ export default function UseCases() {
   }, []);
 
   return (
-    <section 
-      ref={sectionRef} 
-      className="section-usecases" 
+    <section
+      ref={sectionRef}
+      className="section-usecases"
       id="use-cases"
       style={{ padding: '40px 48px 182px', maxWidth: 1200, margin: '0 auto' }}
     >
@@ -112,12 +112,6 @@ export default function UseCases() {
             <h3 className="usecase-title font-body text-[22px] font-bold text-[var(--ink)] leading-[1.3]">
               {uc.title}
             </h3>
-            <Link 
-              href="#" 
-              className="usecase-link mt-auto font-mono text-[12px] font-medium text-[#068F57] no-underline hover:underline"
-            >
-              Use template →
-            </Link>
           </div>
         ))}
       </div>
