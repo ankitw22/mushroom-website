@@ -147,6 +147,7 @@ export default function HeroCanvas() {
     let appIdx = 0;
     let currentAIIdx = 0;
     let dropTimer = 40;
+    let booted = false;
 
     // State
     let clouds: Cloud[] = [];
@@ -784,6 +785,8 @@ export default function HeroCanvas() {
     };
 
     const boot = () => {
+      if (booted) return;
+      booted = true;
       resize();
       initClouds();
 

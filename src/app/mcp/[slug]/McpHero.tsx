@@ -40,7 +40,7 @@ export function McpHero({ app }: McpHeroProps) {
             Connect {app.name} actions with AI tools like ChatGPT, Claude, and Cursor using the Mushrooms MCP Server.
           </p>
           <Link href="https://app.mushroom.viasocket.com/login" target="_blank" className="hero-cta">
-            Get Your Cluster URL
+            Get Your Cluster (MCP Server) URL
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M2.5 7h9M7.5 3.5L11 7l-3.5 3.5" />
             </svg>

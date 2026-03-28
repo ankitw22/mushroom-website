@@ -4,7 +4,7 @@ export function McpHowItWorks({ appName }: { appName: string }) {
   const steps = [
     {
       num: 1,
-      title: "Get Your Cluster URL",
+      title: "Get Your Cluster (MCP Server) URL",
       desc: "Instantly get a unique, secure URL that connects your AI assistant to Mushrooms' network of integrations."
     },
     {
@@ -15,7 +15,7 @@ export function McpHowItWorks({ appName }: { appName: string }) {
     {
       num: 3,
       title: "Connect Your AI Assistant",
-      desc: "Paste your Cluster URL into Claude, ChatGPT, or Cursor. Every action is scoped and approved."
+      desc: "Paste your Cluster (MCP Server) URL into Claude, ChatGPT, or Cursor. Every action is scoped and approved."
     }
   ];
 
