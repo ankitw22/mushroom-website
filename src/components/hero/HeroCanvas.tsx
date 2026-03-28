@@ -84,7 +84,7 @@ interface FallingApp {
   morphT: number;
 }
 
-interface Mushroom {
+interface Mushrooms {
   app: (typeof APPS)[0];
   state: 'landing' | 'gone';
   x: number;
@@ -151,7 +151,7 @@ export default function HeroCanvas() {
     // State
     let clouds: Cloud[] = [];
     let fallingApps: FallingApp[] = [];
-    let mushrooms: Mushroom[] = [];
+    let mushrooms: Mushrooms[] = [];
     let parts: Particle[] = [];
     let floats: FloatText[] = [];
     let actionBubbles: ActionBubble[] = [];
@@ -332,7 +332,7 @@ export default function HeroCanvas() {
       });
     };
 
-    const absorbMush = (m: Mushroom) => {
+    const absorbMushrooms = (m: Mushrooms) => {
       if (!m || m.state === 'gone') return;
       m.state = 'gone';
       char.flashT = 36;
@@ -426,7 +426,7 @@ export default function HeroCanvas() {
       });
     };
 
-    const drawMushroom = (m: Mushroom) => {
+    const drawMushrooms = (m: Mushrooms) => {
       if (!m || m.state === 'gone') return;
       const { app, x, y, bobT, scaleY } = m;
       const bob = m.state === 'landing' ? Math.sin(bobT * 0.048) * 3.5 : 0;
@@ -630,7 +630,7 @@ export default function HeroCanvas() {
         }
       } else if (collectible.length > 0) {
         autoState = 'seeking';
-        let nearest: Mushroom | null = null;
+        let nearest: Mushrooms | null = null;
         let nearDist = Infinity;
         collectible.forEach((m) => {
           const d = Math.abs(m.x + 24 - (char.x + char.w / 2));
@@ -640,8 +640,8 @@ export default function HeroCanvas() {
           }
         });
         if (nearest !== null) {
-          const nearestMush = nearest as Mushroom;
-          const mushCx = nearestMush.x + 24;
+          const nearestMushrooms = nearest as Mushrooms;
+          const mushCx = nearestMushrooms.x + 24;
           const targetX = mushCx - char.w / 2;
           if (Math.abs(char.x - targetX) > 8) {
             const dir = char.x < targetX ? 1 : -1;
@@ -649,7 +649,7 @@ export default function HeroCanvas() {
             char.face = dir > 0 ? 'right' : 'left';
           } else {
             char.vx = 0;
-            absorbMush(nearestMush);
+            absorbMushrooms(nearestMushrooms);
           }
         }
       } else {
@@ -684,7 +684,7 @@ export default function HeroCanvas() {
       }
       if (char.flashT > 0) char.flashT--;
 
-      // Mushroom bobbing
+      // Mushrooms bobbing
       mushrooms.forEach((m) => {
         if (m.state === 'landing') m.bobT++;
       });
@@ -711,7 +711,7 @@ export default function HeroCanvas() {
       ctx.clearRect(0, 0, W, H);
       clouds.forEach(drawCloud);
       drawFallingApps();
-      mushrooms.forEach((m) => drawMushroom(m));
+      mushrooms.forEach((m) => drawMushrooms(m));
       drawChar();
 
       // Particles
