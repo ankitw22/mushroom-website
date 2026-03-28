@@ -90,6 +90,15 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
       {/* ── HERO (Dynamic) ── */}
       <McpHero app={app} />
 
+      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '72px 48px 0', position: 'relative' }}>
+        <h2 style={{ fontFamily: 'var(--pixel)', fontSize: 'clamp(18px, 2.5vw, 30px)', color: '#060606ff', lineHeight: 1.3, marginBottom: 28 }}>
+          Works with
+        </h2>
+        <div style={{ position: 'relative', height: 52, borderRadius: 14, overflow: 'hidden' }}>
+          <Ticker />
+        </div>
+      </section>
+
       {/* ── SUPPORTED ACTIONS (Dynamic) ── */}
       <McpActions actions={actions} appIcon={app.iconurl} appName={app.name} />
 
@@ -103,14 +112,6 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
       <Pricing />
 
       {/* ── WORKS WITH AI CLIENTS (Ticker) ── */}
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '72px 48px 0', position: 'relative' }}>
-        <h2 style={{ fontFamily: 'var(--pixel)', fontSize: 'clamp(18px, 2.5vw, 30px)', color: '#0a0a0a', lineHeight: 1.3, marginBottom: 28 }}>
-          Works with
-        </h2>
-        <div style={{ position: 'relative', height: 52, borderRadius: 14, overflow: 'hidden' }}>
-          <Ticker />
-        </div>
-      </section>
 
       {/* ── BLOG (Reusable) ── */}
       <Blog />
