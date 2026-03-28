@@ -57,7 +57,7 @@ export default function Hero() {
               rel="noopener noreferrer"
               id="hero-cta"
               className="inline-flex items-center gap-2 pointer-events-auto animate-fade-up-delay transition-transform hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.32)]"
-              style={{ fontFamily: "'Symtext', 'Press Start 2P', monospace", fontSize: 'clamp(11px,1.3vw,14px)', fontWeight: 400, letterSpacing: '0.08em', color: '#fff', background: 'var(--ink)', padding: '15px 38px', borderRadius: 8, marginTop: 4, textDecoration: 'none' }}
+              style={{ fontFamily: "'Poppins', sans-serif", fontSize: '15px', fontWeight: 600, color: '#fff', background: 'var(--ink)', padding: '15px 38px', borderRadius: 8, marginTop: 4, textDecoration: 'none' }}
             >
               SELECT AI AND YOUR APPS
               <svg 
