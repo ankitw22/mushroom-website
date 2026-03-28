@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const app = data.plugins[slug];
     if (!app) return { title: 'Mushroom Server' };
     return {
-      title: `${app.name} MCP Server | Mashroom`,
+      title: `${app.name} Cluster (MCP Server) | Mashroom`,
       description: `Mushrooms is a power-up layer for your AI. Connect your AI client to apps you use, and give your AI the ability to do things in those apps.`,
       icons: {
         icon: "/mushroom-logo.svg",
@@ -190,17 +190,17 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
                   <AppIcon app={app} size={52} />
                 </div>
                 <h1 style={{ fontFamily: "'Symtext','Press Start 2P',monospace", fontSize: 'clamp(26px,3.8vw,52px)', fontWeight: 400, color: '#0a0a0a', lineHeight: 1.2, letterSpacing: '-1px', marginBottom: 14, textTransform: 'uppercase' }}>
-                  MCP SERVER<br />FOR<br />{app.name.toUpperCase()}
+                  CLUSTER (MCP SERVER)<br />FOR<br />{app.name.toUpperCase()}
                 </h1>
                 <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: 'rgba(10,10,10,0.5)', marginBottom: 10 }}>
                   {app.domain}
                 </p>
                 <p style={{ fontFamily: "'Poppins',sans-serif", fontSize: 14, color: 'rgba(10,10,10,0.7)', lineHeight: 1.65, marginBottom: 24 }}>
-                  Connect {app.name} actions with AI tools like ChatGPT, Claude, and Cursor using the Mushrooms MCP Server.
+                  Connect {app.name} actions with AI tools like ChatGPT, Claude, and Cursor using the Mushrooms Cluster (MCP Server).
                 </p>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                   <Link href="https://app.mushroom.viasocket.com/login" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', padding: '13px 28px', background: '#0a0a0a', color: '#fff', fontFamily: "'Symtext','Press Start 2P',monospace", fontSize: 'clamp(9px,1vw,11px)', letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 8, whiteSpace: 'nowrap' }}>
-                    Get Your Cluster URL →
+                    Get Your Cluster (MCP Server) URL →
                   </Link>
                   {(app.category ?? []).slice(0, 3).map(cat => (
                     <span key={cat} style={{ padding: '6px 14px', borderRadius: 100, background: 'rgba(10,10,10,0.1)', fontFamily: "'Poppins',sans-serif", fontSize: 12, color: 'rgba(10,10,10,0.65)', whiteSpace: 'nowrap' }}>
@@ -283,7 +283,7 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
               Connect {app.name} to your AI
             </h2>
             <p style={{ fontFamily: "'Poppins',sans-serif", fontSize: 15, color: 'rgba(255,255,255,0.55)', lineHeight: 1.65, maxWidth: 480 }}>
-              Get your MCP endpoint and start automating {app.name} with any AI client in under 2 minutes.
+              Get your Cluster (MCP Server) endpoint and start automating {app.name} with any AI client in under 2 minutes.
             </p>
           </div>
           <Link href="https://app.mushroom.viasocket.com/login" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 32px', background: '#52c49a', color: '#0a0a0a', fontFamily: "'Symtext','Press Start 2P',monospace", fontSize: 12, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 8, whiteSpace: 'nowrap', flexShrink: 0 }}>
