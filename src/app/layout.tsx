@@ -22,8 +22,8 @@ const pressStart2P = Press_Start_2P({
 
 
 export const metadata: Metadata = {
-  title: "Mashroom",
-  description: "Mashroom - AI powered MCP server manager",
+  title: "Mashroom | The AI Power-up Layer for Your Apps",
+  description: "Connect any AI client (Claude, ChatGPT, Cursor) to your daily tools using MCP. Execute actions with granular permissions and full security.",
   icons: {
     icon: "/mushroom-logo.svg",
   },
