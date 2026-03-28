@@ -74,9 +74,7 @@ export default function Integrations() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    setPage(0);
-  }, [activeCat, query]);
+
 
   return (
     <section 
@@ -140,7 +138,7 @@ export default function Integrations() {
               color: 'var(--ink)',
             }}
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => { setQuery(e.target.value); setPage(0); }}
           />
         </div>
 
@@ -149,7 +147,7 @@ export default function Integrations() {
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setActiveCat(cat)}
+                onClick={() => { setActiveCat(cat); setPage(0); }}
                 className={`integ-cat cursor-pointer transition-all whitespace-nowrap overflow-hidden text-ellipsis hover:bg-[rgba(10,10,10,0.03)]`}
               style={{
                 display: 'block',
@@ -184,7 +182,7 @@ export default function Integrations() {
                 slice.map((app: App, idx: number) => (
                   <Link
                     key={app.rowid ?? idx}
-                    href={`/app/${app.appslugname}`}
+                    href={`/mcp/${app.appslugname}`}
                     className="integ-cell flex items-center gap-[10px] border-r border-b border-[rgba(10,10,10,0.07)] transition-colors hover:bg-[rgba(6,143,87,0.05)] [&:nth-child(4n)]:border-r-0 max-[1024px]:[&:nth-child(4n)]:border-r max-[1024px]:[&:nth-child(3n)]:border-r-0"
                     style={{ padding: '13px 16px', textDecoration: 'none', cursor: 'pointer' }}
                   >
