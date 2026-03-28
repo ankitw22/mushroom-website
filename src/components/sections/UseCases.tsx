@@ -82,7 +82,7 @@ export default function UseCases() {
       ref={sectionRef} 
       className="section-usecases" 
       id="use-cases"
-      style={{ padding: '80px 48px 182px', maxWidth: 1200, margin: '0 auto' }}
+      style={{ padding: '40px 48px 182px', maxWidth: 1200, margin: '0 auto' }}
     >
       <div className="usecases-header reveal text-left relative z-[3]" style={{ marginBottom: 48 }}>
         <h2 className="section-headline leading-tight mb-3.5 font-pixel font-normal text-[var(--ink)] text-[clamp(22px,3.4vw,40px)]">
