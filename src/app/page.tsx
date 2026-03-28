@@ -11,18 +11,16 @@ import FAQ from '@/components/sections/FAQ';
 import Footer from '@/components/ui/Footer';
 
 export default function Home() {
-  const scrollToFaq = () => {
-    const el = document.getElementById('faq-free');
+  const scrollToPricing = () => {
+    const el = document.getElementById('pricing');
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      // Simulate click to open FAQ if it exists
-      el.click();
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
   return (
     <div className="p-0">
-      <Navbar onFreePillClick={scrollToFaq} />
+      <Navbar onFreePillClick={scrollToPricing} />
       <Hero />
       <Integrations />
       <UseCases />
