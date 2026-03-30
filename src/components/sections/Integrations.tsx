@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { App, APPS_API } from '@/lib/apps';
+import { App, fetchApps, searchApps, APPS_PER_PAGE } from '@/lib/apps';
 
 
 export default function Integrations() {
@@ -12,41 +12,59 @@ export default function Integrations() {
   const [activeCat, setActiveCat] = useState('All');
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(0);
+  const [totalApps, setTotalApps] = useState(0);
+  const [hasError, setHasError] = useState(false);
+  const [categories, setCategories] = useState<string[]>(['All']);
   const sectionRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    fetch(APPS_API)
-      .then((r) => r.json())
-      .then((json) => {
-        setApps(json.data ?? []);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+  const fetchAppsData = useCallback(async () => {
+    setLoading(true);
+    setHasError(false);
+    
+    try {
+      let result;
+      
+      if (query.trim()) {
+        // Use search API when there's a query
+        result = await searchApps(query);
+      } else {
+        // Use apps API with category filter
+        result = await fetchApps(activeCat, page);
+      }
+      
+      setApps(result.data);
+      setTotalApps(result.total);
+      
+      // Extract categories from the apps data
+      if (!query.trim() && page === 0) {
+        const cats = new Set<string>();
+        result.data.forEach((app) => {
+          (app.category || []).forEach((cat) => cats.add(cat));
+        });
+        setCategories(['All', ...Array.from(cats).sort()]);
+      }
+    } catch (error) {
+      console.error('Error fetching apps:', error);
+      setHasError(true);
+      setApps([]);
+      setTotalApps(0);
+    } finally {
+      setLoading(false);
+    }
+  }, [activeCat, page, query]);
 
-  const categories = useMemo(() => {
-    const cats = new Set<string>();
-    apps.forEach((a) => (a.category ?? []).forEach((c) => cats.add(c)));
-    return ['All', ...Array.from(cats).sort()];
-  }, [apps]);
+  useEffect(() => {
+    fetchAppsData();
+  }, [fetchAppsData]);
 
   const getPerPage = () => {
-    if (typeof window === 'undefined') return 40;
-    return (window.innerWidth > 1024 ? 4 : 3) * 10;
+    if (typeof window === 'undefined') return APPS_PER_PAGE;
+    return APPS_PER_PAGE;
   };
 
-  const filtered = useMemo(() => {
-    return apps.filter((a) => {
-      const catOk = activeCat === 'All' || (a.category ?? []).includes(activeCat);
-      const qOk = !query || a.name.toLowerCase().includes(query.toLowerCase());
-      return catOk && qOk;
-    });
-  }, [apps, activeCat, query]);
-
   const PER_PAGE = getPerPage();
-  const totalPages = Math.ceil(filtered.length / PER_PAGE);
-  const currentPage = Math.min(page, Math.max(0, totalPages - 1));
-  const slice = filtered.slice(currentPage * PER_PAGE, (currentPage + 1) * PER_PAGE);
+  const totalPages = Math.ceil(totalApps / PER_PAGE);
+  const currentPage = page;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -169,17 +187,24 @@ export default function Integrations() {
           </div>
 
           <div className="integrations-grid-wrap flex flex-col" style={{ overflowY: 'auto', maxHeight: 487 }}>
-            <div className="integrations-grid grid grid-cols-4 auto-rows-[54px] min-h-0 max-[1024px]:grid-cols-3 max-[768px]:grid-cols-3">
+            <div 
+              className="integrations-grid grid grid-cols-4 auto-rows-[54px] min-h-0 max-[1024px]:grid-cols-3 max-[768px]:grid-cols-3" 
+              style={{ minHeight: '432px' }} // Fixed height: 8 rows * 54px = 432px
+            >
               {loading ? (
                 <div className="integ-empty col-span-full p-12 text-center" style={{ fontFamily: "'Poppins', sans-serif", fontSize: '14px', color: 'rgba(10,10,10,0.4)' }}>
                   Loading apps…
                 </div>
-              ) : slice.length === 0 ? (
+              ) : hasError ? (
                 <div className="integ-empty col-span-full p-12 text-center" style={{ fontFamily: "'Poppins', sans-serif", fontSize: '14px', color: 'rgba(10,10,10,0.4)' }}>
-                  No apps found.
+                  Error loading apps. Please try again.
+                </div>
+              ) : apps.length === 0 ? (
+                <div className="integ-empty col-span-full p-12 text-center flex items-center justify-center" style={{ fontFamily: "'Poppins', sans-serif", fontSize: '14px', color: 'rgba(10,10,10,0.4)', minHeight: '432px' }}>
+                  {query.trim() ? `No apps found for "${query}"` : 'No apps found.'}
                 </div>
               ) : (
-                slice.map((app: App, idx: number) => (
+                apps.map((app: App, idx: number) => (
                   <Link
                     key={app.rowid ?? idx}
                     href={`/mcp/${app.appslugname}`}
@@ -191,7 +216,7 @@ export default function Integrations() {
                       style={{ backgroundColor: app.brandcolor || '#888', flexShrink: 0 }}
                     >
                       {app.iconurl ? (
-                        <Image src={app.iconurl} alt={app.name} width={28} height={28} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 7 }} unoptimized />
+                        <Image src={app.iconurl.trimStart()} alt={app.name} width={28} height={28} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 7 }} unoptimized />
                       ) : (
                         <span style={{ fontFamily: "'Poppins', sans-serif", fontSize: '10px', fontWeight: 700, color: '#fff' }}>{app.name.charAt(0).toUpperCase()}</span>
                       )}
@@ -213,7 +238,7 @@ export default function Integrations() {
       <div className="integrations-footer flex items-center justify-end pt-4 gap-3" style={{paddingTop:'16px'}}>
         <button
           onClick={() => setPage((p) => Math.max(0, p - 1))}
-          disabled={currentPage === 0}
+          disabled={currentPage === 0 || loading}
           className="integ-page-btn bg-none border-[1.5px] border-[rgba(10,10,10,0.15)] rounded-md py-[5px] px-3.5 cursor-pointer transition-all hover:border-[#068F57] hover:text-[#068F57] disabled:opacity-35 disabled:cursor-default disabled:hover:border-[rgba(10,10,10,0.15)] disabled:hover:text-[var(--ink)]"
           style={{
             fontFamily: "'JetBrains Mono', monospace",
@@ -225,7 +250,7 @@ export default function Integrations() {
         </button>
         <button
           onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
-          disabled={currentPage >= totalPages - 1}
+          disabled={currentPage >= totalPages - 1 || totalPages <= 1 || loading}
           className="integ-page-btn bg-none border-[1.5px] border-[rgba(10,10,10,0.15)] rounded-md py-[5px] px-3.5 cursor-pointer transition-all hover:border-[#068F57] hover:text-[#068F57] disabled:opacity-35 disabled:cursor-default disabled:hover:border-[rgba(10,10,10,0.15)] disabled:hover:text-[var(--ink)]"
           style={{
             fontFamily: "'JetBrains Mono', monospace",
