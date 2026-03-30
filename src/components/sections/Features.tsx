@@ -133,7 +133,7 @@ export default function Features() {
       <PixelEdge position="top" />
       <PixelEdge position="bottom" />
       
-      <section className="section-features" id="features" style={{ paddingTop: 180, paddingBottom: 80, maxWidth: 1200, margin: '0 auto' }}>
+      <section className="section-features" id="features" style={{ paddingTop: 60, paddingBottom: 80, maxWidth: 1200, margin: '0 auto' }}>
         <div className="features-header reveal text-center mb-[52px]">
           <h2 
             className="features-headline leading-tight"
