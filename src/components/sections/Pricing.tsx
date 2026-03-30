@@ -17,7 +17,7 @@ const PRICING_CARDS = [
 
 export default function Pricing() {
   return (
-    <div className="pricing-band bg-[var(--cream)] pt-[182px] pb-[100px] px-12 max-[768px]:pt-[192px] max-[768px]:pb-[60px] max-[768px]:px-0 max-[540px]:pt-[160px] max-[540px]:pb-[48px]" id="dark-band">
+    <div className="pricing-band bg-[var(--cream)] pt-[182px] pb-[100px] px-12 max-[768px]:pt-[192px] max-[768px]:pb-[60px] max-[768px]:px-0 max-[540px]:pt-[160px] max-[540px]:pb-[48px]" id="pricing">
       <div className="pricing-wrap max-w-[1100px] mx-auto bg-white border border-[rgba(0,0,0,0.1)] rounded-[20px] pt-12 pb-[52px] px-12 max-[768px]:mx-4 max-[768px]:py-9 max-[768px]:px-7 max-[768px]:pb-10 max-[768px]:rounded-2xl max-[540px]:mx-3 max-[540px]:py-7 max-[540px]:px-5 max-[540px]:pb-8">
         <div className="pricing-header mb-10">
           <h2 

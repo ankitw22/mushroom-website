@@ -49,7 +49,7 @@ export default function Navbar({ onFreePillClick }: NavbarProps) {
       }}
     >
       <a
-        href="#faq-free"
+        href="#pricing"
         onClick={(e) => { e.preventDefault(); onFreePillClick?.(); }}
         style={{
           display: 'inline-flex', alignItems: 'center', gap: 6,
