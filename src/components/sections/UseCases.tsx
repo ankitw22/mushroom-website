@@ -1,52 +1,85 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Link from 'next/link';
+import Image from 'next/image';
 
+// App domain mapping for icon fetching
+const APP_DOMAINS: Record<string, string> = {
+  gmail: 'gmail.com',
+  notion: 'notion.so',
+  github: 'github.com',
+  slack: 'slack.com',
+  linear: 'linear.app',
+  hubspot: 'hubspot.com',
+};
+
+// Keywords to detect apps in card content
+const APP_KEYWORDS: Record<string, string[]> = {
+  gmail: ['email', 'emails', 'gmail', 'draft email', 'draft emails'],
+  notion: ['notion'],
+  github: ['pr', 'pull request', 'github'],
+  slack: ['#engineering', '#standup', '#product', 'slack', 'post it to #', 'post the summary to #'],
+  linear: ['linear', 'blocking', 'team this week'],
+  hubspot: ['hubspot', 'deals'],
+};
+
+// Use cases with explicit app associations
 const USE_CASES = [
   {
-    icons: [
-      { bg: '#EA4335', letter: 'G' },
-      { bg: '#000', letter: 'N' },
-    ],
+    apps: ['gmail', 'notion'],
     title: 'Summarise my unread emails and log the action items to Notion',
   },
   {
-    icons: [
-      { bg: '#1a1a2e', letter: 'GH' },
-      { bg: '#4A154B', letter: 'S' },
-    ],
+    apps: ['github', 'slack'],
     title: 'Summarise what changed in this PR and post it to #engineering',
   },
   {
-    icons: [
-      { bg: '#5E6AD2', letter: 'L' },
-      { bg: '#4A154B', letter: 'S' },
-    ],
+    apps: ['linear', 'slack'],
     title: "What's blocking the team this week? Post the summary to #standup",
   },
   {
-    icons: [
-      { bg: '#000', letter: 'N' },
-      { bg: '#EA4335', letter: 'G' },
-    ],
+    apps: ['notion', 'gmail'],
     title: 'Draft emails to everyone in my meeting notes who has a follow-up',
   },
   {
-    icons: [
-      { bg: '#FF7A59', letter: 'H' },
-      { bg: '#EA4335', letter: 'G' },
-    ],
+    apps: ['hubspot', 'gmail'],
     title: "Find deals that haven't been touched in 7 days and draft a follow-up",
   },
   {
-    icons: [
-      { bg: '#4A154B', letter: 'S' },
-      { bg: '#000', letter: 'N' },
-    ],
+    apps: ['slack', 'notion'],
     title: 'Collect all decisions made in #product this week and write them up in Notion',
   },
 ];
+
+// Get icon URL for an app
+function getIconUrl(appName: string): string {
+  const domain = APP_DOMAINS[appName.toLowerCase()];
+  if (!domain) return '';
+  return `https://thingsofbrand.com/api/icon/${domain}`;
+}
+
+// App icon component with fallback
+function AppIcon({ app, index }: { app: string; index: number }) {
+  const iconUrl = getIconUrl(app);
+  
+  return (
+    <div
+      className="usecase-icon w-8 h-8 rounded-lg overflow-hidden border-2 border-[var(--cream)] bg-white flex items-center justify-center"
+      style={{ marginLeft: index > 0 ? '-8px' : 0, zIndex: 10 - index }}
+    >
+      {iconUrl && (
+        <Image
+          src={iconUrl}
+          alt={`${app} icon`}
+          width={32}
+          height={32}
+          className="w-full h-full object-cover"
+          unoptimized
+        />
+      )}
+    </div>
+  );
+}
 
 export default function UseCases() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -98,14 +131,8 @@ export default function UseCases() {
           >
             <div className="usecase-top flex items-center justify-between">
               <div className="usecase-icons flex">
-                {uc.icons.map((icon, i) => (
-                  <span
-                    key={i}
-                    className="usecase-icon w-8 h-8 rounded-lg flex items-center justify-center text-white border-2 border-[var(--cream)] font-body text-[11px] font-bold"
-                    style={{ backgroundColor: icon.bg, marginLeft: i > 0 ? '-8px' : 0 }}
-                  >
-                    {icon.letter}
-                  </span>
+                {uc.apps.map((app, i) => (
+                  <AppIcon key={`${app}-${i}`} app={app} index={i} />
                 ))}
               </div>
             </div>
