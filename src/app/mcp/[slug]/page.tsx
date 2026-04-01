@@ -70,9 +70,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 }
 
-// Mock Image component for when next/image is used inside server components that might not have it imported
-import Image from 'next/image';
-
 export default async function McpPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 

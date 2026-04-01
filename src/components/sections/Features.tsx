@@ -144,9 +144,9 @@ export default function Features() {
               marginBottom: 0,
             }}
           >
-            Don&apos;t just chat,
+            Why teams
             <br />
-            <span className="text-white">Put your AI to work</span>
+            <span className="text-white">use Mushrooms</span>
           </h2>
         </div>
 
@@ -229,9 +229,9 @@ export default function Features() {
               color: 'var(--ink)',
             }}
           >
-            AI THAT DOESN&apos;T JUST RESPOND.
+            HOW MUSHROOMS
             <br />
-            <span className="text-white">IT EXECUTES.</span>
+            <span className="text-white">WORK.</span>
           </h2>
           <p 
             className="section-sub max-w-none mx-auto text-center"

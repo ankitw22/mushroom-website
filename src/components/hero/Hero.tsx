@@ -1,34 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import HeroCanvas from './HeroCanvas';
 import Ticker from './Ticker';
+import { useAppsCount } from '@/context/AppsCountContext';
 
 export default function Hero() {
-  const [appsCount, setAppsCount] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchAppsCount() {
-      try {
-        const response = await fetch('https://plug-service.viasocket.com/get-apps-count');
-        if (response.ok) {
-          const data = await response.json();
-          if (data.count) {
-            // Format the count with comma separators
-            const count = parseInt(data.count, 10);
-            setAppsCount(count.toLocaleString());
-          }
-        }
-      } catch (error) {
-        console.error('Failed to fetch apps count:', error);
-      }
-    }
-    fetchAppsCount();
-  }, []);
-
-  // Display dynamic count or fallback to "2,000+" while loading/on error
-  const displayCount = appsCount ? `${appsCount}+` : '2,000+';
+  const { displayCount } = useAppsCount();
 
   return (
     <div className="hero relative h-[calc(100vh-20px)] min-h-[600px] bg-[var(--green)] rounded-2xl overflow-hidden m-[10px]">

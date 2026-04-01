@@ -4,11 +4,13 @@ import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { App, fetchApps, searchApps, APPS_PER_PAGE } from '@/lib/apps';
+import { useAppsCount } from '@/context/AppsCountContext';
 
 
 export default function Integrations() {
   const [apps, setApps] = useState<App[]>([]);
   const [loading, setLoading] = useState(true);
+  const { appsCount } = useAppsCount();
   const [activeCat, setActiveCat] = useState('All');
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(0);
@@ -112,7 +114,7 @@ export default function Integrations() {
             marginBottom: 14,
           }}
         >
-          Give your <span className="text-[#068F57]">AI agent</span> the power to act
+          Connect your <span className="text-[#068F57]">AI</span> to {appsCount ? `${appsCount}+` : '2,000+'} apps
         </h2>
         <Link
           href="https://app.mushroom.viasocket.com/login"

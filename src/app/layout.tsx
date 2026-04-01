@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Poppins, JetBrains_Mono, Press_Start_2P } from 'next/font/google';
 import './globals.css';
+import { AppsCountProvider } from '@/context/AppsCountContext';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -21,13 +22,29 @@ const pressStart2P = Press_Start_2P({
 });
 
 
-export const metadata: Metadata = {
-  title: "Mushroom | AI powered MCP Server Manager",
-  description: "Mushroom - Connect your AI to 2000+ apps using MCP (Model Context Protocol). Give your AI agent the power to take real-world actions with secure MCP servers.",
-  icons: {
-    icon: "/mushroom-logo.svg",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  let count = '2,000+';
+  try {
+    const res = await fetch('https://plug-service.viasocket.com/get-apps-count', { next: { revalidate: 3600 } });
+    if (res.ok) {
+      const data = await res.json();
+      if (data?.count) {
+        count = `${parseInt(data.count, 10).toLocaleString()}+`;
+      }
+    }
+  } catch {}
+
+  return {
+    title: `Mushrooms — Connect Your AI to ${count} Apps via MCP`,
+    description: `Connect your AI tools with ${count} apps. Let AI take real world actions, turn your conversations into real outcomes.`,
+    icons: {
+      icon: '/mushroom-logo.svg',
+    },
+    verification: {
+      google: 'plvKVsbSFbvkiIsLeK4UVcK_l2T_cI9SEe7QxiOCnrg',
+    },
+  };
+}
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -38,7 +55,7 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${jetbrainsMono.variable} ${pressStart2P.variable} antialiased`}
       >
-        {children}
+        <AppsCountProvider>{children}</AppsCountProvider>
       </body>
     </html>
   );

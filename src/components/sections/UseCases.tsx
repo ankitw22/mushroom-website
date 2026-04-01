@@ -127,7 +127,7 @@ export default function UseCases() {
     >
       <div className="usecases-header reveal text-left relative z-[3]" style={{ marginBottom: 48 }}>
         <h2 className="section-headline leading-tight mb-3.5 font-pixel font-normal text-[var(--ink)] text-[clamp(22px,3.4vw,40px)]">
-          START WITH REAL <span className="text-[#068F57]">USE CASES.</span>
+          USE CASES YOUR <span className="text-[#068F57]">AI CAN EXECUTE.</span>
         </h2>
       </div>
       <div className="usecases-grid grid grid-cols-3 max-w-[1100px] mx-auto relative z-[3] max-[1200px]:grid-cols-2 max-[540px]:grid-cols-1" style={{ gap: 16 }}>
