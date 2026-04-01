@@ -53,9 +53,17 @@ const USE_CASES = [
 
 // Get icon URL for an app
 function getIconUrl(appName: string): string {
-  const domain = APP_DOMAINS[appName.toLowerCase()];
-  if (!domain) return '';
-  return `https://thingsofbrand.com/api/icon/${domain}`;
+  // Use reliable icon sources with official icons
+  const iconMap: Record<string, string> = {
+    gmail: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg',
+    notion: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/notion/notion-original.svg',
+    github: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',
+    slack: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/slack/slack-original.svg',
+    linear: 'https://cdn.simpleicons.org/linear',
+    hubspot: 'https://cdn.simpleicons.org/hubspot',
+  };
+  
+  return iconMap[appName.toLowerCase()] || '';
 }
 
 // App icon component with fallback
@@ -65,7 +73,7 @@ function AppIcon({ app, index }: { app: string; index: number }) {
   return (
     <div
       className="usecase-icon w-8 h-8 rounded-lg overflow-hidden border-2 border-[var(--cream)] bg-white flex items-center justify-center"
-      style={{ marginLeft: index > 0 ? '-8px' : 0, zIndex: 10 - index }}
+      style={{ marginLeft: index > 0 ? '8px' : 0, zIndex: 10 - index }}
     >
       {iconUrl && (
         <Image
@@ -73,7 +81,7 @@ function AppIcon({ app, index }: { app: string; index: number }) {
           alt={`${app} icon`}
           width={32}
           height={32}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
           unoptimized
         />
       )}

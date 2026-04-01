@@ -1,33 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 export const runtime = 'edge';
+
+// This route is deprecated - icons are now loaded from reliable CDN sources
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ domain: string }> }
 ) {
   const { domain } = await params;
 
-  try {
-    const upstream = await fetch(
-      `https://thingsofbrand.com/api/icon/${domain}`,
-      { next: { revalidate: 86400 } } // cache for 24 h
-    );
+  // Redirect to a reliable icon source as fallback
+  const iconMap: Record<string, string> = {
+    'slack.com': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/slack/slack-original.svg',
+    'notion.so': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/notion/notion-original.svg',
+    'gmail.com': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg',
+    'github.com': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',
+    'linear.app': 'https://api.iconify.design/logos/linear.svg',
+    'hubspot.com': 'https://api.iconify.design/logos/hubspot.svg',
+  };
 
-    if (!upstream.ok) {
-      return new NextResponse(null, { status: 404 });
-    }
-
-    const contentType = upstream.headers.get('content-type') ?? 'image/png';
-    const buffer = await upstream.arrayBuffer();
-
-    return new NextResponse(buffer, {
-      status: 200,
-      headers: {
-        'Content-Type': contentType,
-        'Cache-Control': 'public, max-age=86400',
-        'Access-Control-Allow-Origin': '*',
-      },
-    });
-  } catch {
-    return new NextResponse(null, { status: 502 });
+  const iconUrl = iconMap[domain];
+  if (iconUrl) {
+    return NextResponse.redirect(iconUrl);
   }
+
+  return new NextResponse(null, { status: 404 });
 }

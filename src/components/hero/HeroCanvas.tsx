@@ -17,28 +17,28 @@ const AI_LIST = [
   { name: 'Amp', sym: '⚡', col: '#FFCC00', icon: null },
 ];
 
-// App catalogue — domain used for thingsofbrand icon API
+// App catalogue — with reliable icon sources
 const APPS = [
-  { nm: 'Slack',      bg: '#4A154B', fg: '#fff', l: 'S',  domain: 'slack.com' },
-  { nm: 'Notion',     bg: '#000000', fg: '#fff', l: 'N',  domain: 'notion.so' },
-  { nm: 'Gmail',      bg: '#EA4335', fg: '#fff', l: 'G',  domain: 'gmail.com' },
-  { nm: 'GitHub',     bg: '#181717', fg: '#fff', l: 'GH', domain: 'github.com' },
-  { nm: 'Zapier',     bg: '#FF4A00', fg: '#fff', l: 'Z',  domain: 'zapier.com' },
-  { nm: 'Linear',     bg: '#5E6AD2', fg: '#fff', l: 'L',  domain: 'linear.app' },
-  { nm: 'ClickUp',    bg: '#7B68EE', fg: '#fff', l: 'CU', domain: 'clickup.com' },
-  { nm: 'Sheets',     bg: '#34A853', fg: '#fff', l: 'S',  domain: 'docs.google.com' },
-  { nm: 'Trello',     bg: '#0052CC', fg: '#fff', l: 'T',  domain: 'trello.com' },
-  { nm: 'Airtable',   bg: '#18BFFF', fg: '#000', l: 'AT', domain: 'airtable.com' },
-  { nm: 'Figma',      bg: '#F24E1E', fg: '#fff', l: 'F',  domain: 'figma.com' },
-  { nm: 'Jira',       bg: '#0052CC', fg: '#fff', l: 'J',  domain: 'atlassian.com' },
-  { nm: 'Asana',      bg: '#F06A6A', fg: '#fff', l: 'A',  domain: 'asana.com' },
-  { nm: 'HubSpot',    bg: '#FF7A59', fg: '#fff', l: 'H',  domain: 'hubspot.com' },
-  { nm: 'Discord',    bg: '#5865F2', fg: '#fff', l: 'D',  domain: 'discord.com' },
-  { nm: 'Dropbox',    bg: '#0061FF', fg: '#fff', l: 'DB', domain: 'dropbox.com' },
-  { nm: 'Stripe',     bg: '#635BFF', fg: '#fff', l: 'ST', domain: 'stripe.com' },
-  { nm: 'Salesforce', bg: '#00A1E0', fg: '#fff', l: 'SF', domain: 'salesforce.com' },
-  { nm: 'Twilio',     bg: '#F22F46', fg: '#fff', l: 'TW', domain: 'twilio.com' },
-  { nm: 'Zendesk',    bg: '#03363D', fg: '#fff', l: 'Z',  domain: 'zendesk.com' },
+  { nm: 'Slack',      bg: '#4A154B', fg: '#fff', l: 'S',  icon: 'slack' },
+  { nm: 'Notion',     bg: '#000000', fg: '#fff', l: 'N',  icon: 'notion' },
+  { nm: 'Gmail',      bg: '#EA4335', fg: '#fff', l: 'G',  icon: 'google' },
+  { nm: 'GitHub',     bg: '#181717', fg: '#fff', l: 'GH', icon: 'github' },
+  { nm: 'Zapier',     bg: '#FF4A00', fg: '#fff', l: 'Z',  icon: 'zapier' },
+  { nm: 'Linear',     bg: '#5E6AD2', fg: '#fff', l: 'L',  icon: 'linear' },
+  { nm: 'ClickUp',    bg: '#7B68EE', fg: '#fff', l: 'CU', icon: 'clickup' },
+  { nm: 'Sheets',     bg: '#34A853', fg: '#fff', l: 'S',  icon: 'google' },
+  { nm: 'Trello',     bg: '#0052CC', fg: '#fff', l: 'T',  icon: 'trello' },
+  { nm: 'Airtable',   bg: '#18BFFF', fg: '#000', l: 'AT', icon: 'airtable' },
+  { nm: 'Figma',      bg: '#F24E1E', fg: '#fff', l: 'F',  icon: 'figma' },
+  { nm: 'Jira',       bg: '#0052CC', fg: '#fff', l: 'J',  icon: 'atlassian' },
+  { nm: 'Asana',      bg: '#F06A6A', fg: '#fff', l: 'A',  icon: 'asana' },
+  { nm: 'HubSpot',    bg: '#FF7A59', fg: '#fff', l: 'H',  icon: 'hubspot' },
+  { nm: 'Discord',    bg: '#5865F2', fg: '#fff', l: 'D',  icon: 'discord' },
+  { nm: 'Dropbox',    bg: '#0061FF', fg: '#fff', l: 'DB', icon: 'dropbox' },
+  { nm: 'Stripe',     bg: '#635BFF', fg: '#fff', l: 'ST', icon: 'stripe' },
+  { nm: 'Salesforce', bg: '#00A1E0', fg: '#fff', l: 'SF', icon: 'salesforce' },
+  { nm: 'Twilio',     bg: '#F22F46', fg: '#fff', l: 'TW', icon: 'twilio' },
+  { nm: 'Zendesk',    bg: '#03363D', fg: '#fff', l: 'Z',  icon: 'zendesk' },
 ];
 
 // App actions
@@ -189,11 +189,11 @@ export default function HeroCanvas() {
       };
     });
 
-    // Preload app icons via thingsofbrand.com API
+    // Preload app icons via reliable sources
     APPS.forEach((app) => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      img.src = `/api/icon/${app.domain}`;
+      img.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${app.icon}/${app.icon}-original.svg`;
       img.onload = () => {
         appIconImgs[app.nm] = img;
       };
