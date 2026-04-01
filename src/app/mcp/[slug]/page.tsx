@@ -58,9 +58,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const data: ApiResponse = await res.json();
     const app = data.plugins[slug];
     if (!app) return { title: 'Mushroom Server' };
+    const actionCount = (app.events ?? []).filter((e) => e.type === 'action').length;
     return {
-      title: `${app.name} MCP Server | Mushroom`,
-      description: `Connect ${app.name} to your AI assistant using the Mushroom MCP Server. Give ChatGPT, Claude, and Cursor the power to take actions in ${app.name} via the Model Context Protocol (MCP).`,
+      title: `MCP Server for ${app.name} | Mushrooms`,
+      description: `Mushrooms connects your AI to ${app.name} with ${actionCount}+ supported actions. Select what your AI can do and let it execute.`,
       icons: {
         icon: "/mushroom-logo.svg",
       },
