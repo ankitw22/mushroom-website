@@ -1,63 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-
-// AI Clients data with domains for thingsofbrand.com icon API
-const AI_LIST = [
-  { name: 'Claude', sym: '✳', col: '#D4845A', domain: 'anthropic.com' },
-  { name: 'ChatGPT', sym: '◎', col: '#74AA9C', domain: 'openai.com' },
-  { name: 'Cursor', sym: '⬡', col: '#aaa', domain: 'cursor.com' },
-  { name: 'Windsurf', sym: '◈', col: '#4D9FE8', domain: 'codeium.com' },
-  { name: 'Gemini', sym: '✦', col: '#8B9CF6', domain: 'gemini.google.com' },
-  { name: 'Copilot', sym: '⊕', col: '#0078D4', domain: 'github.com' },
-  { name: 'Continue', sym: '▷', col: '#FF6B35', domain: 'continue.dev' },
-  { name: 'Cline', sym: '◆', col: '#E24444', domain: 'cline.bot' },
-  { name: 'Zed', sym: '⬢', col: '#7744DD', domain: 'zed.dev' },
-  { name: 'Cody', sym: '✿', col: '#FF5959', domain: 'sourcegraph.com' },
-  { name: 'Amp', sym: '⚡', col: '#FFCC00', domain: 'amp.dev' },
-];
-
-// App catalogue — with domains for thingsofbrand.com icon API
-const APPS = [
-  { nm: 'Slack',      bg: '#4A154B', fg: '#fff', l: 'S',  domain: 'slack.com' },
-  { nm: 'Notion',     bg: '#000000', fg: '#fff', l: 'N',  domain: 'notion.so' },
-  { nm: 'Gmail',      bg: '#EA4335', fg: '#fff', l: 'G',  domain: 'gmail.com' },
-  { nm: 'GitHub',     bg: '#181717', fg: '#fff', l: 'GH', domain: 'github.com' },
-  { nm: 'Zapier',     bg: '#FF4A00', fg: '#fff', l: 'Z',  domain: 'zapier.com' },
-  { nm: 'Linear',     bg: '#5E6AD2', fg: '#fff', l: 'L',  domain: 'linear.app' },
-  { nm: 'ClickUp',    bg: '#7B68EE', fg: '#fff', l: 'CU', domain: 'clickup.com' },
-  { nm: 'Sheets',     bg: '#34A853', fg: '#fff', l: 'S',  domain: 'sheets.google.com' },
-  { nm: 'Trello',     bg: '#0052CC', fg: '#fff', l: 'T',  domain: 'trello.com' },
-  { nm: 'Airtable',   bg: '#18BFFF', fg: '#000', l: 'AT', domain: 'airtable.com' },
-  { nm: 'Figma',      bg: '#F24E1E', fg: '#fff', l: 'F',  domain: 'figma.com' },
-  { nm: 'Jira',       bg: '#0052CC', fg: '#fff', l: 'J',  domain: 'jira.atlassian.com' },
-  { nm: 'Asana',      bg: '#F06A6A', fg: '#fff', l: 'A',  domain: 'asana.com' },
-  { nm: 'HubSpot',    bg: '#FF7A59', fg: '#fff', l: 'H',  domain: 'hubspot.com' },
-  { nm: 'Discord',    bg: '#5865F2', fg: '#fff', l: 'D',  domain: 'discord.com' },
-  { nm: 'Dropbox',    bg: '#0061FF', fg: '#fff', l: 'DB', domain: 'dropbox.com' },
-  { nm: 'Stripe',     bg: '#635BFF', fg: '#fff', l: 'ST', domain: 'stripe.com' },
-  { nm: 'Salesforce', bg: '#00A1E0', fg: '#fff', l: 'SF', domain: 'salesforce.com' },
-  { nm: 'Twilio',     bg: '#F22F46', fg: '#fff', l: 'TW', domain: 'twilio.com' },
-  { nm: 'Zendesk',    bg: '#03363D', fg: '#fff', l: 'Z',  domain: 'zendesk.com' },
-];
-
-// App actions
-const APP_ACTIONS: Record<string, string> = {
-  Slack: 'Sent message',
-  Notion: 'Updated wiki',
-  Gmail: 'Sent email',
-  GitHub: 'Created issue',
-  Zapier: 'Ran workflow',
-  Linear: 'Filed ticket',
-  ClickUp: 'Created task',
-  Sheets: 'Updated data',
-  Trello: 'Moved card',
-  Airtable: 'Added record',
-  Figma: 'Left comment',
-  Jira: 'Logged issue',
-  Asana: 'Assigned task',
-  HubSpot: 'Logged contact',
-};
+import { AI_CLIENTS, INTEGRATION_APPS, APP_ACTIONS } from '@/config/brand-icons';
 
 // Cloud pattern
 const CLOUD_G = [
@@ -68,6 +12,24 @@ const CLOUD_G = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
 
+// Local type for canvas apps (matches INTEGRATION_APPS structure but with shortened keys for canvas code)
+type CanvasApp = {
+  nm: string;
+  bg: string;
+  fg: string;
+  l: string;
+  domain: string;
+};
+
+// Map INTEGRATION_APPS to canvas format
+const APPS: CanvasApp[] = INTEGRATION_APPS.map(app => ({
+  nm: app.name,
+  bg: app.bg,
+  fg: app.fg,
+  l: app.letter,
+  domain: app.domain,
+}));
+
 interface Cloud {
   x: number;
   y: number;
@@ -76,7 +38,7 @@ interface Cloud {
 }
 
 interface FallingApp {
-  app: (typeof APPS)[0];
+  app: CanvasApp;
   x: number;
   y: number;
   vy: number;
@@ -85,7 +47,7 @@ interface FallingApp {
 }
 
 interface Mushroom {
-  app: (typeof APPS)[0];
+  app: CanvasApp;
   state: 'landing' | 'gone';
   x: number;
   y: number;
@@ -183,7 +145,7 @@ export default function HeroCanvas() {
     let pauseTimer = 0;
 
     // Preload AI logos via local API proxy (avoids CORS issues with canvas)
-    AI_LIST.forEach((ai) => {
+    AI_CLIENTS.forEach((ai) => {
       if (!ai.domain) return;
       const img = new Image();
       img.crossOrigin = 'anonymous';
@@ -366,7 +328,7 @@ export default function HeroCanvas() {
       }, 400);
 
       setTimeout(() => {
-        currentAIIdx = (currentAIIdx + 1) % AI_LIST.length;
+        currentAIIdx = (currentAIIdx + 1) % AI_CLIENTS.length;
       }, 600);
 
       setTimeout(() => {
@@ -398,7 +360,7 @@ export default function HeroCanvas() {
       );
     };
 
-    const drawAppLogo = (app: (typeof APPS)[0], cx: number, cy: number) => {
+    const drawAppLogo = (app: CanvasApp, cx: number, cy: number) => {
       const s = 40;
       const r = 10;
       const iconImg = appIconImgs[app.nm];
@@ -528,7 +490,7 @@ export default function HeroCanvas() {
     };
 
     const drawChar = () => {
-      const ai = AI_LIST[currentAIIdx % AI_LIST.length];
+      const ai = AI_CLIENTS[currentAIIdx % AI_CLIENTS.length];
       const { x, y, face, frame, flashT } = char;
       const cx = x + char.w / 2;
 
