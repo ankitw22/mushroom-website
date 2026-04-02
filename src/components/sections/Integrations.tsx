@@ -214,7 +214,7 @@ export default function Integrations() {
                       {/* Request App Section */}
                       <div className="flex flex-col items-center text-center gap-3 max-w-md">
                         <p style={{ fontFamily: "'Poppins', sans-serif", fontSize: '15px', color: 'var(--ink)' }}>
-                          Can&apos;t find the <span style={{ color: '#068F57', fontWeight: 600 }}>Mushroom</span> you&apos;re looking for?
+                          Can&apos;t find the <span style={{ color: '#068F57', fontWeight: 600 }}>Mushroom </span> you&apos;re looking for?
                           <br />
                           <span style={{ color: 'rgba(10,10,10,0.6)' }}>We&apos;ll build it for you within 48 hours.</span>
                         </p>
