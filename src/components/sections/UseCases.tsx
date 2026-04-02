@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 
-// App domain mapping for icon fetching
+// App domain mapping for icon fetching via thingsofbrand.com API
 const APP_DOMAINS: Record<string, string> = {
   gmail: 'gmail.com',
   notion: 'notion.so',
@@ -51,19 +51,11 @@ const USE_CASES = [
   },
 ];
 
-// Get icon URL for an app
+// Get icon URL for an app using thingsofbrand.com API
 function getIconUrl(appName: string): string {
-  // Use reliable icon sources with official icons
-  const iconMap: Record<string, string> = {
-    gmail: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg',
-    notion: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/notion/notion-original.svg',
-    github: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',
-    slack: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/slack/slack-original.svg',
-    linear: 'https://cdn.simpleicons.org/linear',
-    hubspot: 'https://cdn.simpleicons.org/hubspot',
-  };
-  
-  return iconMap[appName.toLowerCase()] || '';
+  const domain = APP_DOMAINS[appName.toLowerCase()];
+  if (!domain) return '';
+  return `https://thingsofbrand.com/api/icon/${domain}`;
 }
 
 // App icon component with fallback

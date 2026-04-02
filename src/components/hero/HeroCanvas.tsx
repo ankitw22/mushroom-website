@@ -2,43 +2,43 @@
 
 import { useEffect, useRef } from 'react';
 
-// AI Clients data
+// AI Clients data with domains for thingsofbrand.com icon API
 const AI_LIST = [
-  { name: 'Claude', sym: '✳', col: '#D4845A', icon: 'anthropic' },
-  { name: 'ChatGPT', sym: '◎', col: '#74AA9C', icon: 'openai' },
-  { name: 'Cursor', sym: '⬡', col: '#aaa', icon: 'cursor' },
-  { name: 'Windsurf', sym: '◈', col: '#4D9FE8', icon: 'codeium' },
-  { name: 'Gemini', sym: '✦', col: '#8B9CF6', icon: 'googlegemini' },
-  { name: 'Copilot', sym: '⊕', col: '#0078D4', icon: 'githubcopilot' },
-  { name: 'Continue', sym: '▷', col: '#FF6B35', icon: null },
-  { name: 'Cline', sym: '◆', col: '#E24444', icon: null },
-  { name: 'Zed', sym: '⬢', col: '#7744DD', icon: 'zedindustries' },
-  { name: 'Cody', sym: '✿', col: '#FF5959', icon: 'sourcegraph' },
-  { name: 'Amp', sym: '⚡', col: '#FFCC00', icon: null },
+  { name: 'Claude', sym: '✳', col: '#D4845A', domain: 'anthropic.com' },
+  { name: 'ChatGPT', sym: '◎', col: '#74AA9C', domain: 'openai.com' },
+  { name: 'Cursor', sym: '⬡', col: '#aaa', domain: 'cursor.com' },
+  { name: 'Windsurf', sym: '◈', col: '#4D9FE8', domain: 'codeium.com' },
+  { name: 'Gemini', sym: '✦', col: '#8B9CF6', domain: 'gemini.google.com' },
+  { name: 'Copilot', sym: '⊕', col: '#0078D4', domain: 'github.com' },
+  { name: 'Continue', sym: '▷', col: '#FF6B35', domain: 'continue.dev' },
+  { name: 'Cline', sym: '◆', col: '#E24444', domain: 'cline.bot' },
+  { name: 'Zed', sym: '⬢', col: '#7744DD', domain: 'zed.dev' },
+  { name: 'Cody', sym: '✿', col: '#FF5959', domain: 'sourcegraph.com' },
+  { name: 'Amp', sym: '⚡', col: '#FFCC00', domain: 'amp.dev' },
 ];
 
-// App catalogue — with reliable icon sources
+// App catalogue — with domains for thingsofbrand.com icon API
 const APPS = [
-  { nm: 'Slack',      bg: '#4A154B', fg: '#fff', l: 'S',  icon: 'slack' },
-  { nm: 'Notion',     bg: '#000000', fg: '#fff', l: 'N',  icon: 'notion' },
-  { nm: 'Gmail',      bg: '#EA4335', fg: '#fff', l: 'G',  icon: 'google' },
-  { nm: 'GitHub',     bg: '#181717', fg: '#fff', l: 'GH', icon: 'github' },
-  { nm: 'Zapier',     bg: '#FF4A00', fg: '#fff', l: 'Z',  icon: 'zapier' },
-  { nm: 'Linear',     bg: '#5E6AD2', fg: '#fff', l: 'L',  icon: 'linear' },
-  { nm: 'ClickUp',    bg: '#7B68EE', fg: '#fff', l: 'CU', icon: 'clickup' },
-  { nm: 'Sheets',     bg: '#34A853', fg: '#fff', l: 'S',  icon: 'google' },
-  { nm: 'Trello',     bg: '#0052CC', fg: '#fff', l: 'T',  icon: 'trello' },
-  { nm: 'Airtable',   bg: '#18BFFF', fg: '#000', l: 'AT', icon: 'airtable' },
-  { nm: 'Figma',      bg: '#F24E1E', fg: '#fff', l: 'F',  icon: 'figma' },
-  { nm: 'Jira',       bg: '#0052CC', fg: '#fff', l: 'J',  icon: 'atlassian' },
-  { nm: 'Asana',      bg: '#F06A6A', fg: '#fff', l: 'A',  icon: 'asana' },
-  { nm: 'HubSpot',    bg: '#FF7A59', fg: '#fff', l: 'H',  icon: 'hubspot' },
-  { nm: 'Discord',    bg: '#5865F2', fg: '#fff', l: 'D',  icon: 'discord' },
-  { nm: 'Dropbox',    bg: '#0061FF', fg: '#fff', l: 'DB', icon: 'dropbox' },
-  { nm: 'Stripe',     bg: '#635BFF', fg: '#fff', l: 'ST', icon: 'stripe' },
-  { nm: 'Salesforce', bg: '#00A1E0', fg: '#fff', l: 'SF', icon: 'salesforce' },
-  { nm: 'Twilio',     bg: '#F22F46', fg: '#fff', l: 'TW', icon: 'twilio' },
-  { nm: 'Zendesk',    bg: '#03363D', fg: '#fff', l: 'Z',  icon: 'zendesk' },
+  { nm: 'Slack',      bg: '#4A154B', fg: '#fff', l: 'S',  domain: 'slack.com' },
+  { nm: 'Notion',     bg: '#000000', fg: '#fff', l: 'N',  domain: 'notion.so' },
+  { nm: 'Gmail',      bg: '#EA4335', fg: '#fff', l: 'G',  domain: 'gmail.com' },
+  { nm: 'GitHub',     bg: '#181717', fg: '#fff', l: 'GH', domain: 'github.com' },
+  { nm: 'Zapier',     bg: '#FF4A00', fg: '#fff', l: 'Z',  domain: 'zapier.com' },
+  { nm: 'Linear',     bg: '#5E6AD2', fg: '#fff', l: 'L',  domain: 'linear.app' },
+  { nm: 'ClickUp',    bg: '#7B68EE', fg: '#fff', l: 'CU', domain: 'clickup.com' },
+  { nm: 'Sheets',     bg: '#34A853', fg: '#fff', l: 'S',  domain: 'sheets.google.com' },
+  { nm: 'Trello',     bg: '#0052CC', fg: '#fff', l: 'T',  domain: 'trello.com' },
+  { nm: 'Airtable',   bg: '#18BFFF', fg: '#000', l: 'AT', domain: 'airtable.com' },
+  { nm: 'Figma',      bg: '#F24E1E', fg: '#fff', l: 'F',  domain: 'figma.com' },
+  { nm: 'Jira',       bg: '#0052CC', fg: '#fff', l: 'J',  domain: 'jira.atlassian.com' },
+  { nm: 'Asana',      bg: '#F06A6A', fg: '#fff', l: 'A',  domain: 'asana.com' },
+  { nm: 'HubSpot',    bg: '#FF7A59', fg: '#fff', l: 'H',  domain: 'hubspot.com' },
+  { nm: 'Discord',    bg: '#5865F2', fg: '#fff', l: 'D',  domain: 'discord.com' },
+  { nm: 'Dropbox',    bg: '#0061FF', fg: '#fff', l: 'DB', domain: 'dropbox.com' },
+  { nm: 'Stripe',     bg: '#635BFF', fg: '#fff', l: 'ST', domain: 'stripe.com' },
+  { nm: 'Salesforce', bg: '#00A1E0', fg: '#fff', l: 'SF', domain: 'salesforce.com' },
+  { nm: 'Twilio',     bg: '#F22F46', fg: '#fff', l: 'TW', domain: 'twilio.com' },
+  { nm: 'Zendesk',    bg: '#03363D', fg: '#fff', l: 'Z',  domain: 'zendesk.com' },
 ];
 
 // App actions
@@ -178,22 +178,22 @@ export default function HeroCanvas() {
     let autoState = 'idle';
     let pauseTimer = 0;
 
-    // Preload AI logos
+    // Preload AI logos via thingsofbrand.com API
     AI_LIST.forEach((ai) => {
-      if (!ai.icon) return;
+      if (!ai.domain) return;
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      img.src = `https://cdn.simpleicons.org/${ai.icon}/white`;
+      img.src = `https://thingsofbrand.com/api/icon/${ai.domain}`;
       img.onload = () => {
         logoImgs[ai.name] = img;
       };
     });
 
-    // Preload app icons via reliable sources
+    // Preload app icons via thingsofbrand.com API
     APPS.forEach((app) => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      img.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${app.icon}/${app.icon}-original.svg`;
+      img.src = `https://thingsofbrand.com/api/icon/${app.domain}`;
       img.onload = () => {
         appIconImgs[app.nm] = img;
       };
