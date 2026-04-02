@@ -158,6 +158,10 @@ export default function HeroCanvas() {
     let actionBubbles: ActionBubble[] = [];
     const logoImgs: Record<string, HTMLImageElement> = {};
     const appIconImgs: Record<string, HTMLImageElement> = {};
+    const loadedAppIcons = new Set<string>();
+    const failedAppIcons = new Set<string>();
+    const loadedLogoImgs = new Set<string>();
+    const failedLogoImgs = new Set<string>();
 
     // Character
     const char = {
@@ -183,20 +187,28 @@ export default function HeroCanvas() {
       if (!ai.domain) return;
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      img.src = `https://thingsofbrand.com/api/icon/${ai.domain}`;
       img.onload = () => {
         logoImgs[ai.name] = img;
+        loadedLogoImgs.add(ai.name);
       };
+      img.onerror = () => {
+        failedLogoImgs.add(ai.name);
+      };
+      img.src = `https://thingsofbrand.com/api/icon/${ai.domain}`;
     });
 
     // Preload app icons via thingsofbrand.com API
     APPS.forEach((app) => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      img.src = `https://thingsofbrand.com/api/icon/${app.domain}`;
       img.onload = () => {
         appIconImgs[app.nm] = img;
+        loadedAppIcons.add(app.nm);
       };
+      img.onerror = () => {
+        failedAppIcons.add(app.nm);
+      };
+      img.src = `https://thingsofbrand.com/api/icon/${app.domain}`;
     });
 
     const nextApp = () => {
@@ -383,22 +395,26 @@ export default function HeroCanvas() {
     const drawAppLogo = (app: (typeof APPS)[0], cx: number, cy: number) => {
       const s = 40;
       const r = 10;
-      // White card background (thingsofbrand icons are full-colour on transparent)
-      ctx.fillStyle = '#ffffff';
-      roundRect(cx - s / 2, cy - s / 2, s, s, r);
-      ctx.fill();
-      // Subtle drop-shadow ring
-      ctx.strokeStyle = 'rgba(0,0,0,0.10)';
-      ctx.lineWidth = 1.5;
-      roundRect(cx - s / 2, cy - s / 2, s, s, r);
-      ctx.stroke();
-      // Icon image or letter fallback
       const iconImg = appIconImgs[app.nm];
+      const isLoaded = loadedAppIcons.has(app.nm);
+      const hasFailed = failedAppIcons.has(app.nm);
       const iconSize = s * 0.68;
-      if (iconImg && iconImg.complete && iconImg.naturalWidth > 0) {
+      
+      // If icon is loaded, draw it on a white card
+      if (isLoaded && iconImg && iconImg.complete && iconImg.naturalWidth > 0) {
+        // White card background
+        ctx.fillStyle = '#ffffff';
+        roundRect(cx - s / 2, cy - s / 2, s, s, r);
+        ctx.fill();
+        // Subtle drop-shadow ring
+        ctx.strokeStyle = 'rgba(0,0,0,0.10)';
+        ctx.lineWidth = 1.5;
+        roundRect(cx - s / 2, cy - s / 2, s, s, r);
+        ctx.stroke();
+        // Draw the brand icon
         ctx.drawImage(iconImg, cx - iconSize / 2, cy - iconSize / 2, iconSize, iconSize);
-      } else {
-        // Letter fallback on brand colour
+      } else if (hasFailed) {
+        // Letter fallback only when image has actually failed
         ctx.fillStyle = app.bg;
         roundRect(cx - s / 2, cy - s / 2, s, s, r);
         ctx.fill();
@@ -408,6 +424,16 @@ export default function HeroCanvas() {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(app.l, cx, cy + 1);
+      } else {
+        // Still loading - show a loading placeholder (subtle pulsing white card)
+        const pulse = 0.85 + 0.15 * Math.sin(Date.now() / 200);
+        ctx.fillStyle = `rgba(255,255,255,${pulse})`;
+        roundRect(cx - s / 2, cy - s / 2, s, s, r);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(0,0,0,0.10)';
+        ctx.lineWidth = 1.5;
+        roundRect(cx - s / 2, cy - s / 2, s, s, r);
+        ctx.stroke();
       }
     };
 
@@ -473,9 +499,12 @@ export default function HeroCanvas() {
 
       const mushIconImg = appIconImgs[app.nm];
       const mushIconSize = 16;
-      if (mushIconImg && mushIconImg.complete && mushIconImg.naturalWidth > 0) {
+      const mushIconLoaded = loadedAppIcons.has(app.nm);
+      const mushIconFailed = failedAppIcons.has(app.nm);
+      if (mushIconLoaded && mushIconImg && mushIconImg.complete && mushIconImg.naturalWidth > 0) {
         ctx.drawImage(mushIconImg, -mushIconSize / 2, -16, mushIconSize, mushIconSize);
-      } else {
+      } else if (mushIconFailed) {
+        // Only show letter fallback if image actually failed
         ctx.fillStyle = app.fg;
         const fz = app.l.length > 1 ? 9 : 12;
         ctx.font = `700 ${fz}px 'Press Start 2P', monospace`;
@@ -483,6 +512,7 @@ export default function HeroCanvas() {
         ctx.textBaseline = 'middle';
         ctx.fillText(app.l[0], 0, -8);
       }
+      // If still loading, don't show anything on the mushroom cap (cleaner look)
 
       ctx.fillStyle = app.fg === '#fff' ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.65)';
       ctx.fillRect(-6, 4, 4, 4);
@@ -542,15 +572,19 @@ export default function HeroCanvas() {
       const badgeY = 11.5 * P;
       const badgeS = 16;
       const logo = logoImgs[ai.name];
-      if (logo) {
+      const logoLoaded = loadedLogoImgs.has(ai.name);
+      const logoFailed = failedLogoImgs.has(ai.name);
+      if (logoLoaded && logo && logo.complete && logo.naturalWidth > 0) {
         ctx.drawImage(logo, badgeX - badgeS / 2, badgeY - badgeS / 2, badgeS, badgeS);
-      } else {
+      } else if (logoFailed) {
+        // Only show symbol fallback if image actually failed
         ctx.fillStyle = '#fff';
         ctx.font = "10px 'Press Start 2P', monospace";
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(ai.sym, badgeX, badgeY);
       }
+      // If still loading, show nothing (cleaner look)
       ctx.restore();
 
       // Waist
