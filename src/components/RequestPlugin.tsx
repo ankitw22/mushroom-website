@@ -132,8 +132,8 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }: 
     };
 
     return (
-        <div className="fixed inset-0 z-50 grid place-items-center">
-            <div className="absolute inset-0 bg-black bg-opacity-40" onClick={handleClose} />
+        <div className="fixed inset-0 z-50 flex h-screen w-screen items-center justify-center">
+            <div className="absolute inset-0 backdrop-blur-sm" onClick={handleClose} />
 
             {showSuccessPopup && (
                 <div className="relative z-10 bg-white rounded-xl p-8 max-w-md w-full mx-4 shadow-2xl">
