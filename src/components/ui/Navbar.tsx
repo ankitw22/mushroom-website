@@ -69,7 +69,7 @@ export default function Navbar({ onFreePillClick }: NavbarProps) {
         Free
       </a>
       <Link
-        href="#"
+        href="/pricing"
         className="max-[540px]:hidden"
         style={{
           display: 'inline-block',
@@ -80,7 +80,7 @@ export default function Navbar({ onFreePillClick }: NavbarProps) {
           transition: 'transform 0.12s, box-shadow 0.12s',
         }}
       >
-        Explore Embed
+        Pricing
       </Link>
       <Link
         href="https://app.mushroom.viasocket.com/login"

@@ -1,0 +1,505 @@
+/* ── PRICING PAGE WRAPPER ── */
+.pricingPageWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── PAGE HEADER ── */
+.pricingPageHeader {
+  background: var(--cream);
+  padding: 100px 48px 40px;
+}
+
+.pricingPageHeaderInner {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.pricingBreadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: rgba(10, 10, 10, 0.5);
+  margin-bottom: 16px;
+}
+
+.pricingBreadcrumb a {
+  color: rgba(10, 10, 10, 0.5);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.pricingBreadcrumb a:hover {
+  color: var(--ink);
+}
+
+.pricingBreadcrumbSep {
+  opacity: 0.4;
+}
+
+.pricingBreadcrumbCurrent {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.pricingPageHeadline {
+  font-family: var(--pixel);
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.2;
+  margin: 0;
+  text-align: left;
+}
+
+/* ── SECTION 1: TWO-COLUMN PRICING BLOCK ── */
+.pricingBlock {
+  background: var(--cream);
+  padding: 0 48px 24px;
+}
+
+/* Grid layout — 5 explicit rows so subgrid can share them */
+.pricingBlockInner {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  grid-template-rows: repeat(5, auto);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Card wrappers — each spans all 5 parent rows via subgrid */
+.pcCardFree,
+.pcCardEnt {
+  grid-row: 1 / 6;
+  display: grid;
+  grid-template-rows: subgrid;
+}
+
+.pcCardFree {
+  grid-column: 1;
+  background-color: var(--cream);
+  background-image: radial-gradient(circle, rgba(10, 10, 10, 0.06) 1px, transparent 1px);
+  background-size: 16px 16px;
+  border-right: 2px solid var(--ink);
+}
+
+.pcCardEnt {
+  grid-column: 2;
+  background-color: var(--green);
+  background-image:
+    linear-gradient(rgba(10, 10, 10, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 10, 10, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* LABELS — row 1 */
+.pcLabel {
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(10, 10, 10, 0.5);
+  margin: 0;
+  padding: 48px 48px 16px;
+}
+
+.pcCardEnt .pcLabel {
+  color: rgba(10, 10, 10, 0.6);
+}
+
+/* HEADLINES — row 2 */
+.pcHeadline {
+  font-family: var(--body);
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  margin: 0;
+  padding: 0 48px 8px;
+}
+
+/* SUBTEXT — row 3 */
+.pcSub {
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.65;
+  margin: 0;
+  padding: 0 48px;
+}
+
+/* LIST (free) / SPACER (enterprise) — row 4 */
+.pcList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 0;
+  padding: 20px 48px 32px;
+}
+
+.pcList li {
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+/* CTA BUTTONS — row 5 */
+.pcCtaFull {
+  display: block;
+  text-align: center;
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  padding: 14px 24px;
+  text-decoration: none;
+  transition: opacity 0.12s;
+  margin: 0 48px 48px;
+}
+
+.pcCtaFull:hover {
+  opacity: 0.82;
+}
+
+.pcCtasSplit {
+  display: flex;
+  gap: 10px;
+  margin: 0 48px 48px;
+}
+
+.pcCtaSplitLeft,
+.pcCtaSplitRight {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 14px 16px;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 8px;
+  border: 2px solid var(--ink);
+  transition: opacity 0.12s;
+}
+
+.pcCtaSplitLeft {
+  background: var(--ink);
+  color: #fff;
+}
+
+.pcCtaSplitLeft:hover {
+  opacity: 0.85;
+}
+
+.pcCtaSplitRight {
+  background: #fff;
+  color: var(--ink);
+}
+
+.pcCtaSplitRight:hover {
+  opacity: 0.8;
+}
+
+/* ── FEATURE STRIP (visually attached to container) ── */
+.sectionFeaturesStrip {
+  background: var(--cream);
+  border-top: 1px solid rgba(10, 10, 10, 0.15);
+  border-bottom: 1px solid rgba(10, 10, 10, 0.15);
+}
+
+.featuresStripInner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 14px 48px;
+  gap: 0;
+}
+
+.fsItem {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(10, 10, 10, 0.6);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 6px 20px;
+  white-space: nowrap;
+}
+
+.fsDivider {
+  width: 1px;
+  height: 14px;
+  background: rgba(10, 10, 10, 0.2);
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+/* ── FAQ SECTION ── */
+.sectionFaq {
+  padding: 60px 48px 120px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionFaqPricing {
+  background: var(--cream);
+  padding-top: 120px;
+}
+
+.faqHeader {
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+.sectionHeadline {
+  font-family: var(--pixel);
+  font-size: clamp(22px, 3.4vw, 40px);
+  color: var(--ink);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.accent {
+  color: #068F57;
+}
+
+.faqGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.faqCard {
+  background: var(--cream);
+  border: 1.5px solid var(--ink);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.2s, opacity 0.2s;
+  cursor: pointer;
+}
+
+.faqCard:hover {
+  border-color: var(--ink);
+  opacity: 0.85;
+}
+
+.faqCardOpen {
+  border-color: var(--ink);
+  opacity: 1;
+}
+
+.faqQuestion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px;
+}
+
+.faqQText {
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.faqToggle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 300;
+  color: rgba(10, 10, 10, 0.4);
+}
+
+.faqToggleOpen {
+  background: var(--green);
+  border-color: #068F57;
+  color: var(--ink);
+  transform: rotate(45deg);
+}
+
+.faqAnswer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faqAnswerOpen {
+  max-height: 200px;
+}
+
+.faqAnswerInner {
+  padding: 0 22px 20px;
+  border-top: 1px solid rgba(10, 10, 10, 0.15);
+  padding-top: 16px;
+  font-family: var(--body);
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.7;
+}
+
+.faqAnswerInner a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(10, 10, 10, 0.35);
+  transition: text-decoration-color 0.15s;
+}
+
+.faqAnswerInner a:hover {
+  text-decoration-color: var(--ink);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .pricingBlock {
+    padding: 0 32px 20px;
+  }
+
+  .pricingPageHeader {
+    padding: 100px 32px 36px;
+  }
+
+  .pcHeadline {
+    font-size: 38px;
+  }
+}
+
+@media (max-width: 900px) {
+  .pricingPageHeader {
+    padding: 90px 28px 32px;
+  }
+
+  .pricingBlock {
+    padding: 0 28px 16px;
+  }
+
+  .pcHeadline {
+    font-size: 32px;
+    letter-spacing: -1px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pricingPageHeader {
+    padding: 80px 20px 24px;
+  }
+
+  .pricingPageHeadline {
+    font-size: clamp(18px, 5vw, 26px);
+  }
+
+  .pricingBlock {
+    padding: 0 20px 16px;
+  }
+
+  .pricingBlockInner {
+    display: flex;
+    flex-direction: column;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+    gap: 16px;
+  }
+
+  /* Each card becomes a standalone flex column with its own border */
+  .pcCardFree,
+  .pcCardEnt {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .pcCardFree {
+    border-right: 2px solid var(--ink);
+  }
+
+  .pcHeadline {
+    font-size: 28px;
+  }
+
+  .featuresStripInner {
+    padding: 12px 20px;
+  }
+
+  .sectionFaq {
+    padding: 60px 20px 80px;
+  }
+
+  .sectionFaqPricing {
+    padding-top: 80px;
+  }
+}
+
+@media (max-width: 540px) {
+  .pcHeadline {
+    font-size: 24px;
+    letter-spacing: -0.5px;
+  }
+
+  .pcCtasSplit {
+    flex-direction: column;
+  }
+
+  .pcCtaSplitRight {
+    border-left: none;
+    border-top: 2px solid var(--ink);
+  }
+
+  .pcLabel {
+    padding: 32px 32px 12px;
+  }
+
+  .pcHeadline {
+    padding: 0 32px 8px;
+  }
+
+  .pcSub {
+    padding: 0 32px;
+  }
+
+  .pcList {
+    padding: 16px 32px 24px;
+  }
+
+  .pcCtaFull {
+    margin: 0 32px 32px;
+  }
+
+  .pcCtasSplit {
+    margin: 0 32px 32px;
+  }
+}
