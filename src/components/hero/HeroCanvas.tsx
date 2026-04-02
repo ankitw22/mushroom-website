@@ -182,33 +182,39 @@ export default function HeroCanvas() {
     let autoState = 'idle';
     let pauseTimer = 0;
 
-    // Preload AI logos via thingsofbrand.com API
+    // Preload AI logos via local API proxy (avoids CORS issues with canvas)
     AI_LIST.forEach((ai) => {
       if (!ai.domain) return;
       const img = new Image();
       img.crossOrigin = 'anonymous';
       img.onload = () => {
+        console.log(`✅ AI logo loaded: ${ai.name} (${ai.domain})`);
         logoImgs[ai.name] = img;
         loadedLogoImgs.add(ai.name);
       };
-      img.onerror = () => {
+      img.onerror = (e) => {
+        console.error(`❌ AI logo FAILED: ${ai.name} (${ai.domain})`, e);
         failedLogoImgs.add(ai.name);
       };
-      img.src = `https://thingsofbrand.com/api/icon/${ai.domain}`;
+      // Use local API proxy to avoid CORS issues
+      img.src = `/api/icon/${ai.domain}`;
     });
 
-    // Preload app icons via thingsofbrand.com API
+    // Preload app icons via local API proxy (avoids CORS issues with canvas)
     APPS.forEach((app) => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
       img.onload = () => {
+        console.log(`✅ App icon loaded: ${app.nm} (${app.domain})`);
         appIconImgs[app.nm] = img;
         loadedAppIcons.add(app.nm);
       };
-      img.onerror = () => {
+      img.onerror = (e) => {
+        console.error(`❌ App icon FAILED: ${app.nm} (${app.domain})`, e);
         failedAppIcons.add(app.nm);
       };
-      img.src = `https://thingsofbrand.com/api/icon/${app.domain}`;
+      // Use local API proxy to avoid CORS issues
+      img.src = `/api/icon/${app.domain}`;
     });
 
     const nextApp = () => {
