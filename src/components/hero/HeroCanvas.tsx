@@ -366,22 +366,21 @@ export default function HeroCanvas() {
       const iconImg = appIconImgs[app.nm];
       const isLoaded = loadedAppIcons.has(app.nm);
       const hasFailed = failedAppIcons.has(app.nm);
+      const iconSize = s * 0.68;
       
-      // If icon is loaded, draw it directly (no white card background)
-      // This ensures consistent look since icons from thingsofbrand.com already
-      // come in "app icon" style with their own backgrounds/styling
+      // If icon is loaded, draw it on a white card
       if (isLoaded && iconImg && iconImg.complete && iconImg.naturalWidth > 0) {
-        // Draw a subtle shadow behind the icon for depth
-        ctx.save();
-        ctx.shadowColor = 'rgba(0,0,0,0.20)';
-        ctx.shadowBlur = 8;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 2;
-        // Draw the brand icon at full size - clip to rounded rect for consistency
+        // White card background
+        ctx.fillStyle = '#ffffff';
         roundRect(cx - s / 2, cy - s / 2, s, s, r);
-        ctx.clip();
-        ctx.drawImage(iconImg, cx - s / 2, cy - s / 2, s, s);
-        ctx.restore();
+        ctx.fill();
+        // Subtle drop-shadow ring
+        ctx.strokeStyle = 'rgba(0,0,0,0.10)';
+        ctx.lineWidth = 1.5;
+        roundRect(cx - s / 2, cy - s / 2, s, s, r);
+        ctx.stroke();
+        // Draw the brand icon
+        ctx.drawImage(iconImg, cx - iconSize / 2, cy - iconSize / 2, iconSize, iconSize);
       } else if (hasFailed) {
         // Letter fallback only when image has actually failed
         ctx.fillStyle = app.bg;
@@ -394,11 +393,15 @@ export default function HeroCanvas() {
         ctx.textBaseline = 'middle';
         ctx.fillText(app.l, cx, cy + 1);
       } else {
-        // Still loading - show a loading placeholder (subtle pulsing card)
+        // Still loading - show a loading placeholder (subtle pulsing white card)
         const pulse = 0.85 + 0.15 * Math.sin(Date.now() / 200);
-        ctx.fillStyle = `rgba(200,200,200,${pulse * 0.5})`;
+        ctx.fillStyle = `rgba(255,255,255,${pulse})`;
         roundRect(cx - s / 2, cy - s / 2, s, s, r);
         ctx.fill();
+        ctx.strokeStyle = 'rgba(0,0,0,0.10)';
+        ctx.lineWidth = 1.5;
+        roundRect(cx - s / 2, cy - s / 2, s, s, r);
+        ctx.stroke();
       }
     };
 
