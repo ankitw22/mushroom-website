@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { App, fetchApps, searchApps, APPS_PER_PAGE } from '@/lib/apps';
 import { useAppsCount } from '@/context/AppsCountContext';
+import { RequestPlugin } from '@/components/RequestPlugin';
 
 
 export default function Integrations() {
@@ -17,6 +18,7 @@ export default function Integrations() {
   const [totalApps, setTotalApps] = useState(0);
   const [hasError, setHasError] = useState(false);
   const [categories, setCategories] = useState<string[]>(['All']);
+  const [showRequestModal, setShowRequestModal] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   const fetchAppsData = useCallback(async () => {
@@ -202,8 +204,64 @@ export default function Integrations() {
                   Error loading apps. Please try again.
                 </div>
               ) : apps.length === 0 ? (
-                <div className="integ-empty col-span-full p-12 text-center flex items-center justify-center" style={{ fontFamily: "'Poppins', sans-serif", fontSize: '14px', color: 'rgba(10,10,10,0.4)', minHeight: '432px' }}>
-                  {query.trim() ? `No apps found for "${query}"` : 'No apps found.'}
+                <div className="integ-empty col-span-full p-12 text-center flex flex-col items-center justify-center gap-8" style={{ fontFamily: "'Poppins', sans-serif", fontSize: '14px', color: 'rgba(10,10,10,0.4)', minHeight: '432px' }}>
+                  {query.trim() ? (
+                    <>
+                      <div className="text-center">
+                        <h3 className="text-lg font-semibold text-[var(--ink)] mb-4">
+                          Can't find your APP(mushroom) you're looking for?
+                        </h3>
+                        <p className="text-base text-[var(--ink)] mb-6">
+                          We'll build it for you within 48 hours.
+                        </p>
+                        <button
+                          onClick={() => setShowRequestModal(true)}
+                          className="inline-flex items-center py-3 px-6 rounded-lg transition-transform hover:translate-y-[-2px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.32)]"
+                          style={{
+                            fontFamily: "'Symtext', 'Press Start 2P', monospace",
+                            fontSize: 'clamp(10px, 1.1vw, 13px)',
+                            fontWeight: 400,
+                            letterSpacing: '0.08em',
+                            color: '#fff',
+                            background: 'var(--ink)',
+                            textDecoration: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          Request a new mushroom
+                        </button>
+                      </div>
+                      
+                      <div className="border-t border-[rgba(10,10,10,0.1)] pt-8 w-full max-w-md">
+                        <h3 className="text-lg font-semibold text-[var(--ink)] mb-4">
+                          Own this app?
+                        </h3>
+                        <p className="text-base text-[var(--ink)] mb-6">
+                          Build its plug and make it live today!
+                        </p>
+                        <a
+                          href="https://viasocket.com/help/plugin-builder"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center py-3 px-6 rounded-lg transition-transform hover:translate-y-[-2px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.32)]"
+                          style={{
+                            fontFamily: "'Symtext', 'Press Start 2P', monospace",
+                            fontSize: 'clamp(10px, 1.1vw, 13px)',
+                            fontWeight: 400,
+                            letterSpacing: '0.08em',
+                            color: '#fff',
+                            background: 'var(--ink)',
+                            textDecoration: 'none',
+                          }}
+                        >
+                          Read our playbook
+                        </a>
+                      </div>
+                    </>
+                  ) : (
+                    'No apps found.'
+                  )}
                 </div>
               ) : (
                 apps.map((app: App, idx: number) => (
@@ -264,102 +322,15 @@ export default function Integrations() {
         </button>
       </div>
 
-      <div className="apps-missing reveal bg-white border-[1.5px] border-[#e2e8f0] rounded-[14px] py-9 px-10 mt-6 relative z-[1] max-[540px]:py-7 max-[540px]:px-5" data-delay="2">
-        <p 
-          className="apps-missing-headline mb-7 tracking-[0.04em]"
-          style={{
-            fontFamily: "'Symtext', 'Press Start 2P', monospace",
-            fontSize: 'clamp(16px, 2vw, 24px)',
-            color: 'var(--ink)',
-            letterSpacing: '0.04em',
-          }}
-        >
-          DON&apos;T SEE YOUR APP?
-        </p>
-        <div className="apps-missing-paths flex items-start gap-0 max-[540px]:flex-col max-[540px]:gap-6">
-          <div className="apps-missing-path flex-1 flex flex-col gap-2">
-            <strong 
-              style={{
-                fontFamily: "'Poppins', sans-serif",
-                fontSize: '18px',
-                fontWeight: 700,
-                color: 'var(--ink)',
-              }}
-            >
-              Request it
-            </strong>
-            <span 
-              className="max-w-[340px]"
-              style={{
-                fontFamily: "'Poppins', sans-serif",
-                fontSize: '14px',
-                color: 'var(--ink)',
-                lineHeight: 1.6,
-              }}
-            >
-              Can&apos;t find what you need? We&apos;ll build the integration within 48 hours.
-            </span>
-            <Link
-              href="https://app.mushroom.viasocket.com/login"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="apps-missing-cta mt-2.5 inline-flex items-center self-start py-3 px-[26px] rounded-lg transition-transform hover:translate-y-[-2px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.32)]"
-              style={{
-                fontFamily: "'Symtext', 'Press Start 2P', monospace",
-                fontSize: 'clamp(10px, 1.1vw, 13px)',
-                fontWeight: 400,
-                letterSpacing: '0.08em',
-                color: '#fff',
-                background: 'var(--ink)',
-                textDecoration: 'none',
-              }}
-            >
-              Request an app →
-            </Link>
-          </div>
-          <div className="apps-missing-divider w-px bg-[#e2e8f0] self-stretch mx-10 flex-shrink-0 max-[540px]:hidden" />
-          <div className="apps-missing-path flex-1 flex flex-col gap-2">
-            <strong 
-              style={{
-                fontFamily: "'Poppins', sans-serif",
-                fontSize: '18px',
-                fontWeight: 700,
-                color: 'var(--ink)',
-              }}
-            >
-              List it yourself
-            </strong>
-            <span 
-              className="max-w-[340px]"
-              style={{
-                fontFamily: "'Poppins', sans-serif",
-                fontSize: '14px',
-                color: 'var(--ink)',
-                lineHeight: 1.6,
-              }}
-            >
-              Own an app? Connect it to Mushrooms and reach thousands of AI users.
-            </span>
-            <Link
-              href="https://app.mushroom.viasocket.com/login"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="apps-missing-cta mt-2.5 inline-flex items-center self-start py-3 px-[26px] rounded-lg transition-transform hover:translate-y-[-2px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.32)]"
-              style={{
-                fontFamily: "'Symtext', 'Press Start 2P', monospace",
-                fontSize: 'clamp(10px, 1.1vw, 13px)',
-                fontWeight: 400,
-                letterSpacing: '0.08em',
-                color: '#fff',
-                background: 'var(--ink)',
-                textDecoration: 'none',
-              }}
-            >
-              Get started →
-            </Link>
-          </div>
-        </div>
-      </div>
+      {showRequestModal && (
+        <dialog open className="modal rounded-none">
+          <RequestPlugin 
+            appInfo={{ name: query }} 
+            type="app"
+            onClose={() => setShowRequestModal(false)} 
+          />
+        </dialog>
+      )}
     </section>
   );
 }
