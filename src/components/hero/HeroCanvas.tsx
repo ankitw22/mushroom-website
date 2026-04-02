@@ -1,63 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-
-// AI Clients data
-const AI_LIST = [
-  { name: 'Claude', sym: '✳', col: '#D4845A', icon: 'anthropic' },
-  { name: 'ChatGPT', sym: '◎', col: '#74AA9C', icon: 'openai' },
-  { name: 'Cursor', sym: '⬡', col: '#aaa', icon: 'cursor' },
-  { name: 'Windsurf', sym: '◈', col: '#4D9FE8', icon: 'codeium' },
-  { name: 'Gemini', sym: '✦', col: '#8B9CF6', icon: 'googlegemini' },
-  { name: 'Copilot', sym: '⊕', col: '#0078D4', icon: 'githubcopilot' },
-  { name: 'Continue', sym: '▷', col: '#FF6B35', icon: null },
-  { name: 'Cline', sym: '◆', col: '#E24444', icon: null },
-  { name: 'Zed', sym: '⬢', col: '#7744DD', icon: 'zedindustries' },
-  { name: 'Cody', sym: '✿', col: '#FF5959', icon: 'sourcegraph' },
-  { name: 'Amp', sym: '⚡', col: '#FFCC00', icon: null },
-];
-
-// App catalogue — with reliable icon sources
-const APPS = [
-  { nm: 'Slack',      bg: '#4A154B', fg: '#fff', l: 'S',  icon: 'slack' },
-  { nm: 'Notion',     bg: '#000000', fg: '#fff', l: 'N',  icon: 'notion' },
-  { nm: 'Gmail',      bg: '#EA4335', fg: '#fff', l: 'G',  icon: 'google' },
-  { nm: 'GitHub',     bg: '#181717', fg: '#fff', l: 'GH', icon: 'github' },
-  { nm: 'Zapier',     bg: '#FF4A00', fg: '#fff', l: 'Z',  icon: 'zapier' },
-  { nm: 'Linear',     bg: '#5E6AD2', fg: '#fff', l: 'L',  icon: 'linear' },
-  { nm: 'ClickUp',    bg: '#7B68EE', fg: '#fff', l: 'CU', icon: 'clickup' },
-  { nm: 'Sheets',     bg: '#34A853', fg: '#fff', l: 'S',  icon: 'google' },
-  { nm: 'Trello',     bg: '#0052CC', fg: '#fff', l: 'T',  icon: 'trello' },
-  { nm: 'Airtable',   bg: '#18BFFF', fg: '#000', l: 'AT', icon: 'airtable' },
-  { nm: 'Figma',      bg: '#F24E1E', fg: '#fff', l: 'F',  icon: 'figma' },
-  { nm: 'Jira',       bg: '#0052CC', fg: '#fff', l: 'J',  icon: 'atlassian' },
-  { nm: 'Asana',      bg: '#F06A6A', fg: '#fff', l: 'A',  icon: 'asana' },
-  { nm: 'HubSpot',    bg: '#FF7A59', fg: '#fff', l: 'H',  icon: 'hubspot' },
-  { nm: 'Discord',    bg: '#5865F2', fg: '#fff', l: 'D',  icon: 'discord' },
-  { nm: 'Dropbox',    bg: '#0061FF', fg: '#fff', l: 'DB', icon: 'dropbox' },
-  { nm: 'Stripe',     bg: '#635BFF', fg: '#fff', l: 'ST', icon: 'stripe' },
-  { nm: 'Salesforce', bg: '#00A1E0', fg: '#fff', l: 'SF', icon: 'salesforce' },
-  { nm: 'Twilio',     bg: '#F22F46', fg: '#fff', l: 'TW', icon: 'twilio' },
-  { nm: 'Zendesk',    bg: '#03363D', fg: '#fff', l: 'Z',  icon: 'zendesk' },
-];
-
-// App actions
-const APP_ACTIONS: Record<string, string> = {
-  Slack: 'Sent message',
-  Notion: 'Updated wiki',
-  Gmail: 'Sent email',
-  GitHub: 'Created issue',
-  Zapier: 'Ran workflow',
-  Linear: 'Filed ticket',
-  ClickUp: 'Created task',
-  Sheets: 'Updated data',
-  Trello: 'Moved card',
-  Airtable: 'Added record',
-  Figma: 'Left comment',
-  Jira: 'Logged issue',
-  Asana: 'Assigned task',
-  HubSpot: 'Logged contact',
-};
+import { AI_CLIENTS, INTEGRATION_APPS, APP_ACTIONS } from '@/config/brand-icons';
 
 // Cloud pattern
 const CLOUD_G = [
@@ -68,6 +12,24 @@ const CLOUD_G = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
 
+// Local type for canvas apps (matches INTEGRATION_APPS structure but with shortened keys for canvas code)
+type CanvasApp = {
+  nm: string;
+  bg: string;
+  fg: string;
+  l: string;
+  domain: string;
+};
+
+// Map INTEGRATION_APPS to canvas format
+const APPS: CanvasApp[] = INTEGRATION_APPS.map(app => ({
+  nm: app.name,
+  bg: app.bg,
+  fg: app.fg,
+  l: app.letter,
+  domain: app.domain,
+}));
+
 interface Cloud {
   x: number;
   y: number;
@@ -76,7 +38,7 @@ interface Cloud {
 }
 
 interface FallingApp {
-  app: (typeof APPS)[0];
+  app: CanvasApp;
   x: number;
   y: number;
   vy: number;
@@ -85,7 +47,7 @@ interface FallingApp {
 }
 
 interface Mushroom {
-  app: (typeof APPS)[0];
+  app: CanvasApp;
   state: 'landing' | 'gone';
   x: number;
   y: number;
@@ -158,6 +120,10 @@ export default function HeroCanvas() {
     let actionBubbles: ActionBubble[] = [];
     const logoImgs: Record<string, HTMLImageElement> = {};
     const appIconImgs: Record<string, HTMLImageElement> = {};
+    const loadedAppIcons = new Set<string>();
+    const failedAppIcons = new Set<string>();
+    const loadedLogoImgs = new Set<string>();
+    const failedLogoImgs = new Set<string>();
 
     // Character
     const char = {
@@ -178,25 +144,39 @@ export default function HeroCanvas() {
     let autoState = 'idle';
     let pauseTimer = 0;
 
-    // Preload AI logos
-    AI_LIST.forEach((ai) => {
-      if (!ai.icon) return;
+    // Preload AI logos via local API proxy (avoids CORS issues with canvas)
+    AI_CLIENTS.forEach((ai) => {
+      if (!ai.domain) return;
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      img.src = `https://cdn.simpleicons.org/${ai.icon}/white`;
       img.onload = () => {
+        console.log(`✅ AI logo loaded: ${ai.name} (${ai.domain})`);
         logoImgs[ai.name] = img;
+        loadedLogoImgs.add(ai.name);
       };
+      img.onerror = (e) => {
+        console.error(`❌ AI logo FAILED: ${ai.name} (${ai.domain})`, e);
+        failedLogoImgs.add(ai.name);
+      };
+      // Use local API proxy to avoid CORS issues
+      img.src = `/api/icon/${ai.domain}`;
     });
 
-    // Preload app icons via reliable sources
+    // Preload app icons via local API proxy (avoids CORS issues with canvas)
     APPS.forEach((app) => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      img.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${app.icon}/${app.icon}-original.svg`;
       img.onload = () => {
+        console.log(`✅ App icon loaded: ${app.nm} (${app.domain})`);
         appIconImgs[app.nm] = img;
+        loadedAppIcons.add(app.nm);
       };
+      img.onerror = (e) => {
+        console.error(`❌ App icon FAILED: ${app.nm} (${app.domain})`, e);
+        failedAppIcons.add(app.nm);
+      };
+      // Use local API proxy to avoid CORS issues
+      img.src = `/api/icon/${app.domain}`;
     });
 
     const nextApp = () => {
@@ -348,7 +328,7 @@ export default function HeroCanvas() {
       }, 400);
 
       setTimeout(() => {
-        currentAIIdx = (currentAIIdx + 1) % AI_LIST.length;
+        currentAIIdx = (currentAIIdx + 1) % AI_CLIENTS.length;
       }, 600);
 
       setTimeout(() => {
@@ -380,25 +360,29 @@ export default function HeroCanvas() {
       );
     };
 
-    const drawAppLogo = (app: (typeof APPS)[0], cx: number, cy: number) => {
+    const drawAppLogo = (app: CanvasApp, cx: number, cy: number) => {
       const s = 40;
       const r = 10;
-      // White card background (thingsofbrand icons are full-colour on transparent)
-      ctx.fillStyle = '#ffffff';
-      roundRect(cx - s / 2, cy - s / 2, s, s, r);
-      ctx.fill();
-      // Subtle drop-shadow ring
-      ctx.strokeStyle = 'rgba(0,0,0,0.10)';
-      ctx.lineWidth = 1.5;
-      roundRect(cx - s / 2, cy - s / 2, s, s, r);
-      ctx.stroke();
-      // Icon image or letter fallback
       const iconImg = appIconImgs[app.nm];
+      const isLoaded = loadedAppIcons.has(app.nm);
+      const hasFailed = failedAppIcons.has(app.nm);
       const iconSize = s * 0.68;
-      if (iconImg && iconImg.complete && iconImg.naturalWidth > 0) {
+      
+      // If icon is loaded, draw it on a white card
+      if (isLoaded && iconImg && iconImg.complete && iconImg.naturalWidth > 0) {
+        // White card background
+        ctx.fillStyle = '#ffffff';
+        roundRect(cx - s / 2, cy - s / 2, s, s, r);
+        ctx.fill();
+        // Subtle drop-shadow ring
+        ctx.strokeStyle = 'rgba(0,0,0,0.10)';
+        ctx.lineWidth = 1.5;
+        roundRect(cx - s / 2, cy - s / 2, s, s, r);
+        ctx.stroke();
+        // Draw the brand icon
         ctx.drawImage(iconImg, cx - iconSize / 2, cy - iconSize / 2, iconSize, iconSize);
-      } else {
-        // Letter fallback on brand colour
+      } else if (hasFailed) {
+        // Letter fallback only when image has actually failed
         ctx.fillStyle = app.bg;
         roundRect(cx - s / 2, cy - s / 2, s, s, r);
         ctx.fill();
@@ -408,6 +392,16 @@ export default function HeroCanvas() {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(app.l, cx, cy + 1);
+      } else {
+        // Still loading - show a loading placeholder (subtle pulsing white card)
+        const pulse = 0.85 + 0.15 * Math.sin(Date.now() / 200);
+        ctx.fillStyle = `rgba(255,255,255,${pulse})`;
+        roundRect(cx - s / 2, cy - s / 2, s, s, r);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(0,0,0,0.10)';
+        ctx.lineWidth = 1.5;
+        roundRect(cx - s / 2, cy - s / 2, s, s, r);
+        ctx.stroke();
       }
     };
 
@@ -473,9 +467,12 @@ export default function HeroCanvas() {
 
       const mushIconImg = appIconImgs[app.nm];
       const mushIconSize = 16;
-      if (mushIconImg && mushIconImg.complete && mushIconImg.naturalWidth > 0) {
+      const mushIconLoaded = loadedAppIcons.has(app.nm);
+      const mushIconFailed = failedAppIcons.has(app.nm);
+      if (mushIconLoaded && mushIconImg && mushIconImg.complete && mushIconImg.naturalWidth > 0) {
         ctx.drawImage(mushIconImg, -mushIconSize / 2, -16, mushIconSize, mushIconSize);
-      } else {
+      } else if (mushIconFailed) {
+        // Only show letter fallback if image actually failed
         ctx.fillStyle = app.fg;
         const fz = app.l.length > 1 ? 9 : 12;
         ctx.font = `700 ${fz}px 'Press Start 2P', monospace`;
@@ -483,6 +480,7 @@ export default function HeroCanvas() {
         ctx.textBaseline = 'middle';
         ctx.fillText(app.l[0], 0, -8);
       }
+      // If still loading, don't show anything on the mushroom cap (cleaner look)
 
       ctx.fillStyle = app.fg === '#fff' ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.65)';
       ctx.fillRect(-6, 4, 4, 4);
@@ -492,7 +490,7 @@ export default function HeroCanvas() {
     };
 
     const drawChar = () => {
-      const ai = AI_LIST[currentAIIdx % AI_LIST.length];
+      const ai = AI_CLIENTS[currentAIIdx % AI_CLIENTS.length];
       const { x, y, face, frame, flashT } = char;
       const cx = x + char.w / 2;
 
@@ -542,15 +540,19 @@ export default function HeroCanvas() {
       const badgeY = 11.5 * P;
       const badgeS = 16;
       const logo = logoImgs[ai.name];
-      if (logo) {
+      const logoLoaded = loadedLogoImgs.has(ai.name);
+      const logoFailed = failedLogoImgs.has(ai.name);
+      if (logoLoaded && logo && logo.complete && logo.naturalWidth > 0) {
         ctx.drawImage(logo, badgeX - badgeS / 2, badgeY - badgeS / 2, badgeS, badgeS);
-      } else {
+      } else if (logoFailed) {
+        // Only show symbol fallback if image actually failed
         ctx.fillStyle = '#fff';
         ctx.font = "10px 'Press Start 2P', monospace";
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(ai.sym, badgeX, badgeY);
       }
+      // If still loading, show nothing (cleaner look)
       ctx.restore();
 
       // Waist
