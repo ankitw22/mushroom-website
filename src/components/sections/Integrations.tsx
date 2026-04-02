@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { App, fetchApps, searchApps, APPS_PER_PAGE } from '@/lib/apps';
 import { useAppsCount } from '@/context/AppsCountContext';
+import { RequestPlugin } from '@/components/RequestPlugin';
 
 
 export default function Integrations() {
@@ -17,6 +18,7 @@ export default function Integrations() {
   const [totalApps, setTotalApps] = useState(0);
   const [hasError, setHasError] = useState(false);
   const [categories, setCategories] = useState<string[]>(['All']);
+  const [showRequestModal, setShowRequestModal] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   const fetchAppsData = useCallback(async () => {
@@ -202,8 +204,77 @@ export default function Integrations() {
                   Error loading apps. Please try again.
                 </div>
               ) : apps.length === 0 ? (
-                <div className="integ-empty col-span-full p-12 text-center flex items-center justify-center" style={{ fontFamily: "'Poppins', sans-serif", fontSize: '14px', color: 'rgba(10,10,10,0.4)', minHeight: '432px' }}>
-                  {query.trim() ? `No apps found for "${query}"` : 'No apps found.'}
+                <div className="integ-empty col-span-full p-8 flex flex-col items-center justify-center gap-8" style={{ minHeight: '432px' }}>
+                  {query.trim() ? (
+                    <>
+                      <p style={{ fontFamily: "'Poppins', sans-serif", fontSize: '14px', color: 'rgba(10,10,10,0.4)' }}>
+                        No apps found for &quot;{query}&quot;
+                      </p>
+                      
+                      {/* Request App Section */}
+                      <div className="flex flex-col items-center text-center gap-3 max-w-md">
+                        <p style={{ fontFamily: "'Poppins', sans-serif", fontSize: '15px', color: 'var(--ink)' }}>
+                          Can&apos;t find the <span style={{ color: '#068F57', fontWeight: 600 }}>Mushroom</span> you&apos;re looking for?
+                          <br />
+                          <span style={{ color: 'rgba(10,10,10,0.6)' }}>We&apos;ll build it for you within 48 hours.</span>
+                        </p>
+                        <button
+                          onClick={() => setShowRequestModal(true)}
+                          className="transition-transform hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)]"
+                          style={{
+                            padding: '12px 24px',
+                            borderRadius: 8,
+                            fontFamily: "'Symtext', 'Press Start 2P', monospace",
+                            fontSize: '11px',
+                            fontWeight: 400,
+                            letterSpacing: '0.06em',
+                            color: '#fff',
+                            background: 'var(--ink)',
+                            border: 'none',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          Request a new Mushroom
+                        </button>
+                      </div>
+
+                      {/* Divider */}
+                      <div className="w-16 h-px bg-[rgba(10,10,10,0.15)]"></div>
+
+                      {/* Build Your Own Section */}
+                      <div className="flex flex-col items-center text-center gap-3 max-w-md">
+                        <p style={{ fontFamily: "'Poppins', sans-serif", fontSize: '15px', color: 'var(--ink)' }}>
+                          Own this app?
+                          <br />
+                          <span style={{ color: 'rgba(10,10,10,0.6)' }}>Build its plug and make it live today!</span>
+                        </p>
+                        <Link
+                          href="https://viasocket.com/help/plugin-builder"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="transition-transform hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)]"
+                          style={{
+                            display: 'inline-block',
+                            padding: '12px 24px',
+                            borderRadius: 8,
+                            fontFamily: "'Symtext', 'Press Start 2P', monospace",
+                            fontSize: '11px',
+                            fontWeight: 400,
+                            letterSpacing: '0.06em',
+                            color: '#fff',
+                            background: '#068F57',
+                            textDecoration: 'none',
+                          }}
+                        >
+                          Read our Playbook
+                        </Link>
+                      </div>
+                    </>
+                  ) : (
+                    <p style={{ fontFamily: "'Poppins', sans-serif", fontSize: '14px', color: 'rgba(10,10,10,0.4)' }}>
+                      No apps found.
+                    </p>
+                  )}
                 </div>
               ) : (
                 apps.map((app: App, idx: number) => (
@@ -265,6 +336,11 @@ export default function Integrations() {
       </div>
 
       
+      {showRequestModal && (
+        <RequestPlugin
+          onClose={() => setShowRequestModal(false)}
+        />
+      )}
     </section>
   );
 }
