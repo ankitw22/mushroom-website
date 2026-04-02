@@ -27,7 +27,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
         useCase: '',
         plugName: appInfo?.name,
         source: 'website',
-        environment: process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT,
+        environment: 'prod',
         plug: appInfo,
     });
     const [emailError, setEmailError] = useState('');
