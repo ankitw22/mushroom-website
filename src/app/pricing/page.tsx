@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import { useState, useEffect, useRef } from 'react';
 import Navbar from '@/components/ui/Navbar';
 import Footer from '@/components/ui/Footer';
-import FAQ from '@/components/ui/FAQ';
 import styles from './pricing.module.css';
 
 const FAQ_DATA = [
@@ -53,6 +53,35 @@ const FEATURES = [
 ];
 
 export default function PricingPage() {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const toggleFaq = (id: string) => {
+    setOpenId(openId === id ? null : id);
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            el.classList.add('visible');
+            observer.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.05 }
+    );
+
+    const section = sectionRef.current;
+    if (section) {
+      section.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className={styles.pricingPageWrapper}>
       <Navbar />
@@ -138,7 +167,47 @@ export default function PricingPage() {
       </section>
 
       {/* FAQ SECTION */}
-      <FAQ data={FAQ_DATA} />
+      <section ref={sectionRef} className={`${styles.sectionFaq} ${styles.sectionFaqPricing} reveal`}>
+        <div className={styles.faqHeader}>
+          <h2 className={styles.sectionHeadline}>
+            Frequently Asked <span className={styles.accent}>Questions</span>
+          </h2>
+        </div>
+        <div className={styles.faqGrid}>
+          {FAQ_DATA.map((item) => (
+            <div
+              key={item.id}
+              onClick={() => toggleFaq(item.id)}
+              className={`${styles.faqCard} ${openId === item.id ? styles.faqCardOpen : ''}`}
+            >
+              <div className={styles.faqQuestion}>
+                <span className={styles.faqQText}>{item.q}</span>
+                <span className={`${styles.faqToggle} ${openId === item.id ? styles.faqToggleOpen : ''}`}>
+                  +
+                </span>
+              </div>
+              <div className={`${styles.faqAnswer} ${openId === item.id ? styles.faqAnswerOpen : ''}`}>
+                <div className={styles.faqAnswerInner}>
+                  {item.a}
+                  {item.link && (
+                    <>
+                      {' '}
+                      <a
+                        href={item.link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {item.link.text}
+                      </a>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <Footer />
     </div>

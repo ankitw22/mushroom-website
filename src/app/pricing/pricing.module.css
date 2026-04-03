@@ -256,7 +256,7 @@
 
 /* ── FAQ SECTION ── */
 .sectionFaq {
-  padding: 80px 48px 120px;
+  padding: 60px 48px 120px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -264,13 +264,11 @@
 .sectionFaqPricing {
   background: var(--cream);
   padding-top: 120px;
-  padding-left: 48px;
-  padding-right: 48px;
 }
 
 .faqHeader {
   text-align: left;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
 .sectionHeadline {
@@ -288,7 +286,7 @@
 .faqGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 12px;
   max-width: 1200px;
   margin: 0 auto;
 }
