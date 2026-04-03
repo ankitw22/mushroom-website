@@ -2,7 +2,9 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
+import Navbar from '@/components/ui/Navbar';
 import Footer from '@/components/ui/Footer';
+import FAQ from '@/components/sections/FAQ';
 import styles from './pricing.module.css';
 
 const FAQ_DATA = [
@@ -83,6 +85,8 @@ export default function PricingPage() {
 
   return (
     <div className={styles.pricingPageWrapper}>
+      <Navbar />
+      
       {/* PAGE HEADER */}
       <div className={styles.pricingPageHeader}>
         <div className={styles.pricingPageHeaderInner}>
@@ -136,7 +140,7 @@ export default function PricingPage() {
             </ul>
             <div className={styles.pcCtasSplit}>
               <a
-                href="https://viasocket.com/mcp/saas"
+                href="https://viasocket.com/embed"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.pcCtaSplitLeft}
@@ -164,47 +168,7 @@ export default function PricingPage() {
       </section>
 
       {/* FAQ SECTION */}
-      <section ref={sectionRef} className={`${styles.sectionFaq} ${styles.sectionFaqPricing} reveal`}>
-        <div className={styles.faqHeader}>
-          <h2 className={styles.sectionHeadline}>
-            Frequently Asked <span className={styles.accent}>Questions</span>
-          </h2>
-        </div>
-        <div className={styles.faqGrid}>
-          {FAQ_DATA.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => toggleFaq(item.id)}
-              className={`${styles.faqCard} ${openId === item.id ? styles.faqCardOpen : ''}`}
-            >
-              <div className={styles.faqQuestion}>
-                <span className={styles.faqQText}>{item.q}</span>
-                <span className={`${styles.faqToggle} ${openId === item.id ? styles.faqToggleOpen : ''}`}>
-                  +
-                </span>
-              </div>
-              <div className={`${styles.faqAnswer} ${openId === item.id ? styles.faqAnswerOpen : ''}`}>
-                <div className={styles.faqAnswerInner}>
-                  {item.a}
-                  {item.link && (
-                    <>
-                      {' '}
-                      <a
-                        href={item.link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        {item.link.text}
-                      </a>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <FAQ />
 
       <Footer />
     </div>
