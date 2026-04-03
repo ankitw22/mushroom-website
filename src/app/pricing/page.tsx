@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import Navbar from '@/components/ui/Navbar';
 import Footer from '@/components/ui/Footer';
-import FAQ from '@/components/ui/FAQ';
+import FAQ from '@/components/sections/FAQ';
 import styles from './pricing.module.css';
 
 const FAQ_DATA = [
@@ -168,7 +168,7 @@ export default function PricingPage() {
       </section>
 
       {/* FAQ SECTION */}
-      <FAQ data={FAQ_DATA} />
+      <FAQ />
 
       <Footer />
     </div>
