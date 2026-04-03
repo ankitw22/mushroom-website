@@ -48,16 +48,9 @@ export default function Navbar({ onFreePillClick }: NavbarProps) {
         pointerEvents: isVisible ? 'auto' : 'none',
       }}
     >
-      <a
-        href="#pricing"
-        onClick={(e) => { e.preventDefault(); onFreePillClick?.(); }}
-        style={{
-          display: 'inline-flex', alignItems: 'center', gap: 6,
-          padding: '7px 16px', borderRadius: 100,
-          background: '#FFD600', color: '#0a0a0a',
-          fontFamily: "'Poppins', sans-serif", fontSize: 13, fontWeight: 700,
-          whiteSpace: 'nowrap', textDecoration: 'none', cursor: 'pointer',
-        }}
+      <Link
+        href="/pricing"
+        className="max-[540px]:hidden inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#FFD600] text-[#0a0a0a] font-['Poppins'] text-[13px] font-bold whitespace-nowrap no-underline cursor-pointer transition-opacity hover:opacity-80"
       >
         <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: 14, height: 14, flexShrink: 0 }}>
           <path d="M20 12v10H4V12" />
@@ -67,9 +60,11 @@ export default function Navbar({ onFreePillClick }: NavbarProps) {
           <path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z" />
         </svg>
         Free
-      </a>
+      </Link>
       <Link
-        href="#"
+        href="https://viasocket.com/embed"
+        target="_blank"
+        rel="noopener noreferrer"
         className="max-[540px]:hidden"
         style={{
           display: 'inline-block',
