@@ -79,7 +79,7 @@ export default function Footer() {
             SaaS Players
           </Link>
           <Link
-            href="#faq-free"
+            href="/pricing"
             className="underline underline-offset-[3px] decoration-[rgba(10,10,10,0.3)] transition-colors hover:text-[#068F57] hover:decoration-[#068F57]"
             style={{
               fontFamily: "'Poppins', sans-serif",
@@ -89,6 +89,19 @@ export default function Footer() {
             }}
           >
             Pricing
+          </Link>
+          <Link
+            href="https://viasocket.com/help/viaSocket-MCP/Fair-Usage-Policy"
+            target="_blank"
+            className="underline underline-offset-[3px] decoration-[rgba(10,10,10,0.3)] transition-colors hover:text-[#068F57] hover:decoration-[#068F57]"
+            style={{
+              fontFamily: "'Poppins', sans-serif",
+              fontSize: '14px',
+              fontWeight: 500,
+              color: 'var(--ink)',
+            }}
+          >
+            Fair Usage Policy
           </Link>
         </nav>
       </div>
