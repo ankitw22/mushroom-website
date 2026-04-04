@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -39,7 +41,36 @@ export function McpHero({ app }: McpHeroProps) {
           <p className="hero-sub">
             Connect {app.name} actions with AI tools like ChatGPT, Claude, and Cursor using the Mushrooms MCP Server.
           </p>
-          <Link href="https://app.mushroom.viasocket.com/login" target="_blank" className="hero-cta">
+          <div style={{ marginBottom: 24 }}>
+            <span style={{ fontFamily: "'Poppins', sans-serif", fontSize: '13px', color: 'rgba(10,10,10,0.6)', marginRight: 8 }}>
+              Domain URL:
+            </span>
+            <Link 
+              href={`https://mushroom.viasocket.com/mcp/${app.domain}`}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: '13px',
+                color: '#068F57',
+                textDecoration: 'underline',
+                textDecorationColor: 'rgba(6,143,87,0.3)',
+                textDecorationSkipInk: 'none',
+                transition: 'color 0.2s ease, textDecoration-color 0.2s ease'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.color = '#056b41';
+                e.currentTarget.style.textDecorationColor = 'rgba(5,107,65,0.5)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.color = '#068F57';
+                e.currentTarget.style.textDecorationColor = 'rgba(6,143,87,0.3)';
+              }}
+            >
+              https://mushroom.viasocket.com/mcp/{app.domain}
+            </Link>
+          </div>
+          <Link href="https://app.mushroom.viasocket.com/login" target="_blank" rel="noopener noreferrer nofollow" className="hero-cta">
             Get Your Cluster (MCP Server) URL
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M2.5 7h9M7.5 3.5L11 7l-3.5 3.5" />

@@ -64,7 +64,7 @@ export default function Navbar({ onFreePillClick }: NavbarProps) {
       <Link
         href="https://viasocket.com/embed"
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noopener noreferrer nofollow"
         className="max-[540px]:hidden"
         style={{
           display: 'inline-block',
@@ -80,7 +80,7 @@ export default function Navbar({ onFreePillClick }: NavbarProps) {
       <Link
         href="https://app.mushroom.viasocket.com/login"
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noopener noreferrer nofollow"
         style={{
           display: 'inline-block',
           padding: '7px 18px', borderRadius: 100,

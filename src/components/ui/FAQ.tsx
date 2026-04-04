@@ -85,7 +85,7 @@ export default function FAQ({
                       <a
                         href={item.link.href}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="noopener noreferrer nofollow"
                         onClick={(e) => e.stopPropagation()}
                       >
                         {item.link.text}

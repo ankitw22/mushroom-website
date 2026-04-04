@@ -158,6 +158,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }: 
                                     className="underline hover:text-[#068F57] transition-colors"
                                     href={'https://cal.id/team/viasocket/workflow-setup-discussion'}
                                     target="_blank"
+                                    rel="noopener noreferrer nofollow"
                                 >
                                     schedule a meeting
                                 </Link>{' '}

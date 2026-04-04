@@ -118,7 +118,7 @@ export default function PricingPage() {
             <a
               href="https://app.mushroom.viasocket.com/login"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener noreferrer nofollow"
               className={styles.pcCtaFull}
             >
               Get Started Free →
@@ -142,7 +142,7 @@ export default function PricingPage() {
               <a
                 href="https://viasocket.com/embed"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener noreferrer nofollow"
                 className={styles.pcCtaSplitLeft}
               >
                 Explore Embed

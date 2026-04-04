@@ -121,7 +121,7 @@ export default function Integrations() {
         <Link
           href="https://app.mushroom.viasocket.com/login"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener noreferrer nofollow"
           className="integrations-cta transition-transform hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)]"
           style={{
             display: 'inline-block',
@@ -251,7 +251,7 @@ export default function Integrations() {
                         <Link
                           href="https://viasocket.com/help/plugin-builder"
                           target="_blank"
-                          rel="noopener noreferrer"
+                          rel="noopener noreferrer nofollow"
                           className="transition-transform hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)]"
                           style={{
                             display: 'inline-block',
