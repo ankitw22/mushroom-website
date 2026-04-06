@@ -13,6 +13,7 @@ import FAQ from '@/components/sections/FAQ';
 import Footer from '@/components/ui/Footer';
 import Ticker from '@/components/hero/Ticker';
 import AiClients from '@/components/sections/AiClients';
+import Navbar from '@/components/ui/Navbar';
 
 export const runtime = 'edge';
 
@@ -149,6 +150,7 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
 
   return (
     <div className="mcp-page-wrapper">
+      <Navbar />
       {/* ── HERO (Dynamic) ── */}
       <McpHero app={app} />
 
