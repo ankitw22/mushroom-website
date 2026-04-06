@@ -56,7 +56,7 @@ export function McpHero({ app }: McpHeroProps) {
                 textDecoration: 'underline',
                 textDecorationColor: 'rgba(6,143,87,0.3)',
                 textDecorationSkipInk: 'none',
-                transition: 'color 0.2s ease, textDecoration-color 0.2s ease'
+                transition: 'color 0.2s ease, textDecorationColor 0.2s ease'
               }}
               onMouseOver={(e) => {
                 e.currentTarget.style.color = '#056b41';
