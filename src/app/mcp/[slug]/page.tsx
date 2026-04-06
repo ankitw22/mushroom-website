@@ -12,6 +12,7 @@ import Blog from '@/components/sections/Blog';
 import FAQ from '@/components/sections/FAQ';
 import Footer from '@/components/ui/Footer';
 import Ticker from '@/components/hero/Ticker';
+import AiClients from '@/components/sections/AiClients';
 
 export const runtime = 'edge';
 
@@ -99,7 +100,7 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
 
       {/* ── SUPPORTED ACTIONS (Dynamic) ── */}
       <McpActions actions={actions} appIcon={app.iconurl} appName={app.name} />
-
+     <AiClients appSlug={slug} />
       {/* ── USE CASES (Reusable) ── */}
       <UseCases />
 
