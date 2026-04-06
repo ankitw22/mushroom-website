@@ -8,7 +8,7 @@ import { useAppsCount } from '@/context/AppsCountContext';
 import { RequestPlugin } from '@/components/RequestPlugin';
 
 
-export default function Integrations({ clientId }: { clientId?: string } = {}) {
+export default function Integrations() {
   const [apps, setApps] = useState<App[]>([]);
   const [loading, setLoading] = useState(true);
   const { appsCount } = useAppsCount();
@@ -120,6 +120,8 @@ export default function Integrations({ clientId }: { clientId?: string } = {}) {
         </h2>
         <Link
           href="https://app.mushroom.viasocket.com/login"
+          target="_blank"
+          rel="noopener noreferrer"
           className="integrations-cta transition-transform hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)]"
           style={{
             display: 'inline-block',
@@ -278,7 +280,7 @@ export default function Integrations({ clientId }: { clientId?: string } = {}) {
                 apps.map((app: App, idx: number) => (
                   <Link
                     key={app.rowid ?? idx}
-                    href={clientId ? `/google-sheets/${clientId}/${app.appslugname}` : `/mcp/${app.appslugname}`}
+                    href={`/mcp/${app.appslugname}`}
                     className="integ-cell flex items-center gap-[10px] border-r border-b border-[rgba(10,10,10,0.07)] transition-colors hover:bg-[rgba(6,143,87,0.05)] [&:nth-child(4n)]:border-r-0 max-[1024px]:[&:nth-child(4n)]:border-r max-[1024px]:[&:nth-child(3n)]:border-r-0"
                     style={{ padding: '13px 16px', textDecoration: 'none', cursor: 'pointer' }}
                   >
