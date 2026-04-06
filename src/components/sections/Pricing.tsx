@@ -46,8 +46,6 @@ export default function Pricing() {
               </p>
               <Link
                 href="https://app.mushroom.viasocket.com/login"
-                target="_blank"
-                rel="noopener noreferrer"
                 className="pricing-card-cta inline-block py-[15px] px-[38px] rounded-lg bg-[var(--ink)] text-white font-pixel font-normal text-[clamp(11px,1.3vw,14px)] tracking-[0.08em] no-underline transition-transform self-start whitespace-nowrap hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
               >
                 {card.cta}
