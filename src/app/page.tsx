@@ -4,7 +4,6 @@ import Navbar from '@/components/ui/Navbar';
 import Hero from '@/components/hero/Hero';
 import UseCases from '@/components/sections/UseCases';
 import Integrations from '@/components/sections/Integrations';
-import AiClients from '@/components/sections/AiClients';
 import Features from '@/components/sections/Features';
 import Pricing from '@/components/sections/Pricing';
 import Blog from '@/components/sections/Blog';
@@ -24,7 +23,6 @@ export default function Home() {
       <Navbar onFreePillClick={scrollToPricing} />
       <Hero />
       <Integrations />
-      <AiClients />
       <UseCases />
       <Features />
       <Pricing />
