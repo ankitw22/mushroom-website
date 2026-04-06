@@ -89,14 +89,10 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
       {/* ── HERO (Dynamic) ── */}
       <McpHero app={app} />
 
-      <section style={{ maxWidth: 1200, margin: '0 auto', padding: '72px 48px 0', position: 'relative' }}>
-        <h2 style={{ fontFamily: 'var(--pixel)', fontSize: 'clamp(18px, 2.5vw, 30px)', color: '#060606ff', lineHeight: 1.3, marginBottom: 28 }}>
-          Works with
-        </h2>
-        <div style={{ position: 'relative', height: 52, borderRadius: 14, overflow: 'hidden' }}>
-          <Ticker />
-        </div>
-      </section>
+      {/* ── WORKS WITH AI CLIENTS (Ticker Black Strip) ── */}
+      <div style={{ position: 'relative', height: 52, overflow: 'hidden' }}>
+        <Ticker />
+      </div>
 
       {/* ── SUPPORTED ACTIONS (Dynamic) ── */}
       <McpActions actions={actions} appIcon={app.iconurl} appName={app.name} />
