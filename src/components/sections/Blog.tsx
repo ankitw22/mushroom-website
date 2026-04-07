@@ -87,7 +87,7 @@ export default function Blog() {
             key={idx}
             href={post.link}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer nofollow"
             className="group blog-card bg-white border-2 border-[#068F57] rounded-[14px] overflow-hidden flex flex-col transition-all cursor-pointer no-underline hover:translate-y-[-4px] hover:shadow-[0_14px_36px_rgba(0,0,0,0.07)] hover:border-[#068F57]"
           >
             <img

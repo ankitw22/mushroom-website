@@ -30,7 +30,7 @@ const FAQ_ITEMS: { id: string; question: string; answer: React.ReactNode }[] = [
         <a
           href="https://viasocket.com/help/viasocket-mcp?source=single"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener noreferrer nofollow"
           className="text-[#068F57] underline hover:text-[#056b41] transition-colors"
           onClick={(e) => e.stopPropagation()}
         >

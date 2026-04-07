@@ -249,7 +249,7 @@ export default function Integrations({ clientId }: { clientId?: string } = {}) {
                         <Link
                           href="https://viasocket.com/help/plugin-builder"
                           target="_blank"
-                          rel="noopener noreferrer"
+                          rel="noopener noreferrer nofollow"
                           className="transition-transform hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)]"
                           style={{
                             display: 'inline-block',

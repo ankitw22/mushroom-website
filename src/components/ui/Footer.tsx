@@ -55,6 +55,7 @@ export default function Footer() {
           <Link
             href="https://viasocket.com/embed#ai_agent"
             target="_blank"
+            rel="noopener noreferrer nofollow"
             className="underline underline-offset-[3px] decoration-[rgba(10,10,10,0.3)] transition-colors hover:text-[#068F57] hover:decoration-[#068F57]"
             style={{
               fontFamily: "'Poppins', sans-serif",
@@ -68,6 +69,7 @@ export default function Footer() {
           <Link
             href="https://viasocket.com/mcp/saas"
             target="_blank"
+            rel="noopener noreferrer nofollow"
             className="underline underline-offset-[3px] decoration-[rgba(10,10,10,0.3)] transition-colors hover:text-[#068F57] hover:decoration-[#068F57]"
             style={{
               fontFamily: "'Poppins', sans-serif",
@@ -93,6 +95,7 @@ export default function Footer() {
           <Link
             href="https://viasocket.com/help/viaSocket-MCP/Fair-Usage-Policy"
             target="_blank"
+            rel="noopener noreferrer nofollow"
             className="underline underline-offset-[3px] decoration-[rgba(10,10,10,0.3)] transition-colors hover:text-[#068F57] hover:decoration-[#068F57]"
             style={{
               fontFamily: "'Poppins', sans-serif",

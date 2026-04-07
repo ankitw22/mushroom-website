@@ -39,7 +39,7 @@ export default function Navbar({ onFreePillClick }: NavbarProps) {
       <Link
         href="https://viasocket.com/embed"
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noopener noreferrer nofollow"
         className="max-[540px]:hidden"
         style={{
           display: 'inline-block',
