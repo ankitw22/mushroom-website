@@ -6,6 +6,7 @@ import Pricing from '@/components/sections/Pricing';
 import FAQ from '@/components/sections/FAQ';
 import Footer from '@/components/ui/Footer';
 import { fetchAiClients } from '@/lib/ai-clients';
+import { fetchAiClientData } from '@/lib/ai-client-data';
 import { ClientHero } from './ClientHero';
 import { HowToConnect } from './HowToConnect';
 import { AlsoWorksWith } from './AlsoWorksWith';
@@ -31,7 +32,10 @@ export default async function ClientPage(
   { params }: { params: Promise<{ clientId: string }> }
 ) {
   const { clientId } = await params;
-  const clients = await fetchAiClients();
+  const [clients, clientApiData] = await Promise.all([
+    fetchAiClients(),
+    fetchAiClientData(clientId),
+  ]);
   const client = clients.find((c) => c.id === clientId);
   if (!client) notFound();
 
@@ -48,7 +52,7 @@ export default async function ClientPage(
       <Integrations clientId={clientId} />
 
       {/* How to connect */}
-      <HowToConnect client={client} otherClients={otherClients} />
+      <HowToConnect client={client} otherClients={otherClients} clientApiData={clientApiData} />
 
       {/* Pricing */}
       <Pricing />

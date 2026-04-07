@@ -6,6 +6,7 @@ import Blog from '@/components/sections/Blog';
 import FAQ from '@/components/sections/FAQ';
 import Footer from '@/components/ui/Footer';
 import { fetchAiClients } from '@/lib/ai-clients';
+import { fetchAiClientData } from '@/lib/ai-client-data';
 import { HowToConnect } from '../HowToConnect';
 import { AppClientHero } from './AppClientHero';
 import { StatsStrip } from './StatsStrip';
@@ -69,9 +70,10 @@ export default async function AppClientPage(
 ) {
   const { clientId, appSlug } = await params;
 
-  const [clients, res] = await Promise.all([
+  const [clients, res, clientApiData] = await Promise.all([
     fetchAiClients(),
     fetch(`${RECOMMEND_API}${appSlug}`, { next: { revalidate: 3600 } }),
+    fetchAiClientData(clientId),
   ]);
 
   const client = clients.find((c) => c.id === clientId);
@@ -113,7 +115,7 @@ export default async function AppClientPage(
         actions={actions}
       />
 
-      <HowToConnect client={client} otherClients={otherClients} />
+      <HowToConnect client={client} otherClients={otherClients} clientApiData={clientApiData} />
 
       <Pricing />
 

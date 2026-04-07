@@ -5,6 +5,8 @@ import { Marquee } from '@/components/ui/Marquee';
 import './../mcp-ui.css';
 import { McpHero } from './McpHero';
 import { McpActions } from './McpActions';
+import { McpUseCases } from './McpUseCases';
+import { McpFAQ } from './McpFAQ';
 import UseCases from '@/components/sections/UseCases';
 import Features from '@/components/sections/Features';
 import Pricing from '@/components/sections/Pricing';
@@ -14,6 +16,7 @@ import Footer from '@/components/ui/Footer';
 import Ticker from '@/components/hero/Ticker';
 import AiClients from '@/components/sections/AiClients';
 import Navbar from '@/components/ui/Navbar';
+import { fetchMcpAppData } from '@/lib/mcp-app-data';
 
 export const runtime = 'edge';
 
@@ -55,21 +58,29 @@ interface ApiResponse {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const res = await fetch(`${RECOMMEND_API}${slug}`, { next: { revalidate: 3600 } });
+    const [res, tableData] = await Promise.all([
+      fetch(`${RECOMMEND_API}${slug}`, { next: { revalidate: 3600 } }),
+      fetchMcpAppData(slug),
+    ]);
     if (!res.ok) return { title: 'Mushroom Server' };
     const data: ApiResponse = await res.json();
     const app = data.plugins[slug];
     if (!app) return { title: 'Mushroom Server' };
     const actionCount = (app.events ?? []).filter((e) => e.type === 'action').length;
     const triggerCount = (app.events ?? []).filter((e) => e.type === 'trigger').length;
-    
-    const title = `MCP Server for ${app.name} | Mushrooms`;
-    const description = `Mushrooms connects your AI to ${app.name} with ${actionCount}+ supported actions and ${triggerCount}+ triggers. Select what your AI can do and let it execute.`;
+
+    const title = tableData?.page_title || `MCP Server for ${app.name} | Mushrooms`;
+    const description = tableData?.meta_description || `Mushrooms connects your AI to ${app.name} with ${actionCount}+ supported actions and ${triggerCount}+ triggers. Select what your AI can do and let it execute.`;
+    const keywords = [
+      ...(tableData?.primary_keyword ?? []),
+      ...(tableData?.secondary_keyword ?? []),
+    ];
     const url = `https://mushroom.viasocket.com/mcp/${slug}`;
-    
+
     return {
       title,
       description,
+      keywords: keywords.length ? keywords : undefined,
       icons: {
         icon: "/mushroom-logo.svg",
         apple: "/mushroom-logo.svg",
@@ -139,7 +150,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function McpPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
-  const res = await fetch(`${RECOMMEND_API}${slug}`, { next: { revalidate: 3600 } });
+  const [res, tableData] = await Promise.all([
+    fetch(`${RECOMMEND_API}${slug}`, { next: { revalidate: 3600 } }),
+    fetchMcpAppData(slug),
+
+  ]);
+  console.log(res,tableData,"hello")
   if (!res.ok) notFound();
 
   const data: ApiResponse = await res.json();
@@ -151,35 +167,32 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
   return (
     <div className="mcp-page-wrapper">
       <Navbar />
-      {/* ── HERO (Dynamic) ── */}
       <McpHero app={app} />
 
-      {/* ── WORKS WITH AI CLIENTS (Ticker Black Strip) ── */}
       <div style={{ position: 'relative', height: 52, overflow: 'hidden' }}>
         <Ticker />
       </div>
 
-      {/* ── SUPPORTED ACTIONS (Dynamic) ── */}
       <McpActions actions={actions} appIcon={app.iconurl} appName={app.name} />
-     <AiClients appSlug={slug} />
-      {/* ── USE CASES (Reusable) ── */}
-      <UseCases />
 
-      {/* ── FEATURES & HOW IT WORKS (Reusable, Green Band) ── */}
+      <AiClients appSlug={slug} />
+
+      {tableData?.use_case_cards?.length
+        ? <McpUseCases cards={tableData.use_case_cards} />
+        : <UseCases />
+      }
+
       <Features />
 
-      {/* ── PRICING (Reusable) ── */}
       <Pricing />
 
-      {/* ── WORKS WITH AI CLIENTS (Ticker) ── */}
-
-      {/* ── BLOG (Reusable) ── */}
       <Blog />
 
-      {/* ── FAQ (Reusable) ── */}
-      <FAQ />
+      {tableData?.faqs?.length
+        ? <McpFAQ faqs={tableData.faqs} />
+        : <FAQ />
+      }
 
-      {/* ── SITE FOOTER (Reusable) ── */}
       <Footer />
     </div>
   );
