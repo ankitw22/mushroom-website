@@ -45,7 +45,7 @@ export async function GET(
           status: 200,
           headers: {
             'Content-Type': 'image/png',
-            'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+            'Cache-Control': 'public, max-age=86400, s-maxage=86400',
             'Access-Control-Allow-Origin': '*',
           },
         });
@@ -58,7 +58,7 @@ export async function GET(
         status: 200,
         headers: {
           'Content-Type': contentType,
-          'Cache-Control': 'public, max-age=86400, s-maxage=86400',
+          'Cache-Control': 'public, max-age=604800, s-maxage=604800, stale-while-revalidate=86400, immutable',
           'Access-Control-Allow-Origin': '*',
         },
       });
@@ -77,7 +77,7 @@ export async function GET(
         status: 200,
         headers: {
           'Content-Type': 'image/png',
-          'Cache-Control': 'public, max-age=300, s-maxage=300', // Shorter cache for fallback
+          'Cache-Control': 'public, max-age=86400, s-maxage=86400',
           'Access-Control-Allow-Origin': '*',
         },
       });
@@ -90,7 +90,7 @@ export async function GET(
       status: 200,
       headers: {
         'Content-Type': 'image/png',
-        'Cache-Control': 'public, max-age=300, s-maxage=300',
+        'Cache-Control': 'public, max-age=86400, s-maxage=86400',
         'Access-Control-Allow-Origin': '*',
       },
     });
