@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { App, fetchApps, searchApps, APPS_PER_PAGE } from '@/lib/apps';
 import { useAppsCount } from '@/context/AppsCountContext';
 import { RequestPlugin } from '@/components/RequestPlugin';
+import { fetchAiClients } from '@/lib/ai-clients';
 
 
 export default function Integrations({ clientId }: { clientId?: string } = {}) {
@@ -19,6 +20,7 @@ export default function Integrations({ clientId }: { clientId?: string } = {}) {
   const [hasError, setHasError] = useState(false);
   const [categories, setCategories] = useState<string[]>(['All']);
   const [showRequestModal, setShowRequestModal] = useState(false);
+  const [currentClient, setCurrentClient] = useState<any>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
   const fetchAppsData = useCallback(async () => {
@@ -60,6 +62,15 @@ export default function Integrations({ clientId }: { clientId?: string } = {}) {
   useEffect(() => {
     fetchAppsData();
   }, [fetchAppsData]);
+
+  useEffect(() => {
+    if (clientId) {
+      fetchAiClients().then(clients => {
+        const client = clients.find((c) => c.id === clientId);
+        setCurrentClient(client);
+      });
+    }
+  }, [clientId]);
 
   const getPerPage = () => {
     if (typeof window === 'undefined') return APPS_PER_PAGE;
@@ -105,40 +116,7 @@ export default function Integrations({ clientId }: { clientId?: string } = {}) {
       id="integrations"
       style={{ background: 'var(--cream)', padding: '80px 48px 80px', maxWidth: 1200, margin: '0 auto' }}
     >
-      <div className="integrations-header reveal text-left mb-10 relative z-[3]">
-        <h2 
-          className="section-headline leading-tight whitespace-nowrap max-[768px]:whitespace-normal"
-          style={{
-            fontFamily: "'Symtext', 'Press Start 2P', monospace",
-            fontSize: 'clamp(22px, 3.4vw, 40px)',
-            color: 'var(--ink)',
-            lineHeight: 1.3,
-            marginBottom: 14,
-          }}
-        >
-          Connect your <span className="text-[#068F57]">AI</span> to {appsCount ? `${appsCount}+` : '2,000+'} apps
-        </h2>
-        <Link
-          href="https://app.mushroom.viasocket.com/login"
-          className="integrations-cta transition-transform hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)]"
-          style={{
-            display: 'inline-block',
-            padding: '15px 38px',
-            borderRadius: 8,
-            marginBottom: 20,
-            fontFamily: "'Symtext', 'Press Start 2P', monospace",
-            fontSize: 'clamp(11px, 1.3vw, 14px)',
-            fontWeight: 400,
-            letterSpacing: '0.08em',
-            color: '#fff',
-            background: 'var(--ink)',
-            textDecoration: 'none',
-          }}
-        >
-          Get Your Cluster (MCP Server) URL
-        </Link>
-      </div>
-
+      
       <div className="integrations-box border-2 border-[rgba(10,10,10,0.1)] rounded-xl overflow-hidden bg-white relative z-[3]">
         <div className="integrations-search relative max-w-full border-b-2 border-[rgba(10,10,10,0.1)]">
           <span 
