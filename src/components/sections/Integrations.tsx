@@ -262,10 +262,10 @@ export default function Integrations({ clientId }: { clientId?: string } = {}) {
                   >
                     <span
                       className="integ-icon w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0 overflow-hidden"
-                      style={{ backgroundColor: app.brandcolor || '#888', flexShrink: 0 }}
+                      // style={{ backgroundColor: app.brandcolor || '#888', flexShrink: 0 }}
                     >
                       {app.iconurl ? (
-                        <Image src={app.iconurl.trimStart()} alt={app.name} width={28} height={28} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 7 }} unoptimized />
+                        <Image src={app.iconurl.trimStart()} alt={app.name} width={28} height={28}  />
                       ) : (
                         <span style={{ fontFamily: "'Poppins', sans-serif", fontSize: '10px', fontWeight: 700, color: '#fff' }}>{app.name.charAt(0).toUpperCase()}</span>
                       )}
