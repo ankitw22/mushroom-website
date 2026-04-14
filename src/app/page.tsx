@@ -1,36 +1,17 @@
-'use client';
+import { cookies } from 'next/headers';
+import HomeClient from './HomeClient';
 
-import Navbar from '@/components/ui/Navbar';
-import Hero from '@/components/hero/Hero';
-import UseCases from '@/components/sections/UseCases';
-import Integrations from '@/components/sections/Integrations';
-import AiClients from '@/components/sections/AiClients';
-import Features from '@/components/sections/Features';
-import Pricing from '@/components/sections/Pricing';
-import Blog from '@/components/sections/Blog';
-import FAQ from '@/components/sections/FAQ';
-import Footer from '@/components/ui/Footer';
+const USER_ID_COOKIE = 'userId';
 
-export default function Home() {
-  const scrollToPricing = () => {
-    const el = document.getElementById('pricing');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
+function createUserId() {
+  return Math.floor(Math.random() * 1_000_000_000) + 1;
+}
 
-  return (
-    <div className="p-0">
-      <Navbar onFreePillClick={scrollToPricing} />
-      <Hero />
-      <Integrations />
-      <AiClients />
-      <UseCases />
-      <Features />
-      <Pricing />
-      <Blog />
-      <FAQ />
-      <Footer />
-    </div>
-  );
+export default async function Home() {
+  const cookieStore = await cookies();
+  const cookieUserId = Number(cookieStore.get(USER_ID_COOKIE)?.value);
+  const hasUserId = Number.isInteger(cookieUserId) && cookieUserId > 0;
+  const userId = hasUserId ? cookieUserId : createUserId();
+
+  return <HomeClient userId={userId} shouldSetCookie={!hasUserId} />;
 }
