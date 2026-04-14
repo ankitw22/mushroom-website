@@ -52,7 +52,7 @@ export default function Hero2() {
 
                         </div>
                         <Link
-                            href="https://app.mushroom.viasocket.com/login"
+                            href="https://app.mushrooms.viasocket.com/login"
                             id="hero-cta"
                             className="inline-flex items-center gap-2 pointer-events-auto animate-fade-up-delay transition-transform hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.32)]"
                             style={{ fontFamily: "'Symtext', 'Press Start 2P', monospace", fontSize: '16px', fontWeight: 600, color: '#fff', background: 'var(--ink)', padding: '15px 38px', borderRadius: 8, marginTop: 4, textDecoration: 'none' }}

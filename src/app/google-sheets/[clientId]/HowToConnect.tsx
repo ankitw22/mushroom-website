@@ -196,7 +196,7 @@ export function HowToConnect({ client, otherClients, clientApiData }: HowToConne
               </div>
             </div>
           )}
-          <Link href="https://app.mushroom.viasocket.com/login" className="htc-cta">
+          <Link href="https://app.mushrooms.viasocket.com/login" className="htc-cta">
             Get your MCP Server URL
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />

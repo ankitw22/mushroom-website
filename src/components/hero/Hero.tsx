@@ -30,7 +30,7 @@ export default function Hero() {
               <strong style={{ color: 'var(--ink)', fontWeight: 700 }}>Power up</strong> your AI <span style={{ color: 'var(--ink)' }}>with</span> {displayCount} apps
             </p>
             <Link
-              href="https://app.mushroom.viasocket.com/login"
+              href="https://app.mushrooms.viasocket.com/login"
               id="hero-cta"
               className="inline-flex items-center gap-2 pointer-events-auto animate-fade-up-delay transition-transform hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.32)]"
               style={{ fontFamily: "'Poppins', sans-serif", fontSize: '15px', fontWeight: 600, color: '#fff', background: 'var(--ink)', padding: '15px 38px', borderRadius: 8, marginTop: 4, textDecoration: 'none' }}

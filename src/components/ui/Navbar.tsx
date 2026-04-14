@@ -58,7 +58,7 @@ export default function Navbar({ onFreePillClick }: NavbarProps) {
           Explore Embed
         </Link>
         <Link
-          href="https://app.mushroom.viasocket.com/login"
+          href="https://app.mushrooms.viasocket.com/login"
           style={{
             display: 'inline-block',
             padding: '7px 18px', borderRadius: 100,

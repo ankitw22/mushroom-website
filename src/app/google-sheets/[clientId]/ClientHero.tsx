@@ -55,7 +55,7 @@ export function ClientHero({ client }: { client: AiClient }) {
           Use {client.title} with your favourite apps via the Mushrooms MCP Server. No code required.
         </p>
 
-        <Link href="https://app.mushroom.viasocket.com/login" className="client-hero-cta">
+        <Link href="https://app.mushrooms.viasocket.com/login" className="client-hero-cta">
           GET YOUR MCP SERVER URL
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M2 6h8M6 2.5L9.5 6 6 9.5" />

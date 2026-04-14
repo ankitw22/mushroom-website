@@ -13,7 +13,7 @@ export function PricingSection() {
           <div className="pricing-card" style={{ border: '1.5px solid rgba(0, 0, 0, 0.1)', borderRadius: 14, padding: 32, display: 'flex', flexDirection: 'column', gap: 14 }}>
             <h3 style={{ fontSize: 26, fontWeight: 700, color: 'var(--ink)' }}>Free for Lifetime</h3>
             <p style={{ fontSize: 14, color: 'rgba(10, 10, 10, 0.6)', lineHeight: 1.65, flex: 1 }}>Mushrooms is free to use for lifetime under a fair usage policy, without rate limits.</p>
-            <Link href="https://app.mushroom.viasocket.com/login" className="pricing-card-cta" style={{ display: 'inline-block', fontSize: 13, fontWeight: 700, color: '#fff', background: 'var(--ink)', textDecoration: 'none', padding: '10px 22px', borderRadius: 100, alignSelf: 'flex-start' }}>Get your Cluster (MCP Server) URL</Link>
+            <Link href="https://app.mushrooms.viasocket.com/login" className="pricing-card-cta" style={{ display: 'inline-block', fontSize: 13, fontWeight: 700, color: '#fff', background: 'var(--ink)', textDecoration: 'none', padding: '10px 22px', borderRadius: 100, alignSelf: 'flex-start' }}>Get your Cluster (MCP Server) URL</Link>
           </div>
           <div className="pricing-card" style={{ border: '1.5px solid rgba(0, 0, 0, 0.1)', borderRadius: 14, padding: 32, display: 'flex', flexDirection: 'column', gap: 14 }}>
             <h3 style={{ fontSize: 26, fontWeight: 700, color: 'var(--ink)' }}>For Enterprises</h3>

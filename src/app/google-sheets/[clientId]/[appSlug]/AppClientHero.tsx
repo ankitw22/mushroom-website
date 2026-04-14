@@ -54,7 +54,7 @@ export function AppClientHero({ client, appName, appIcon }: AppClientHeroProps) 
             Let {client.title} read data, take actions, and automate workflows in {appName} — directly from your conversation.
           </p>
 
-          <Link href="https://app.mushroom.viasocket.com/login" className="client-hero-cta">
+          <Link href="https://app.mushrooms.viasocket.com/login" className="client-hero-cta">
             GET YOUR MCP SERVER URL
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M2 6h8M6 2.5L9.5 6 6 9.5" />

@@ -116,7 +116,7 @@ export default function PricingPage() {
               <li>Works with Claude, ChatGPT, Cursor, Windsurf + more</li>
             </ul>
             <a
-              href="https://app.mushroom.viasocket.com/login"
+              href="https://app.mushrooms.viasocket.com/login"
               target="_blank"
               rel="noopener noreferrer nofollow"
               className={styles.pcCtaFull}
