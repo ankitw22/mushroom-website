@@ -28,6 +28,7 @@ const TITLE_TO_DOMAIN: Record<string, string> = {
   'Zed': 'zed.dev',
   'Ravenala': 'ravenala.ai',
   'Toolhouse': 'toolhouse.ai',
+  'Antigravity': 'antigravity.google',
 };
 
 export function getIconDomain(client: AiClient): string | null {

@@ -23,7 +23,7 @@ interface HomeClientProps {
 export default function HomeClient({ userId, shouldSetCookie }: HomeClientProps) {
   useLayoutEffect(() => {
     if (shouldSetCookie) {
-      document.cookie = `${USER_ID_COOKIE}=${userId}; max-age=${COOKIE_MAX_AGE_SECONDS}; path=/; SameSite=Lax`;
+      document.cookie = `${USER_ID_COOKIE}=${userId}; max-age=${COOKIE_MAX_AGE_SECONDS}; path=/; domain=.mushrooms.viasocket.com; SameSite=Lax`;
     }
   }, [shouldSetCookie, userId]);
 
