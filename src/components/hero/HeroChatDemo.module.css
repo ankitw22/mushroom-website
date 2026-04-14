@@ -1,0 +1,221 @@
+/* ── HERO CHAT ZONE ── */
+.heroChatZone {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 80px;
+}
+
+/* ── CHAT DEMO WINDOW ── */
+.chatDemoWindow {
+    background: #212121;
+    border: 2.5px solid var(--ink);
+    border-radius: 18px;
+    overflow: hidden;
+    margin: 0 auto;
+    box-shadow: 6px 6px 0 rgba(10, 10, 10, 0.35);
+    display: flex;
+    flex-direction: column;
+    height: 510px;
+}
+
+.chatDemoBar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    background: #161616;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.chatDemoDots {
+    display: flex;
+    gap: 6px;
+}
+
+.chatDemoDot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.dotR {
+    background: #ff5f57;
+}
+
+.dotY {
+    background: #febc2e;
+}
+
+.dotG {
+    background: #28c840;
+}
+
+.chatDemoLabel {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.35);
+    margin-left: 8px;
+    letter-spacing: 0.04em;
+}
+
+/* ── Messages container ── */
+.chatDemoMessages {
+    padding: 28px 40px;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    transition: opacity 0.5s ease;
+    scrollbar-width: none;
+}
+
+.chatDemoMessages::-webkit-scrollbar {
+    display: none;
+}
+
+/* ── User bubble ── */
+.cdmUser {
+    align-self: flex-end;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 12px 18px;
+    border-radius: 18px 18px 4px 18px;
+    max-width: 72%;
+}
+
+/* ── Tool call row ── */
+.cdmToolRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+}
+
+.cdmToolAppIcon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--body);
+    font-size: 8px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    overflow: hidden;
+    background: #ffffff;
+    border: 2px solid var(--green);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.cdmToolAppIcon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.cdmToolText {
+    align-self: flex-start;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    padding: 7px 16px;
+    border-radius: 20px;
+    background: rgba(92, 210, 162, 0.1);
+    border: 1px solid rgba(92, 210, 162, 0.22);
+    color: rgba(130, 220, 180, 0.75);
+}
+
+.cdmToolText.pulsing {
+    background: linear-gradient(90deg,
+            rgba(92, 210, 162, 0.07) 0%,
+            rgba(92, 210, 162, 0.07) 25%,
+            rgba(180, 255, 220, 0.45) 50%,
+            rgba(92, 210, 162, 0.07) 75%,
+            rgba(92, 210, 162, 0.07) 100%);
+    background-size: 300% 100%;
+    border-color: rgba(92, 210, 162, 0.4);
+    color: rgba(155, 235, 200, 0.9);
+    animation: cdm-pill-wave 3.51s linear infinite;
+}
+
+@keyframes cdm-pill-wave {
+    0% {
+        background-position: 130% 0;
+    }
+
+    100% {
+        background-position: -130% 0;
+    }
+}
+
+/* ── AI (Claude) row ── */
+.cdmClaudeRow {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    align-self: flex-start;
+    max-width: 84%;
+}
+
+.cdmClaudeAvatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #ffffff;
+    border: 2px solid var(--green);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 2px;
+}
+
+.cdmClaudeAvatar img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.cdmClaude {
+    background: #2f2f2f;
+    color: rgba(255, 255, 255, 0.88);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 12px 18px;
+    border-radius: 18px 18px 18px 4px;
+}
+
+/* ── Typing cursor ── */
+.cdmCursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: currentColor;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: cdm-blink 0.7s step-end infinite;
+}
+
+@keyframes cdm-blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
