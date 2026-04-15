@@ -189,7 +189,7 @@ export function HowToConnect({ client, otherClients, clientApiData }: HowToConne
               </span>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                 {otherClients.slice(0, 6).map((c) => (
-                  <Link key={c.id} href={`/google-sheets/${c.id}`} className="htc-client-pill">
+                  <Link key={c.id} href={`/aiclients/${c.id}`} className="htc-client-pill">
                     {c.title}
                   </Link>
                 ))}

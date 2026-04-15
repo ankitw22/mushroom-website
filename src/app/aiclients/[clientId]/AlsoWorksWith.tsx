@@ -98,7 +98,7 @@ export function AlsoWorksWith({ currentClient, otherClients }: AlsoWorksWithProp
             {otherClients.map((client) => {
               const d = getIconDomain(client);
               return (
-                <Link key={client.id} href={`/google-sheets/${client.id}`} className="client-grid-pill">
+                <Link key={client.id} href={`/aiclients/${client.id}`} className="client-grid-pill">
                   <span
                     style={{
                       width: 26,
