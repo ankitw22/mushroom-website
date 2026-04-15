@@ -107,7 +107,7 @@ export default function AiClients({ appSlug }: { appSlug?: string } = {}) {
               return (
                 <Link
                   key={client.id}
-                  href={appSlug ? `/google-sheets/${client.id}/${appSlug}` : `/google-sheets/${client.id}`}
+                  href={appSlug ? `/aiclients/${client.id}/${appSlug}` : `/aiclients/${client.id}`}
                   className="flex items-center gap-[10px] border-r border-b border-[rgba(10,10,10,0.07)] transition-colors hover:bg-[rgba(6,143,87,0.05)] [&:nth-child(4n)]:border-r-0 max-[1024px]:[&:nth-child(4n)]:border-r max-[1024px]:[&:nth-child(3n)]:border-r-0"
                   style={{ padding: '13px 16px', textDecoration: 'none', height: '54px' }}
                 >

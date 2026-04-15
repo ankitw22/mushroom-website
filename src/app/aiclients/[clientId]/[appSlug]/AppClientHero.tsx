@@ -19,7 +19,7 @@ export function AppClientHero({ client, appName, appIcon }: AppClientHeroProps) 
         <nav className="client-hero-breadcrumb" aria-label="Breadcrumb">
           <Link href="/">Home</Link>
           <span style={{ opacity: 0.4 }}>›</span>
-          <Link href={`/google-sheets/${client.id}`}>{client.title}</Link>
+          <Link href={`/aiclients/${client.id}`}>{client.title}</Link>
           <span style={{ opacity: 0.4 }}>›</span>
           <span style={{ color: 'var(--ink)', fontWeight: 600 }}>{appName}</span>
         </nav>

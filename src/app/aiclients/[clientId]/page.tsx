@@ -48,7 +48,7 @@ export default async function ClientPage(
       {/* Hero */}
       <ClientHero client={client} />
 
-      {/* Apps grid — links to /google-sheets/[clientId]/[appSlug] */}
+      {/* Apps grid — links to /aiclients/[clientId]/[appSlug] */}
       <Integrations clientId={clientId} />
 
       {/* How to connect */}
