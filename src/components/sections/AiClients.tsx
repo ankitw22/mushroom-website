@@ -19,6 +19,33 @@ export default function AiClients({ appSlug }: { appSlug?: string } = {}) {
       .finally(() => setLoading(false));
   }, []);
 
+  const handleSubmitRequest = async () => {
+    try {
+      const response = await fetch('https://flow.sokt.io/func/scriu9vmqXqr', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          aiClientName: requestForm.name || query,
+          description: requestForm.description,
+          originalSearch: query,
+          timestamp: new Date().toISOString()
+        })
+      });
+      
+      if (response.ok) {
+        setShowToast(true);
+        setRequestForm({ name: '', description: '' });
+        setTimeout(() => setShowToast(false), 3000);
+      } else {
+        alert('Failed to submit request. Please try again.');
+      }
+    } catch (error) {
+      alert('Error submitting request. Please try again.');
+    }
+  };
+
   const filtered = query.trim()
     ? clients.filter((c) => c.title.toLowerCase().includes(query.toLowerCase()))
     : clients;
@@ -128,33 +155,7 @@ export default function AiClients({ appSlug }: { appSlug?: string } = {}) {
                   <button
                     className="px-8 py-3 bg-[#068F57] text-white rounded-xl font-bold hover:bg-[#057a48] transition-all hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
                     style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '14px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase' }}
-                    onClick={async () => {
-                      // Handle request for AI client
-                      try {
-                        const response = await fetch('https://flow.sokt.io/func/scriu9vmqXqr', {
-                          method: 'POST',
-                          headers: {
-                            'Content-Type': 'application/json',
-                          },
-                          body: JSON.stringify({
-                            aiClientName: requestForm.name || query,
-                            description: requestForm.description,
-                            originalSearch: query,
-                            timestamp: new Date().toISOString()
-                          })
-                        });
-                        
-                        if (response.ok) {
-                          setShowToast(true);
-                          setRequestForm({ name: '', description: '' });
-                          setTimeout(() => setShowToast(false), 3000);
-                        } else {
-                          alert('Failed to submit request. Please try again.');
-                        }
-                      } catch (error) {
-                        alert('Error submitting request. Please try again.');
-                      }
-                    }}
+                    onClick={handleSubmitRequest}
                   >
                     Request for AI Client
                   </button>
