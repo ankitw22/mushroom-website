@@ -47,7 +47,7 @@ export default function AiClients({ appSlug }: { appSlug?: string } = {}) {
       ref={sectionRef}
       className="max-[540px]:hidden"
       id="ai-clients"
-      style={{ background: 'var(--cream)', padding: '0 48px 80px', maxWidth: 1200, margin: '0 auto' }}
+      style={{ background: 'var(--cream)', padding: '0 48px 150px', maxWidth: 1200, margin: '0 auto' }}
     >
       <div className="reveal text-left mb-10 relative z-[3]">
         <h2

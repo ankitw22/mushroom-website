@@ -10,16 +10,16 @@ export function ClientHero({ client }: { client: AiClient }) {
   const domain = getIconDomain(client);
 
   return (
-    <section className="client-hero">
-      <nav className="client-hero-breadcrumb" aria-label="Breadcrumb">
-        <Link href="/">Home</Link>
-        <span style={{ opacity: 0.4 }}>›</span>
-        <Link href="/#ai-clients">AI Clients</Link>
-        <span style={{ opacity: 0.4 }}>›</span>
-        <span style={{ color: 'var(--ink)', fontWeight: 600 }}>{client.title}</span>
-      </nav>
-
+    <section className="client-hero client-hero-left">
       <div className="client-hero-inner">
+        <nav className="client-hero-breadcrumb" aria-label="Breadcrumb">
+          <Link href="/">Home</Link>
+          <span style={{ opacity: 0.4 }}>›</span>
+          <Link href="/#ai-clients">AI Clients</Link>
+          <span style={{ opacity: 0.4 }}>›</span>
+          <span style={{ color: 'var(--ink)', fontWeight: 600 }}>{client.title}</span>
+        </nav>
+
         <div className="client-pill">
           <span
             style={{

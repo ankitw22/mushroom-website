@@ -22,12 +22,13 @@ export default function Navbar({ onFreePillClick }: NavbarProps) {
         background: 'none',
         padding: 0,
         boxShadow: 'none',
+        pointerEvents: 'none',
       }}
     >
-      <Link href="/" className="nav-brand" style={{ display: 'flex', alignItems: 'center' }}>
+      <Link href="/" className="nav-brand" style={{ display: 'flex', alignItems: 'center', pointerEvents: 'auto' }}>
         <img src="/logo.png" alt="Mushrooms Logo" style={{ height: '42px', width: 'auto' }} />
       </Link>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, pointerEvents: 'auto' }}>
         <Link
           href="/pricing"
           className="max-[540px]:hidden inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#FFD600] text-[#0a0a0a] font-['Poppins'] text-[13px] font-bold whitespace-nowrap no-underline cursor-pointer transition-opacity hover:opacity-80"

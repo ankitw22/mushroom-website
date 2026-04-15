@@ -62,7 +62,17 @@
   text-align: center;
   width: 100%;
   max-width: 900px;
-    margin: 0 auto;
+  margin: 0 auto;
+}
+
+.client-hero-left .client-hero-inner {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.client-hero-left .client-hero-breadcrumb {
+  position: static;
+  margin-bottom: 24px;
 }
 
 .client-pill {
