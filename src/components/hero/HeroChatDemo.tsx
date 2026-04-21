@@ -36,7 +36,7 @@ const conversations = [
 ];
 
 const CHAT_AIS = [
-    { name: 'Claude', src: '/api/icon/anthropic.com' },
+    { name: 'Claude', src: '/api/icon/claude.com' },
     { name: 'ChatGPT', src: '/api/icon/openai.com' },
     { name: 'Cursor', src: '/api/icon/cursor.com' },
     { name: 'Gemini', src: '/api/icon/gemini.google.com' },

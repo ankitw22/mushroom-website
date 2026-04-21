@@ -15,6 +15,14 @@ export default function Hero2() {
     useEffect(() => {
         const shuffled = [...INTEGRATION_APPS].sort(() => 0.5 - Math.random());
         setRandomApps(shuffled.slice(0, 4));
+        
+        // Flip icons every 3 seconds
+        const interval = setInterval(() => {
+            const newShuffled = [...INTEGRATION_APPS].sort(() => 0.5 - Math.random());
+            setRandomApps(newShuffled.slice(0, 4));
+        }, 3000);
+        
+        return () => clearInterval(interval);
     }, []);
 
     return (
@@ -40,8 +48,8 @@ export default function Hero2() {
                                 <span className="inline-flex items-center space-x-[-12px] ml-2 align-middle">
                                     {randomApps.map((app, index) => (
                                         <span
-                                            key={index}
-                                            className="w-[clamp(32px,4vw,42px)] h-[clamp(32px,4vw,42px)] rounded-[10px] flex items-center justify-center relative shadow-sm border-[2px] border-[var(--green)] bg-white"
+                                            key={`${app.name}-${index}`}
+                                            className="w-[clamp(32px,4vw,42px)] h-[clamp(32px,4vw,42px)] rounded-[10px] flex items-center justify-center relative shadow-sm border-[2px] border-[var(--green)] bg-white transition-all duration-500 ease-in-out"
                                             style={{ zIndex: 4 - index }}
                                         >
                                             <img src={`/api/icon/${app.domain}`} alt={app.name} className="w-[60%] h-[60%] object-contain" />
