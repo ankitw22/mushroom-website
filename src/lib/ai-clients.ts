@@ -48,7 +48,8 @@ export async function fetchAiClients(): Promise<AiClient[]> {
     });
     if (!res.ok) return [];
     const data = await res.json();
-    return data.status === 'success' ? data.result : [];
+    if (data.status !== 'success' || !data.result) return [];
+    return data.result.filter((client: AiClient) => client.id !== 'other');
   } catch {
     return [];
   }
