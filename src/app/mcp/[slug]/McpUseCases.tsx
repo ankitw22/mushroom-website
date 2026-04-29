@@ -7,7 +7,7 @@ export function McpUseCases({ cards }: { cards: UseCaseCard[] }) {
   return (
     <section
       id="use-cases"
-      style={{ padding: '40px 48px 80px', maxWidth: 1200, margin: '0 auto' }}
+      style={{ padding: '0px 48px 240px', maxWidth: 1200, margin: '0 auto' }}
     >
       <div style={{ marginBottom: 48 }}>
         <h2
