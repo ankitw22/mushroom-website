@@ -153,9 +153,8 @@ export default async function McpPage({ params }: { params: Promise<{ slug: stri
   const [res, tableData] = await Promise.all([
     fetch(`${RECOMMEND_API}${slug}`, { next: { revalidate: 3600 } }),
     fetchMcpAppData(slug),
-
   ]);
-  console.log(res,tableData,"hello")
+  
   if (!res.ok) notFound();
 
   const data: ApiResponse = await res.json();

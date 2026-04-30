@@ -7,6 +7,7 @@ import FAQ from '@/components/sections/FAQ';
 import Footer from '@/components/ui/Footer';
 import { fetchAiClients } from '@/lib/ai-clients';
 import { fetchAiClientData } from '@/lib/ai-client-data';
+import { fetchAiAppData, fetchAiAppWorkflows, type AiAppData, type Workflow } from '@/lib/ai-app-data';
 import { HowToConnect } from '../HowToConnect';
 import { AppClientHero } from './AppClientHero';
 import { StatsStrip } from './StatsStrip';
@@ -49,20 +50,64 @@ export async function generateMetadata(
   { params }: { params: Promise<{ clientId: string; appSlug: string }> }
 ): Promise<Metadata> {
   const { clientId, appSlug } = await params;
-  const [clients, res] = await Promise.all([
-    fetchAiClients(),
-    fetch(`${RECOMMEND_API}${appSlug}`, { next: { revalidate: 3600 } }),
-  ]);
-  const client = clients.find((c) => c.id === clientId);
-  if (!client || !res.ok) return { title: 'Mushrooms MCP' };
-  const data: RecommendResponse = await res.json();
-  const app = data.plugins[appSlug];
-  if (!app) return { title: 'Mushrooms MCP' };
-  return {
-    title: `Connect ${client.title} to ${app.name} — Mushrooms MCP`,
-    description: `Let ${client.title} take actions in ${app.name} via the Mushrooms MCP Server. Free. No code required.`,
-    icons: { icon: '/mushroom-logo.svg' },
-  };
+  
+  // Production-ready error boundaries
+  try {
+    // Try to fetch from dbdash API first
+    const [clients, dynamicAppData, res] = await Promise.all([
+      fetchAiClients(),
+      fetchAiAppData(appSlug, clientId),
+      fetch(`${RECOMMEND_API}${appSlug}`, { next: { revalidate: 3600 } }),
+    ]);
+    
+    const client = clients.find((c) => c.id === clientId);
+    if (!client) return { title: 'Mushrooms MCP' };
+    
+    // Use dynamic data if available, otherwise fallback to static API
+    let app: any = null;
+    if (dynamicAppData) {
+      app = {
+        name: dynamicAppData.name,
+        description: dynamicAppData.description,
+        iconurl: dynamicAppData.iconurl,
+        domain: dynamicAppData.domain,
+      };
+    } else if (res.ok) {
+      const data: RecommendResponse = await res.json();
+      app = data.plugins[appSlug];
+    }
+    
+    if (!app) return { title: 'Mushrooms MCP' };
+    
+    const title = `Connect ${client.title} to ${app.name} — Mushrooms MCP`;
+    const description = `Let ${client.title} take actions in ${app.name} via the Mushrooms MCP Server. Free. No code required.`;
+    
+    return {
+      title,
+      description,
+      icons: { icon: '/mushroom-logo.svg' },
+      openGraph: {
+        title,
+        description: app.description,
+        images: app.iconurl ? [{ url: app.iconurl }] : undefined,
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description: app.description,
+        images: app.iconurl ? [app.iconurl] : undefined,
+      },
+    };
+  } catch (error) {
+    // Fallback metadata for production stability
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Metadata generation error:', error);
+    }
+    return {
+      title: 'Mushrooms MCP',
+      description: 'Connect AI tools with your favorite apps via Mushrooms MCP Server.',
+    };
+  }
 }
 
 export default async function AppClientPage(
@@ -70,68 +115,109 @@ export default async function AppClientPage(
 ) {
   const { clientId, appSlug } = await params;
 
-  const [clients, res, clientApiData] = await Promise.all([
-    fetchAiClients(),
-    fetch(`${RECOMMEND_API}${appSlug}`, { next: { revalidate: 3600 } }),
-    fetchAiClientData(clientId),
-  ]);
+  // Production-ready data fetching with error boundaries
+  try {
+    // Try to fetch from dbdash API first, with fallback to static API
+    const [clients, dynamicAppData, dynamicWorkflows, res, clientApiData] = await Promise.all([
+      fetchAiClients(),
+      fetchAiAppData(appSlug, clientId),
+      fetchAiAppWorkflows(appSlug, clientId),
+      fetch(`${RECOMMEND_API}${appSlug}`, { next: { revalidate: 3600 } }),
+      fetchAiClientData(clientId),
+    ]);
 
-  const client = clients.find((c) => c.id === clientId);
-  if (!client) notFound();
-  if (!res.ok) notFound();
+    const client = clients.find((c) => c.id === clientId);
+    if (!client) notFound();
 
-  const data: RecommendResponse = await res.json();
-  console.log(data,"hello")
-  const app = data.plugins[appSlug];
-  if (!app) notFound();
+    // Use dynamic data if available, otherwise fallback to static API
+    let app: any = null;
+    let combinations: Combination[] = [];
+    let actions: PluginEvent[] = [];
 
-  const actions = (app.events ?? []).filter((e) => e.type === 'action');
-  const otherClients = clients.filter((c) => c.id !== clientId);
+    if (dynamicAppData) {
+      // Use dynamic data from dbdash API
+      app = {
+        name: dynamicAppData.name,
+        description: dynamicAppData.description,
+        iconurl: dynamicAppData.iconurl,
+        domain: dynamicAppData.domain,
+        events: dynamicAppData.events || [],
+      };
+      
+      // Use dynamic workflows if available
+      if (dynamicWorkflows && dynamicWorkflows.length > 0) {
+        combinations = dynamicWorkflows.map(workflow => ({
+          description: workflow.description,
+          trigger: workflow.trigger,
+          actions: workflow.actions,
+          score: workflow.score,
+        }));
+      }
+      
+      actions = (dynamicAppData.actions || []).filter((e: PluginEvent) => e.type === 'action');
+      
+    } else if (res.ok) {
+      // Fallback to static API
+      const data: RecommendResponse = await res.json();
+      app = data.plugins[appSlug];
+      if (!app) notFound();
+      combinations = data.combinations;
+      actions = (app.events ?? []).filter((e: PluginEvent) => e.type === 'action');
+    } else {
+      notFound();
+    }
 
-  return (
-    <div className="client-page-wrapper">
-      <Navbar />
+    const otherClients = clients.filter((c) => c.id !== clientId);
 
-      <AppClientHero
-        client={client}
-        appName={app.name}
-        appIcon={app.iconurl}
-      />
+    return (
+      <div className="client-page-wrapper">
+        <Navbar />
 
-      {/* <StatsStrip /> */}
+        <AppClientHero
+          client={client}
+          appName={app.name}
+          appIcon={app.iconurl}
+        />
 
-      <WorkflowsSection
-        clientTitle={client.title}
-        appName={app.name}
-        combinations={data.combinations}
-      />
+        <WorkflowsSection
+          clientTitle={client.title}
+          appName={app.name}
+          combinations={combinations}
+        />
 
-      <ChatDemoSection clientTitle={client.title} appName={app.name} />
+        <ChatDemoSection clientTitle={client.title} appName={app.name} />
 
-      <ActionsPreview
-        clientTitle={client.title}
-        appName={app.name}
-        appSlug={appSlug}
-        actions={actions}
-      />
+        <ActionsPreview
+          clientTitle={client.title}
+          appName={app.name}
+          appSlug={appSlug}
+          actions={actions}
+        />
 
-      <HowToConnect client={client} otherClients={otherClients} clientApiData={clientApiData} />
+        <HowToConnect client={client} otherClients={otherClients} clientApiData={clientApiData} />
 
-      <Pricing />
+        <Pricing />
 
-      <Blog />
+        <Blog />
 
-      <FAQ />
+        <FAQ />
 
-      <AboutSection
-        client={client}
-        appName={app.name}
-        appIcon={app.iconurl}
-        appDescription={app.description}
-        appDomain={app.domain}
-      />
+        <AboutSection
+          client={client}
+          appName={app.name}
+          appIcon={app.iconurl}
+          appDescription={app.description}
+          appDomain={app.domain}
+        />
 
-      <Footer />
-    </div>
-  );
+        <Footer />
+      </div>
+    );
+  } catch (error) {
+    // Production error handling
+    if (process.env.NODE_ENV === 'development') {
+      console.error('AppClientPage error:', error);
+    }
+    notFound();
+  }
 }

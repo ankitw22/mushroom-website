@@ -29,7 +29,14 @@ export function McpHero({ app }: McpHeroProps) {
 
           <div style={{ width: 52, height: 52, borderRadius: 14, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, boxShadow: '0 4px 16px rgba(0,0,0,0.1)' }}>
             {app.iconurl ? (
-              <Image src={app.iconurl} alt={app.name} width={32} height={32} unoptimized />
+              <Image 
+                src={app.iconurl} 
+                alt={app.name} 
+                width={32} 
+                height={32} 
+                unoptimized 
+                style={{ width: 'auto', height: 'auto' }}
+              />
             ) : (
               <span style={{ fontSize: 20, fontWeight: 700 }}>{app.name.charAt(0)}</span>
             )}
