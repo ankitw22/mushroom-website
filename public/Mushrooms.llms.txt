@@ -1,0 +1,162 @@
+# MCP (Model Context Protocol) — Mushrooms by viaSocket
+
+Mushrooms by viaSocket is the MCP layer for AI agents. It exposes 1000+ app integrations as MCP-compatible tools, enabling AI agents, IDEs, and LLM clients to trigger real-world actions across SaaS apps without custom API code.
+
+## Core Links
+
+- [Home](https://mushrooms.viasocket.com/): Mushrooms by viaSocket main platform
+- [Login](https://app.mushrooms.viasocket.com/login): Sign in to Mushrooms dashboard
+- [Integrations](https://mushrooms.viasocket.com/#integrations): Browse all available MCP app integrations
+- [Pricing](https://mushrooms.viasocket.com/pricing): Plans and pricing for Mushrooms
+
+## Blogs
+
+- [What is MCP and Why It's the Future of AI Integration](https://viasocket.com/blog/what-is-mcp-and-why-its-the-future-of-ai-integration): Introduction to MCP and its role in connecting AI agents to real-world tools
+- [Connect viaSocket MCP with Your AI Assistant](https://viasocket.com/blog/connect-viasocket-mcp-with-your-ai-assistant): Step-by-step guide to linking viaSocket MCP with AI assistants
+- [MCP Servers: A Comprehensive Guide](https://viasocket.com/blog/mcp-servers-a-comprehensive-guide): Deep-dive into MCP server architecture and setup with tools like Cursor, Claude, and Windsurf
+- [How viaSocket Works: A Complete Guide](https://viasocket.com/blog/how-viasocket-works-a-complete-guide): End-to-end overview of viaSocket's automation and MCP capabilities
+
+## Documentation
+
+### Overview
+
+- [Understanding MCP](https://viasocket.com/help/viasocket-mcp/understanding-mcp): Core concepts behind Model Context Protocol and how viaSocket implements it
+- [MCP Overview](https://viasocket.com/help/viasocket-mcp): Getting started with Mushrooms by viaSocket MCP
+- [Fair Usage Policy](https://viasocket.com/help/viasocket-mcp/fair-usage-policy): Usage limits and responsible access guidelines for MCP connections
+
+### AI / IDE Integrations
+
+- [Cursor](https://viasocket.com/help/viasocket-mcp/cursor-integration): Connect Mushrooms MCP with Cursor IDE for AI-assisted development
+- [Claude Desktop](https://viasocket.com/help/viasocket-mcp/claude-desktop): Link Mushrooms MCP with Claude Desktop application
+- [Claude Desktop Integration Guide](https://viasocket.com/help/viasocket-mcp/claude-desktop/claude-desktop-integration-guide): Step-by-step setup for Claude Desktop MCP connection
+- [Claude Web Integration Guide](https://viasocket.com/help/viasocket-mcp/claude-desktop/claude-web-integration-guide): Connect Mushrooms MCP to Claude via the web interface
+- [ChatGPT](https://viasocket.com/help/viasocket-mcp/chatgpt): Connect ChatGPT to viaSocket workflows through MCP
+- [Visual Studio Code](https://viasocket.com/help/viasocket-mcp/visual-studio-code): VS Code MCP integration setup guide
+- [Windsurf](https://viasocket.com/help/viasocket-mcp/wind): Setup instructions for Windsurf MCP integration
+- [Zed](https://viasocket.com/help/viasocket-mcp/zed-integration-guide): Connect Mushrooms MCP with the Zed code editor
+- [Gemini CLI](https://viasocket.com/help/viasocket-mcp/gemini-cli-integration): Use Gemini CLI with Mushrooms MCP
+- [Manus](https://viasocket.com/help/viasocket-mcp/manus-integration): Connect Manus AI agent platform via MCP
+- [VAPI](https://viasocket.com/help/viasocket-mcp/vapi): Voice AI integration using MCP and VAPI
+- [Ravenala](https://viasocket.com/help/viasocket-mcp/ravenala-integration-guide): Connect Ravenala to viaSocket via MCP
+
+### SDKs
+
+- [Python Client](https://viasocket.com/help/viasocket-mcp/python-client-integration): Use Mushrooms MCP with Python applications and automation scripts
+- [TypeScript Client](https://viasocket.com/help/viasocket-mcp/typescript-client-integration): Connect Mushrooms MCP with TypeScript-based projects
+
+### MCP Servers / Tools
+
+- [Anthropic API MCP Server](https://viasocket.com/help/viasocket-mcp/anthropic-api-mcp-server): Connect to Anthropic Claude APIs via Mushrooms MCP server
+- [OpenAI API MCP Server](https://viasocket.com/help/viasocket-mcp/openai-api-mcp-server): Access OpenAI APIs through Mushrooms MCP server
+- [Amazon Quick Suite MCP Server](https://viasocket.com/help/viasocket-mcp/amazon-quick-suite-mcp-server): Amazon Quick Suite integration through MCP
+- [Julius AI MCP Server](https://viasocket.com/help/viasocket-mcp/julius-ai-mcp-server): Julius AI data analysis integration via MCP
+- [Warp MCP Server](https://viasocket.com/help/viasocket-mcp/warp-mcp-server): Warp terminal MCP connectivity setup
+- [Toolhouse](https://viasocket.com/help/viasocket-mcp/connect-viasocket-with-toolhouse): Connect viaSocket workflows with Toolhouse via MCP
+
+## MCP App URLs
+
+Format: `https://mushrooms.viasocket.com/mcp/{appslug}`
+
+- [Google Sheets](https://mushrooms.viasocket.com/mcp/google-sheets): MCP server for Google Sheets automation
+- [LeadConnector](https://mushrooms.viasocket.com/mcp/leadconnector): MCP server for LeadConnector CRM
+- [Airtable](https://mushrooms.viasocket.com/mcp/airtable): MCP server for Airtable database workflows
+- [Slack](https://mushrooms.viasocket.com/mcp/slack): MCP server for Slack messaging and notifications
+- [HubSpot](https://mushrooms.viasocket.com/mcp/hubspot): MCP server for HubSpot CRM and marketing
+- [Zendesk Sell](https://mushrooms.viasocket.com/mcp/zendesk-sell): MCP server for Zendesk Sell CRM
+- [Zendesk Support](https://mushrooms.viasocket.com/mcp/zendesk-support): MCP server for Zendesk support ticket management
+- [Razorpay](https://mushrooms.viasocket.com/mcp/razorpay): MCP server for Razorpay payment workflows
+- [ActiveCampaign](https://mushrooms.viasocket.com/mcp/activecampaign): MCP server for ActiveCampaign email and CRM automation
+- [Bitbucket](https://mushrooms.viasocket.com/mcp/bitbucket): MCP server for Bitbucket repository events
+- [Basecamp](https://mushrooms.viasocket.com/mcp/basecamp): MCP server for Basecamp project management
+- [JustCall](https://mushrooms.viasocket.com/mcp/justcall): MCP server for JustCall call logging and SMS
+- [Zoho Projects](https://mushrooms.viasocket.com/mcp/zoho-projects): MCP server for Zoho Projects task automation
+- [Bigin](https://mushrooms.viasocket.com/mcp/bigin): MCP server for Bigin CRM pipeline management
+- [Zoho CRM](https://mushrooms.viasocket.com/mcp/zoho-crm): MCP server for Zoho CRM leads and contacts
+- [Zoho Cliq](https://mushrooms.viasocket.com/mcp/zoho-cliq): MCP server for Zoho Cliq team messaging
+- [Zoho Mail](https://mushrooms.viasocket.com/mcp/zoho-mail): MCP server for Zoho Mail email workflows
+- [Intercom](https://mushrooms.viasocket.com/mcp/intercom): MCP server for Intercom customer messaging
+- [Google Drive](https://mushrooms.viasocket.com/mcp/google-drive): MCP server for Google Drive file management
+- [Google Calendar](https://mushrooms.viasocket.com/mcp/google-calendar): MCP server for Google Calendar scheduling
+- [Gmail](https://mushrooms.viasocket.com/mcp/gmail): MCP server for Gmail email automation
+- [Notion](https://mushrooms.viasocket.com/mcp/notion): MCP server for Notion pages and databases
+- [Microsoft Teams](https://mushrooms.viasocket.com/mcp/microsoft-teams): MCP server for Microsoft Teams messaging
+- [Dropbox](https://mushrooms.viasocket.com/mcp/dropbox): MCP server for Dropbox file sync and sharing
+- [Dropbox Sign](https://mushrooms.viasocket.com/mcp/dropbox-sign): MCP server for Dropbox Sign e-signature workflows
+- [OneDrive](https://mushrooms.viasocket.com/mcp/onedrive): MCP server for Microsoft OneDrive file management
+- [Trello](https://mushrooms.viasocket.com/mcp/trello): MCP server for Trello board and card management
+- [Asana](https://mushrooms.viasocket.com/mcp/asana): MCP server for Asana task and project automation
+- [ClickUp](https://mushrooms.viasocket.com/mcp/clickup): MCP server for ClickUp task and workspace management
+- [Monday.com](https://mushrooms.viasocket.com/mcp/monday): MCP server for Monday.com board workflows
+- [Jira](https://mushrooms.viasocket.com/mcp/jira): MCP server for Jira issue and sprint management
+- [GitHub](https://mushrooms.viasocket.com/mcp/github): MCP server for GitHub repository event automation
+- [GitLab](https://mushrooms.viasocket.com/mcp/gitlab): MCP server for GitLab pipeline and merge request events
+- [Wrike](https://mushrooms.viasocket.com/mcp/wrike): MCP server for Wrike project and task management
+- [Todoist](https://mushrooms.viasocket.com/mcp/todoist): MCP server for Todoist task creation and completion
+- [Plane.so](https://mushrooms.viasocket.com/mcp/planeso): MCP server for Plane.so open-source project management
+- [Contentful](https://mushrooms.viasocket.com/mcp/contentful): MCP server for Contentful CMS content management
+- [Salesforce](https://mushrooms.viasocket.com/mcp/salesforce): MCP server for Salesforce CRM and opportunity syncing
+- [Pipedrive](https://mushrooms.viasocket.com/mcp/pipedrive): MCP server for Pipedrive deal and contact management
+- [Freshdesk](https://mushrooms.viasocket.com/mcp/freshdesk): MCP server for Freshdesk support ticket automation
+- [Freshsales](https://mushrooms.viasocket.com/mcp/freshsales): MCP server for Freshsales CRM lead workflows
+- [Copper](https://mushrooms.viasocket.com/mcp/copper): MCP server for Copper Google Workspace CRM
+- [Nutshell](https://mushrooms.viasocket.com/mcp/nutshell): MCP server for Nutshell CRM pipeline management
+- [Kommo](https://mushrooms.viasocket.com/mcp/kommo): MCP server for Kommo messenger-based CRM
+- [Mailchimp](https://mushrooms.viasocket.com/mcp/mailchimp): MCP server for Mailchimp email marketing automation
+- [Klaviyo](https://mushrooms.viasocket.com/mcp/klaviyo): MCP server for Klaviyo eCommerce email and SMS
+- [Typeform](https://mushrooms.viasocket.com/mcp/typeform): MCP server for Typeform survey and form submissions
+- [Jotform](https://mushrooms.viasocket.com/mcp/jotform): MCP server for Jotform online form submissions
+- [Mailgun](https://mushrooms.viasocket.com/mcp/mailgun): MCP server for Mailgun transactional email delivery
+- [SendGrid](https://mushrooms.viasocket.com/mcp/sendgrid): MCP server for SendGrid email sending and tracking
+- [Brevo](https://mushrooms.viasocket.com/mcp/brevo): MCP server for Brevo email and SMS marketing
+- [ConvertKit](https://mushrooms.viasocket.com/mcp/convertkit): MCP server for ConvertKit email sequence automation
+- [Lemlist](https://mushrooms.viasocket.com/mcp/lemlist): MCP server for Lemlist cold email outreach
+- [Apollo.io](https://mushrooms.viasocket.com/mcp/apollo): MCP server for Apollo.io lead generation workflows
+- [Stripe](https://mushrooms.viasocket.com/mcp/stripe): MCP server for Stripe payment and subscription events
+- [PayPal](https://mushrooms.viasocket.com/mcp/paypal): MCP server for PayPal payment transaction workflows
+- [QuickBooks](https://mushrooms.viasocket.com/mcp/quickbooks): MCP server for QuickBooks accounting automation
+- [WooCommerce](https://mushrooms.viasocket.com/mcp/woocommerce): MCP server for WooCommerce order and inventory management
+- [Chargebee](https://mushrooms.viasocket.com/mcp/chargebee): MCP server for Chargebee subscription billing workflows
+- [Square](https://mushrooms.viasocket.com/mcp/square): MCP server for Square payment and POS events
+- [Twilio](https://mushrooms.viasocket.com/mcp/twilio): MCP server for Twilio SMS and voice call automation
+- [WhatsApp Business](https://mushrooms.viasocket.com/mcp/whatsapp-business-cloud-api): MCP server for WhatsApp Business Cloud API messaging
+- [Telegram](https://mushrooms.viasocket.com/mcp/telegram): MCP server for Telegram bot and channel notifications
+- [Discord](https://mushrooms.viasocket.com/mcp/discord): MCP server for Discord server and channel messaging
+- [Zoom](https://mushrooms.viasocket.com/mcp/zoom): MCP server for Zoom meeting scheduling and events
+- [Calendly](https://mushrooms.viasocket.com/mcp/calendly): MCP server for Calendly booking and scheduling events
+- [Microsoft Bookings](https://mushrooms.viasocket.com/mcp/microsoft-bookings): MCP server for Microsoft Bookings appointment management
+- [Shopify](https://mushrooms.viasocket.com/mcp/shopify): MCP server for Shopify order and customer workflows
+- [WordPress](https://mushrooms.viasocket.com/mcp/wordpress): MCP server for WordPress post and form event triggers
+- [Webflow](https://mushrooms.viasocket.com/mcp/webflow): MCP server for Webflow CMS and publishing workflows
+- [BigCommerce](https://mushrooms.viasocket.com/mcp/bigcommerce): MCP server for BigCommerce store order management
+- [Box](https://mushrooms.viasocket.com/mcp/box): MCP server for Box cloud file storage automation
+- [Amazon S3](https://mushrooms.viasocket.com/mcp/amazons3): MCP server for Amazon S3 file storage and retrieval
+- [Google Analytics](https://mushrooms.viasocket.com/mcp/google-analytics): MCP server for Google Analytics event workflows
+- [Mixpanel](https://mushrooms.viasocket.com/mcp/mixpanel): MCP server for Mixpanel analytics event tracking
+- [Datadog](https://mushrooms.viasocket.com/mcp/datadog): MCP server for Datadog monitoring and alert workflows
+- [Segment](https://mushrooms.viasocket.com/mcp/segment): MCP server for Segment customer data routing
+- [BambooHR](https://mushrooms.viasocket.com/mcp/bamboohr): MCP server for BambooHR employee and HR workflows
+- [Greenhouse](https://mushrooms.viasocket.com/mcp/greenhouse): MCP server for Greenhouse recruitment pipeline automation
+- [Workday](https://mushrooms.viasocket.com/mcp/workday): MCP server for Workday HR and workforce management
+- [Figma](https://mushrooms.viasocket.com/mcp/figma): MCP server for Figma design update and comment events
+- [Canva](https://mushrooms.viasocket.com/mcp/canva): MCP server for Canva design creation and asset management
+- [Loom](https://mushrooms.viasocket.com/mcp/loom): MCP server for Loom video recording and sharing events
+- [YouTube](https://mushrooms.viasocket.com/mcp/youtube): MCP server for YouTube video upload and channel events
+- [OpenAI](https://mushrooms.viasocket.com/mcp/openai): MCP server for OpenAI GPT-powered text generation
+- [Anthropic](https://mushrooms.viasocket.com/mcp/anthropic): MCP server for Anthropic Claude AI integration
+- [Apify](https://mushrooms.viasocket.com/mcp/apify): MCP server for Apify large-scale web scraping
+- [MySQL](https://mushrooms.viasocket.com/mcp/mysql): MCP server for MySQL database query and update automation
+- [Sangam CRM](https://mushrooms.viasocket.com/mcp/sangam-crm): MCP server for Sangam CRM customer data workflows
+- [Xero](https://mushrooms.viasocket.com/mcp/xero): MCP server for Xero accounting and invoicing workflows
+- [Gorgias](https://mushrooms.viasocket.com/mcp/gorgias): MCP server for Gorgias helpdesk ticket routing
+- [LiveChat](https://mushrooms.viasocket.com/mcp/livechat): MCP server for LiveChat conversation and customer events
+- [Dialpad](https://mushrooms.viasocket.com/mcp/dialpad): MCP server for Dialpad call logging and communication
+- [Livestorm](https://mushrooms.viasocket.com/mcp/livestorm): MCP server for Livestorm webinar and attendee events
+- [Bubble](https://mushrooms.viasocket.com/mcp/bubble): MCP server for Bubble no-code app data workflows
+- [Fireflies.AI](https://mushrooms.viasocket.com/mcp/fireflies): MCP server for Fireflies meeting transcription automation
+- [WATI](https://mushrooms.viasocket.com/mcp/wati): MCP server for WATI WhatsApp messaging workflows
+- [Firecrawl](https://mushrooms.viasocket.com/mcp/firecrawl): MCP server for Firecrawl web scraping and data extraction
+- [Help Scout](https://mushrooms.viasocket.com/mcp/help-scout): MCP server for Help Scout support ticket workflows
+- [CallRail](https://mushrooms.viasocket.com/mcp/callrail): MCP server for CallRail call tracking and analytics
+- [Frappe](https://mushrooms.viasocket.com/mcp/frappe): MCP server for Frappe open-source ERP workflows
+- [Zoho SalesIQ](https://mushrooms.viasocket.com/mcp/zoho-salesIQ): MCP server for Zoho SalesIQ live chat and visitor tracking
+- [Manus](https://mushrooms.viasocket.com/mcp/manus): MCP server for Manus AI agent workflow integration
