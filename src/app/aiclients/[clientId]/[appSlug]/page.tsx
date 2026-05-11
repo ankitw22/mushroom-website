@@ -1,68 +1,59 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import Navbar from '@/components/ui/Navbar';
-import Pricing from '@/components/sections/Pricing';
-import Blog from '@/components/sections/Blog';
-import FAQ from '@/components/sections/FAQ';
-import Footer from '@/components/ui/Footer';
 import { fetchAiClients } from '@/lib/ai-clients';
 import { fetchAiClientData } from '@/lib/ai-client-data';
-import { HowToConnect } from '../HowToConnect';
-import { AppClientHero } from './AppClientHero';
-import { StatsStrip } from './StatsStrip';
-import { WorkflowsSection } from './WorkflowsSection';
-import { ChatDemoSection } from './ChatDemoSection';
-import { ActionsPreview } from './ActionsPreview';
-import { AboutSection } from './AboutSection';
+import { fetchAiAppData } from '@/lib/ai-app-data';
+import { AppClientPageContent } from './AppClientPageContent';
 import '../../client-ui.css';
 
 export const runtime = 'edge';
-
-const RECOMMEND_API = 'https://plug-service.viasocket.com/api/v1/plugins/recommend/integrations?service=';
-
-interface PluginEvent {
-  name: string;
-  description: string;
-  type: 'action' | 'trigger';
-}
-
-interface Plugin {
-  name: string;
-  description: string;
-  iconurl: string;
-  domain: string;
-}
-
-interface Combination {
-  description: string;
-  trigger: { name: string; id: string };
-  actions: { name: string; id: string }[];
-  score: number;
-}
-
-interface RecommendResponse {
-  combinations: Combination[];
-  plugins: Record<string, Plugin & { events: PluginEvent[] }>;
-}
 
 export async function generateMetadata(
   { params }: { params: Promise<{ clientId: string; appSlug: string }> }
 ): Promise<Metadata> {
   const { clientId, appSlug } = await params;
-  const [clients, res] = await Promise.all([
-    fetchAiClients(),
-    fetch(`${RECOMMEND_API}${appSlug}`, { next: { revalidate: 3600 } }),
-  ]);
-  const client = clients.find((c) => c.id === clientId);
-  if (!client || !res.ok) return { title: 'Mushrooms MCP' };
-  const data: RecommendResponse = await res.json();
-  const app = data.plugins[appSlug];
-  if (!app) return { title: 'Mushrooms MCP' };
-  return {
-    title: `Connect ${client.title} to ${app.name} — Mushrooms MCP`,
-    description: `Let ${client.title} take actions in ${app.name} via the Mushrooms MCP Server. Free. No code required.`,
-    icons: { icon: '/mushroom-logo.svg' },
-  };
+
+  try {
+    const clients = await fetchAiClients();
+    const client = clients.find((c) => c.id === clientId);
+    if (!client) return { title: 'Mushrooms MCP' };
+
+    const appData = await fetchAiAppData(appSlug, client.title);
+    if (!appData) return { title: 'Mushrooms MCP' };
+
+    const title = appData.page_title || `Connect ${client.title} to ${appData.name} — Mushrooms MCP`;
+    const description = appData.meta_description || appData.description || `Let ${client.title} take actions in ${appData.name} via Mushrooms.`;
+    const keywords = [
+      ...(appData.primary_keywords ?? []),
+      ...(appData.secondary_keywords ?? []),
+    ];
+
+    return {
+      title,
+      description,
+      keywords: keywords.length ? keywords : undefined,
+      icons: { icon: '/mushroom-logo.svg' },
+      openGraph: {
+        title,
+        description,
+        images: appData.iconurl ? [{ url: appData.iconurl }] : undefined,
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: appData.iconurl ? [appData.iconurl] : undefined,
+      },
+    };
+  } catch (error) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Metadata generation error:', error);
+    }
+    return {
+      title: 'Mushrooms MCP',
+      description: 'Connect AI tools with your favorite apps via Mushrooms MCP Server.',
+    };
+  }
 }
 
 export default async function AppClientPage(
@@ -70,68 +61,19 @@ export default async function AppClientPage(
 ) {
   const { clientId, appSlug } = await params;
 
-  const [clients, res, clientApiData] = await Promise.all([
-    fetchAiClients(),
-    fetch(`${RECOMMEND_API}${appSlug}`, { next: { revalidate: 3600 } }),
-    fetchAiClientData(clientId),
-  ]);
-
+  const clients = await fetchAiClients();
   const client = clients.find((c) => c.id === clientId);
   if (!client) notFound();
-  if (!res.ok) notFound();
 
-  const data: RecommendResponse = await res.json();
-  console.log(data,"hello")
-  const app = data.plugins[appSlug];
-  if (!app) notFound();
-
-  const actions = (app.events ?? []).filter((e) => e.type === 'action');
+  const clientApiData = await fetchAiClientData(clientId);
   const otherClients = clients.filter((c) => c.id !== clientId);
 
   return (
-    <div className="client-page-wrapper">
-      <Navbar />
-
-      <AppClientHero
-        client={client}
-        appName={app.name}
-        appIcon={app.iconurl}
-      />
-
-      {/* <StatsStrip /> */}
-
-      <WorkflowsSection
-        clientTitle={client.title}
-        appName={app.name}
-        combinations={data.combinations}
-      />
-
-      <ChatDemoSection clientTitle={client.title} appName={app.name} />
-
-      <ActionsPreview
-        clientTitle={client.title}
-        appName={app.name}
-        appSlug={appSlug}
-        actions={actions}
-      />
-
-      <HowToConnect client={client} otherClients={otherClients} clientApiData={clientApiData} />
-
-      <Pricing />
-
-      <Blog />
-
-      <FAQ />
-
-      <AboutSection
-        client={client}
-        appName={app.name}
-        appIcon={app.iconurl}
-        appDescription={app.description}
-        appDomain={app.domain}
-      />
-
-      <Footer />
-    </div>
+    <AppClientPageContent
+      client={client}
+      otherClients={otherClients}
+      clientApiData={clientApiData}
+      appSlug={appSlug}
+    />
   );
 }

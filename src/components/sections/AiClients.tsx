@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { type AiClient, getIconDomain, fetchAiClients } from '@/lib/ai-clients';
+import { submitAiClientRequest } from '@/lib/requests';
 
 export default function AiClients({ appSlug }: { appSlug?: string } = {}) {
   const [clients, setClients] = useState<AiClient[]>([]);
@@ -20,29 +21,18 @@ export default function AiClients({ appSlug }: { appSlug?: string } = {}) {
   }, []);
 
   const handleSubmitRequest = async () => {
-    try {
-      const response = await fetch('https://flow.sokt.io/func/scriu9vmqXqr', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          aiClientName: requestForm.name || query,
-          description: requestForm.description,
-          originalSearch: query,
-          timestamp: new Date().toISOString()
-        })
-      });
-      
-      if (response.ok) {
-        setShowToast(true);
-        setRequestForm({ name: '', description: '' });
-        setTimeout(() => setShowToast(false), 3000);
-      } else {
-        alert('Failed to submit request. Please try again.');
-      }
-    } catch (error) {
-      alert('Error submitting request. Please try again.');
+    const ok = await submitAiClientRequest({
+      aiClientName: requestForm.name || query,
+      description: requestForm.description,
+      originalSearch: query,
+    });
+
+    if (ok) {
+      setShowToast(true);
+      setRequestForm({ name: '', description: '' });
+      setTimeout(() => setShowToast(false), 3000);
+    } else {
+      alert('Failed to submit request. Please try again.');
     }
   };
 

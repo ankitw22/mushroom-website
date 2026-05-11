@@ -2,9 +2,15 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+interface PromptToAction {
+  user_prompt: string;
+  ai_action: string;
+}
+
 interface ChatDemoSectionProps {
   clientTitle: string;
   appName: string;
+  prompts?: PromptToAction[];
 }
 
 interface Message {
@@ -16,8 +22,16 @@ interface Scenario {
   messages: Message[];
 }
 
-export function ChatDemoSection({ clientTitle, appName }: ChatDemoSectionProps) {
-  const scenarios: Scenario[] = [
+export function ChatDemoSection({ clientTitle, appName, prompts }: ChatDemoSectionProps) {
+  const dynamicScenarios: Scenario[] = (prompts ?? []).map((p) => ({
+    messages: [
+      { type: 'user', text: p.user_prompt },
+      { type: 'tool', text: `🍄 Calling ${appName} via Mushrooms MCP…` },
+      { type: 'ai', text: p.ai_action },
+    ],
+  }));
+
+  const fallbackScenarios: Scenario[] = [
     {
       messages: [
         { type: 'user', text: `What happened in ${appName} today?` },
@@ -40,6 +54,8 @@ export function ChatDemoSection({ clientTitle, appName }: ChatDemoSectionProps) 
       ],
     },
   ];
+
+  const scenarios: Scenario[] = dynamicScenarios.length > 0 ? dynamicScenarios : fallbackScenarios;
 
   const [scenarioIdx, setScenarioIdx] = useState(0);
   const [visibleMessages, setVisibleMessages] = useState<{ type: string; text: string; typed: string }[]>([]);

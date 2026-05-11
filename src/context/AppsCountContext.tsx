@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { fetchAppsCount } from '@/lib/apps-count';
 
 interface AppsCountContextValue {
   appsCount: string | null;
@@ -16,14 +17,9 @@ export function AppsCountProvider({ children }: { children: ReactNode }) {
   const [appsCount, setAppsCount] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('https://plug-service.viasocket.com/get-apps-count')
-      .then((r) => (r.ok ? r.json() : null))
-      .then((data) => {
-        if (data?.count) {
-          setAppsCount(parseInt(data.count, 10).toLocaleString());
-        }
-      })
-      .catch(() => {});
+    fetchAppsCount().then((count) => {
+      if (count) setAppsCount(count);
+    });
   }, []);
 
   const displayCount = appsCount ? `${appsCount}+` : '2,000+';

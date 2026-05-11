@@ -15,6 +15,7 @@ export default function Integrations({ clientId }: { clientId?: string } = {}) {
   const { appsCount } = useAppsCount();
   const [activeCat, setActiveCat] = useState('All');
   const [query, setQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [page, setPage] = useState(0);
   const [totalApps, setTotalApps] = useState(0);
   const [hasError, setHasError] = useState(false);
@@ -23,6 +24,12 @@ export default function Integrations({ clientId }: { clientId?: string } = {}) {
   const [currentClient, setCurrentClient] = useState<any>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
+  // Debounce the search query so we don't fire on every keystroke
+  useEffect(() => {
+    const handle = setTimeout(() => setDebouncedQuery(query), 350);
+    return () => clearTimeout(handle);
+  }, [query]);
+
   const fetchAppsData = useCallback(async () => {
     setLoading(true);
     setHasError(false);
@@ -30,9 +37,9 @@ export default function Integrations({ clientId }: { clientId?: string } = {}) {
     try {
       let result;
       
-      if (query.trim()) {
+      if (debouncedQuery.trim()) {
         // Use search API when there's a query
-        result = await searchApps(query);
+        result = await searchApps(debouncedQuery);
       } else {
         // Use apps API with category filter
         result = await fetchApps(activeCat, page);
@@ -42,7 +49,7 @@ export default function Integrations({ clientId }: { clientId?: string } = {}) {
       setTotalApps(result.total);
       
       // Extract categories from the apps data
-      if (!query.trim() && page === 0) {
+      if (!debouncedQuery.trim() && page === 0) {
         const cats = new Set<string>();
         result.data.forEach((app) => {
           (app.category || []).forEach((cat) => cats.add(cat));
@@ -57,7 +64,7 @@ export default function Integrations({ clientId }: { clientId?: string } = {}) {
     } finally {
       setLoading(false);
     }
-  }, [activeCat, page, query]);
+  }, [activeCat, page, debouncedQuery]);
 
   useEffect(() => {
     fetchAppsData();

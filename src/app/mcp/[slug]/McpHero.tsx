@@ -12,9 +12,11 @@ interface Plugin {
 
 interface McpHeroProps {
   app: Plugin;
+  h1Title?: string;
+  subheadline?: string;
 }
 
-export function McpHero({ app }: McpHeroProps) {
+export function McpHero({ app, h1Title, subheadline }: McpHeroProps) {
   return (
     <div className="mcp-hero-section">
       <div className="hero-inner">
@@ -29,17 +31,24 @@ export function McpHero({ app }: McpHeroProps) {
 
           <div style={{ width: 52, height: 52, borderRadius: 14, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, boxShadow: '0 4px 16px rgba(0,0,0,0.1)' }}>
             {app.iconurl ? (
-              <Image src={app.iconurl} alt={app.name} width={32} height={32} unoptimized />
+              <Image 
+                src={app.iconurl} 
+                alt={app.name} 
+                width={32} 
+                height={32} 
+                unoptimized 
+                style={{ width: 'auto', height: 'auto' }}
+              />
             ) : (
               <span style={{ fontSize: 20, fontWeight: 700 }}>{app.name.charAt(0)}</span>
             )}
           </div>
 
           <h1 className="hero-title">
-            MCP SERVER<br />FOR<br />{app.name.toUpperCase()}
+            {h1Title ? h1Title : <>MCP SERVER<br />FOR<br />{app.name.toUpperCase()}</>}
           </h1>
           <p className="hero-sub">
-            Connect {app.name} actions with AI tools like ChatGPT, Claude, and Cursor using the Mushrooms MCP Server.
+            {subheadline || `Connect ${app.name} actions with AI tools like ChatGPT, Claude, and Cursor using the Mushrooms MCP Server.`}
           </p>
           <Link href="https://app.mushrooms.viasocket.com/login" className="hero-cta">
             Get Your Cluster (MCP Server) URL

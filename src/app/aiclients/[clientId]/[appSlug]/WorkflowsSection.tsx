@@ -1,17 +1,11 @@
-interface Combination {
-  description: string;
-  trigger: { name: string };
-  actions: { name: string }[];
-}
-
 interface WorkflowsSectionProps {
   clientTitle: string;
   appName: string;
-  combinations: Combination[];
+  useCases: string[];
 }
 
-export function WorkflowsSection({ clientTitle, appName, combinations }: WorkflowsSectionProps) {
-  const shown = combinations.slice(0, 6);
+export function WorkflowsSection({ clientTitle, appName, useCases }: WorkflowsSectionProps) {
+  const shown = useCases.slice(0, 6);
   if (shown.length === 0) return null;
 
   return (
@@ -35,13 +29,9 @@ export function WorkflowsSection({ clientTitle, appName, combinations }: Workflo
       </div>
 
       <div className="workflows-grid">
-        {shown.map((combo, i) => (
+        {shown.map((useCase, i) => (
           <div key={i} className="workflow-card">
-            <p className="workflow-sentence">{combo.description}</p>
-            <p className="workflow-meta">
-              {combo.trigger.name}
-              {combo.actions.length > 0 && ` → ${combo.actions.map((a) => a.name).join(', ')}`}
-            </p>
+            <p className="workflow-sentence">{useCase}</p>
           </div>
         ))}
       </div>

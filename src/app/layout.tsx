@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Poppins, JetBrains_Mono, Press_Start_2P } from 'next/font/google';
 import './globals.css';
 import { AppsCountProvider } from '@/context/AppsCountContext';
+import { fetchAppsCount } from '@/lib/apps-count';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -23,16 +24,8 @@ const pressStart2P = Press_Start_2P({
 
 
 export async function generateMetadata(): Promise<Metadata> {
-  let count = '2,000+';
-  try {
-    const res = await fetch('https://plug-service.viasocket.com/get-apps-count', { next: { revalidate: 3600 } });
-    if (res.ok) {
-      const data = await res.json();
-      if (data?.count) {
-        count = `${parseInt(data.count, 10).toLocaleString()}+`;
-      }
-    }
-  } catch {}
+  const formatted = await fetchAppsCount();
+  const count = formatted ? `${formatted}+` : '2,000+';
 
   return {
     title: `Mushrooms — Connect Your AI to ${count} Apps via MCP`,

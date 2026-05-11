@@ -1,69 +1,20 @@
-import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Marquee } from '@/components/ui/Marquee';
 import './../mcp-ui.css';
-import { McpHero } from './McpHero';
-import { McpActions } from './McpActions';
-import { McpUseCases } from './McpUseCases';
-import { McpFAQ } from './McpFAQ';
-import UseCases from '@/components/sections/UseCases';
-import Features from '@/components/sections/Features';
-import Pricing from '@/components/sections/Pricing';
-import Blog from '@/components/sections/Blog';
-import FAQ from '@/components/sections/FAQ';
-import Footer from '@/components/ui/Footer';
-import Ticker from '@/components/hero/Ticker';
-import AiClients from '@/components/sections/AiClients';
-import Navbar from '@/components/ui/Navbar';
 import { fetchMcpAppData } from '@/lib/mcp-app-data';
+import { fetchRecommendedIntegrations } from '@/lib/recommend';
+import { McpPageContent } from './McpPageContent';
 
 export const runtime = 'edge';
-
-const RECOMMEND_API = 'https://plug-service.viasocket.com/api/v1/plugins/recommend/integrations?service=';
-
-interface PluginEvent {
-  rowid: string;
-  name: string;
-  description: string;
-  type: 'action' | 'trigger';
-  preposition: string | null;
-}
-
-interface Plugin {
-  rowid: string;
-  name: string;
-  description: string;
-  appslugname: string;
-  iconurl: string;
-  category: string[];
-  domain: string;
-  brandcolor: string | null;
-  autonumber: number;
-  events: PluginEvent[];
-}
-
-interface Combination {
-  description: string;
-  trigger: { name: string; id: string };
-  actions: { name: string; id: string }[];
-  score: number;
-}
-
-interface ApiResponse {
-  combinations: Combination[];
-  plugins: Record<string, Plugin>;
-}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const [res, tableData] = await Promise.all([
-      fetch(`${RECOMMEND_API}${slug}`, { next: { revalidate: 3600 } }),
+    const [data, tableData] = await Promise.all([
+      fetchRecommendedIntegrations(slug),
       fetchMcpAppData(slug),
     ]);
-    if (!res.ok) return { title: 'Mushroom Server' };
-    const data: ApiResponse = await res.json();
+    if (!data) return { title: 'Mushroom Server' };
     const app = data.plugins[slug];
     if (!app) return { title: 'Mushroom Server' };
     const actionCount = (app.events ?? []).filter((e) => e.type === 'action').length;
@@ -150,50 +101,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function McpPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
-  const [res, tableData] = await Promise.all([
-    fetch(`${RECOMMEND_API}${slug}`, { next: { revalidate: 3600 } }),
-    fetchMcpAppData(slug),
+  const data = await fetchRecommendedIntegrations(slug);
+  if (!data) notFound();
 
-  ]);
-  console.log(res,tableData,"hello")
-  if (!res.ok) notFound();
-
-  const data: ApiResponse = await res.json();
   const app = data.plugins[slug];
   if (!app) notFound();
 
-  const actions = app.events.filter(e => e.type === 'action');
-
-  return (
-    <div className="mcp-page-wrapper">
-      <Navbar />
-      <McpHero app={app} />
-
-      <div style={{ position: 'relative', height: 52, overflow: 'hidden' }}>
-        <Ticker />
-      </div>
-
-      <McpActions actions={actions} appIcon={app.iconurl} appName={app.name} />
-
-      <AiClients appSlug={slug} />
-
-      {tableData?.use_case_cards?.length
-        ? <McpUseCases cards={tableData.use_case_cards} />
-        : <UseCases />
-      }
-
-      <Features />
-
-      <Pricing />
-
-      <Blog />
-
-      {tableData?.faqs?.length
-        ? <McpFAQ faqs={tableData.faqs} />
-        : <FAQ />
-      }
-
-      <Footer />
-    </div>
-  );
+  return <McpPageContent slug={slug} app={app} />;
 }
