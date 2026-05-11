@@ -2,7 +2,17 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-const FAQ_ITEMS: { id: string; question: string; answer: React.ReactNode }[] = [
+interface FAQItem {
+  id?: string;
+  question: string;
+  answer: React.ReactNode;
+}
+
+interface FAQProps {
+  items?: { question: string; answer: string }[];
+}
+
+const DEFAULT_FAQ_ITEMS: FAQItem[] = [
   {
     id: 'mcp',
     question: 'What is MCP?',
@@ -53,7 +63,10 @@ const FAQ_ITEMS: { id: string; question: string; answer: React.ReactNode }[] = [
   },
 ];
 
-export default function FAQ() {
+export default function FAQ({ items }: FAQProps = {}) {
+  const effectiveItems: FAQItem[] = items && items.length > 0
+    ? items.map((it, i) => ({ id: `faq-${i}`, question: it.question, answer: it.answer }))
+    : DEFAULT_FAQ_ITEMS;
   const [openId, setOpenId] = useState<string | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -107,11 +120,11 @@ export default function FAQ() {
       </div>
 
       <div className="faq-grid reveal grid grid-cols-1 gap-[12px] max-w-[1200px] mx-auto" data-delay="1">
-        {FAQ_ITEMS.map((item) => (
+        {effectiveItems.map((item) => (
           <div
             key={item.id}
             id={item.id}
-            onClick={() => toggleFaq(item.id)}
+            onClick={() => toggleFaq(item.id!)}
             className={`faq-card bg-white border-[1.5px] border-[#e2e8f0] rounded-[14px] overflow-hidden transition-colors cursor-pointer hover:border-[#c8d4e0] ${
               openId === item.id ? 'border-[#068F57]' : ''
             }`}

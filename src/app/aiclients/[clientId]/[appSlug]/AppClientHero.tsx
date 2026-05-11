@@ -8,9 +8,10 @@ interface AppClientHeroProps {
   client: AiClient;
   appName: string;
   appIcon: string;
+  description?: string;
 }
 
-export function AppClientHero({ client, appName, appIcon }: AppClientHeroProps) {
+export function AppClientHero({ client, appName, appIcon, description }: AppClientHeroProps) {
   const clientDomain = getIconDomain(client);
 
   return (
@@ -50,7 +51,7 @@ export function AppClientHero({ client, appName, appIcon }: AppClientHeroProps) 
         </h1>
 
         <p className="client-hero-sub">
-          Let {client.title} read data, take actions, and automate workflows in {appName} — directly from your conversation.
+          {description || `Let ${client.title} read data, take actions, and automate workflows in ${appName} — directly from your conversation.`}
         </p>
 
         <Link href="https://app.mushrooms.viasocket.com/login" className="client-hero-cta">

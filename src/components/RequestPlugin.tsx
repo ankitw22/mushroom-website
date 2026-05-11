@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { submitPluginRequest } from '@/lib/requests';
 
 interface AppInfo {
     name: string;
@@ -111,16 +112,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }: 
 
         try {
             setIsLoading(true);
-            const pluginResponse = await fetch('https://flow.sokt.io/func/scriPIvL7pBP', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
-            });
-
-            const pluginData = await pluginResponse.json();
-
+            const pluginData = await submitPluginRequest(payload);
             if (pluginData?.data?.success) {
                 handleClose();
             }

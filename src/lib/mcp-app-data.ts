@@ -1,5 +1,4 @@
-const TABLE_API = 'https://table-api.viasocket.com/69d49705c98b7a1ea940fbc9/tbllyuo80';
-const AUTH_KEY = 'keyyZ74wvd8-mL_';
+const MCP_APP_FLOW_URL = 'https://flow.sokt.io/func/scrifJg885jL';
 
 export interface UseCaseCard {
   title: string;
@@ -37,14 +36,15 @@ function parseJson<T>(raw: unknown, fallback: T): T {
 
 export async function fetchMcpAppData(slug: string): Promise<McpAppData | null> {
   try {
-    const url = `${TABLE_API}?filter=app_slug = '${slug}'`;
-    const res = await fetch(url, {
-      headers: { 'auth-key': AUTH_KEY },
+    const res = await fetch(MCP_APP_FLOW_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ app_slug: slug }),
       next: { revalidate: 3600 },
     });
     if (!res.ok) return null;
     const json = await res.json();
-    const row = json?.data?.rows?.[0];
+    const row = json?.data?.rows?.[0] ?? json?.data ?? json;
     if (!row) return null;
 
     return {

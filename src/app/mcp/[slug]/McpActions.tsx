@@ -34,7 +34,14 @@ export function McpActions({ actions, appIcon, appName }: McpActionsProps) {
           <div key={idx} className="mcp-action-card">
             <div style={{ width: 36, height: 36, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, background: '#f8fafc', border: '1px solid #e2e8f0' }}>
               {appIcon ? (
-                <Image src={appIcon} alt={appName} width={24} height={24} unoptimized />
+                <Image 
+                  src={appIcon} 
+                  alt={appName} 
+                  width={24} 
+                  height={24} 
+                  unoptimized 
+                  style={{ width: 'auto', height: 'auto' }}
+                />
               ) : (
                 <div style={{ width: 24, height: 24, background: '#e2e8f0', borderRadius: 6 }} />
               )}
