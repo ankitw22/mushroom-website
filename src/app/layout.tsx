@@ -233,6 +233,21 @@ export default function RootLayout({
             ]
           }) }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var script = document.createElement('script');
+                script.id = 'chatbot-main-script';
+                script.setAttribute('embedToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcmdfaWQiOiIxMjc3IiwiY2hhdGJvdF9pZCI6IjY2NTA2MjhhZDQ4ZTIwZTYxY2Y3MDFhMCIsInVzZXJfaWQiOiIwMTAxIn0._oHVtPdP_jmBVzN28B2kbi8hk4DHNNlUzoxsPpGrQS8');
+                script.src = 'https://chatbot.gtwy.ai/chatbot.js';
+                script.setAttribute('bridgeName', 'viasocket_chat');
+                script.setAttribute('theme', 'light');
+                document.head.appendChild(script);
+              })();
+            `
+          }}
+        />
       </head>
       <body
         className={`${poppins.variable} ${jetbrainsMono.variable} ${pressStart2P.variable} antialiased`}
