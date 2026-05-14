@@ -106,6 +106,20 @@ export default function Footer() {
           >
             Fair Usage Policy
           </Link>
+          <Link
+            href="https://viasocket.com/help/viasocket-mcp"
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            className="underline underline-offset-[3px] decoration-[rgba(10,10,10,0.3)] transition-colors hover:text-[#068F57] hover:decoration-[#068F57]"
+            style={{
+              fontFamily: "'Poppins', sans-serif",
+              fontSize: '14px',
+              fontWeight: 500,
+              color: 'var(--ink)',
+            }}
+          >
+            Help Docs
+          </Link>
         </nav>
       </div>
 
