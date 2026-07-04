@@ -9,7 +9,7 @@
  */
 
 const TABLE_API = 'https://table-api.viasocket.com/69d49705c98b7a1ea940fbc9/tblw93xqh';
-const AUTH_KEY = process.env.VIASOCKET_TABLE_AUTH_KEY ?? 'keyWWd7noIucHa1';
+const AUTH_KEY = 'keyWWd7noIucHa1';
 
 // Validates CSS length values to prevent injection into <style> blocks
 // Allows: 48px, 3vh, 12vw, 1.5rem, 80%, etc.
