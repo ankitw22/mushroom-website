@@ -10,7 +10,7 @@ export default function Hero() {
   const { displayCount } = useAppsCount();
 
   return (
-    <div className="hero relative h-[calc(100vh-20px)] min-h-[580px] sm:min-h-[750px] md:min-h-[1000px] lg:min-h-[1350px] bg-[var(--green)] rounded-2xl overflow-hidden m-[10px]">
+    <div className="hero relative h-[calc(100vh-20px)] min-h-[400px] sm:min-h-[450px] md:min-h-[500px] bg-[var(--green)] rounded-2xl overflow-hidden m-[10px]">
       <HeroCanvas />
 
       <div id="hero-content" className="relative z-10 flex flex-col items-center justify-start w-full h-full pt-[40px] px-4 sm:px-6 pb-16">

@@ -1,5 +1,6 @@
 import { headers } from 'next/headers';
 import HomeClient from './HomeClient';
+import { fetchHeroContent } from '@/lib/hero-content';
 
 export const runtime = 'edge';
 
@@ -22,5 +23,7 @@ export default async function Home() {
   const hasUserId = Number.isInteger(cookieUserId) && cookieUserId > 0;
   const userId = hasUserId ? cookieUserId : createUserId();
 
-  return <HomeClient userId={userId} shouldSetCookie={!hasUserId} />;
+  const heroContent = await fetchHeroContent();
+
+  return <HomeClient userId={userId} shouldSetCookie={!hasUserId} heroContent={heroContent} />;
 }
